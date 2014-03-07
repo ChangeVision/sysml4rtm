@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:rtc="http://www.openrtp.org/namespaces/rtc"
+	targetNamespace="http://www.openrtp.org/namespaces/rtc"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified">
+
+	<xsd:element name="RtcProfile" type="rtc:rtc_profile"/>
+	<xsd:complexType name="rtc_profile">
+		<xsd:sequence>
+			<xsd:element name="BasicInfo" type="rtc:basic_info" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="Actions" type="rtc:actions" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="ConfigurationSet" type="rtc:configuration_set" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="DataPorts" type="rtc:dataport" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ServicePorts" type="rtc:serviceport" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Parameters" type="rtc:parameter" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Language" type="rtc:language" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+		<xsd:attribute name="version" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="basic_info">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="componentType" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="STATIC"/>
+					<xsd:enumeration value="UNIQUE"/>
+					<xsd:enumeration value="COMMUTATIVE"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="activityType" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="PERIODIC"/>
+					<xsd:enumeration value="SPORADIC"/>
+					<xsd:enumeration value="EVENTDRIVEN"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="componentKind" type="xsd:string" use="required"/>
+		<xsd:attribute name="rtcType" type="xsd:string" use="optional"/>
+		<xsd:attribute name="category" type="xsd:string" use="required"/>
+		<xsd:attribute name="description" type="xsd:string" use="optional"/>
+		<xsd:attribute name="executionRate" type="xsd:double" use="optional"/>
+		<xsd:attribute name="executionType" type="xsd:string" use="required"/>
+		<xsd:attribute name="maxInstances" type="xsd:integer" use="optional"/>
+		<xsd:attribute name="vendor" type="xsd:string" use="required"/>
+		<xsd:attribute name="version" type="xsd:string" use="required"/>
+		<xsd:attribute name="abstract" type="xsd:string" use="optional"/>
+		<xsd:attribute name="hardwareProfile" type="xsd:string" use="optional"/>
+		<xsd:attribute name="creationDate" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="updateDate" type="xsd:dateTime" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="actions">
+		<xsd:sequence>
+			<xsd:element name="OnInitialize" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnFinalize" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnStartup" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnShutdown" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnActivated" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnDeactivated" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnAborting" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnError" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnReset" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnExecute" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnStateUpdate" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnRateChanged" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnAction" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="OnModeChanged" type="rtc:action_status" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="action_status">
+		<xsd:attribute name="implemented" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="configuration_set">
+		<xsd:sequence>
+			<xsd:element name="Configuration" type="rtc:configuration" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="configuration">
+		<xsd:sequence>
+			<xsd:element name="Constraint" type="rtc:constraint_type" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="type" type="xsd:string" use="required"/>
+		<xsd:attribute name="defaultValue" type="xsd:string" use="required"/>
+		<xsd:attribute name="unit" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="dataport">
+		<xsd:sequence>
+			<xsd:element name="Constraint" type="rtc:constraint_type" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="portType" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="DataInPort"/>
+					<xsd:enumeration value="DataOutPort"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="type" type="xsd:string" use="required"/>
+		<xsd:attribute name="idlFile" type="xsd:string" use="optional"/>
+		<xsd:attribute name="interfaceType" type="xsd:string" use="optional"/>
+		<xsd:attribute name="dataflowType" type="xsd:string" use="optional"/>
+		<xsd:attribute name="subscriptionType" type="xsd:string" use="optional"/>
+		<xsd:attribute name="unit" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="serviceport">
+		<xsd:sequence>
+			<xsd:element name="ServiceInterface" type="rtc:serviceinterface" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="TransMethods" type="rtc:transmission_method" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="serviceinterface">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="direction" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Provided"/>
+					<xsd:enumeration value="Required"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="instanceName" type="xsd:string" use="optional"/>
+		<xsd:attribute name="idlFile" type="xsd:string" use="optional"/>
+		<xsd:attribute name="type" type="xsd:string" use="required"/>
+		<xsd:attribute name="path" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="transmission_method">
+		<xsd:attribute name="kind" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="parameter">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="defaultValue" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="language">
+		<xsd:attribute name="kind" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="constraint_type">
+		<xsd:choice>
+			<xsd:element name="ConstraintHashType" type="rtc:constraint_hash_type"/>
+			<xsd:element name="ConstraintListType" type="rtc:constraint_list_type"/>
+			<xsd:element name="ConstraintUnitType" type="rtc:constraint_unit_type"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="constraint_hash_type">
+		<xsd:sequence>
+			<xsd:element name="Constraint" type="rtc:constraint_type" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="constraint_list_type">
+		<xsd:sequence>
+			<xsd:element name="Constraint" type="rtc:constraint_type" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="constraint_unit_type">
+		<xsd:choice>
+			<xsd:element name="Not" type="rtc:not"/>
+			<xsd:element name="And" type="rtc:and"/>
+			<xsd:element name="Or" type="rtc:or"/>
+			<xsd:element name="propertyIsNullType" type="rtc:property_is_null_type"/>
+			<xsd:element name="propertyIsEqualTo" type="rtc:property_is_equal_to"/>
+			<xsd:element name="propertyIsNotEqualTo" type="rtc:property_is_not_equal_to"/>
+			<xsd:element name="propertyIsLessThan" type="rtc:property_is_less_than"/>
+			<xsd:element name="propertyIsGreaterThan" type="rtc:property_is_greater_than"/>
+			<xsd:element name="propertyIsLessThanOrEqualTo" type="rtc:property_is_less_than_or_equal_to"/>
+			<xsd:element name="propertyIsGreaterThanOrEqualTo" type="rtc:property_is_greater_than_or_equal_to"/>
+			<xsd:element name="propertyIsLike" type="rtc:property_is_like"/>
+			<xsd:element name="propertyIsBetween" type="rtc:property_is_between"/>
+		</xsd:choice>
+		<xsd:attribute name="key" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="not">
+		<xsd:sequence>
+			<xsd:element name="Constraint" type="rtc:constraint_type" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="and">
+		<xsd:sequence>
+			<xsd:element name="Constraint" type="rtc:constraint_type" minOccurs="2" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="or">
+		<xsd:sequence>
+			<xsd:element name="Constraint" type="rtc:constraint_type" minOccurs="2" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_null_type">
+		<xsd:choice>
+			<xsd:element name="propertyIsNull" type="xsd:string"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_equal_to">
+		<xsd:sequence>
+			<xsd:element name="Literal" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="matchCase" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_not_equal_to">
+		<xsd:sequence>
+			<xsd:element name="Literal" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="matchCase" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_less_than">
+		<xsd:sequence>
+			<xsd:element name="Literal" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="matchCase" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_greater_than">
+		<xsd:sequence>
+			<xsd:element name="Literal" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="matchCase" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_less_than_or_equal_to">
+		<xsd:sequence>
+			<xsd:element name="Literal" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="matchCase" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_greater_than_or_equal_to">
+		<xsd:sequence>
+			<xsd:element name="Literal" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="matchCase" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_like">
+		<xsd:sequence>
+			<xsd:element name="Literal" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="wildCard" type="xsd:string" use="required"/>
+		<xsd:attribute name="singleChar" type="xsd:string" use="required"/>
+		<xsd:attribute name="escapeChar" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="property_is_between">
+		<xsd:sequence>
+			<xsd:element name="LowerBoundary" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="UpperBoundary" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

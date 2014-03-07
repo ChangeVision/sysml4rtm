@@ -1,0 +1,7 @@
+#ifndef WITHOUTPACKAGE_IDL
+#define WITHOUTPACKAGE_IDL
+
+struct WithoutPackage{
+};
+
+#endif

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+   <extension point="com.change_vision.astah.ui.actionSets">
+      <actionSet
+            label="%action_set_label"
+            visible="true"
+            id="com.change_vision.astah.sysml4rtm.actionSet">
+         <menu
+               id="sysml4rtm"
+               label="%menu_group"
+               path="tool/sysml4rtm">
+         </menu>
+         <action
+			   label="%menu_label"
+               icon="icons/sample.gif"
+               class="sysml4rtm.TemplateAction"
+               tooltip="%menu_tooltip"
+               menubarPath="tool/sysml4rtm/"
+               id="sysml4rtm">
+         </action>
+     </actionSet>
+   </extension>
+</plugin>

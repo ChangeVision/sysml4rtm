@@ -1,0 +1,16 @@
+#ifndef VALUETYPE_COMMENT_IDL
+#define VALUETYPE_COMMENT_IDL
+
+/*
+* This is comment.<br/>
+* これはコメントです
+*/
+struct ValueType_Comment{
+    /*
+    * this is attribute comment<br/>
+    * これは属性のコメントです
+    */
+    double attribute20;
+};
+
+#endif

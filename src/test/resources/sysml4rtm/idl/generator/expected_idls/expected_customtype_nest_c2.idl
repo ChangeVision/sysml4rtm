@@ -1,0 +1,8 @@
+#ifndef VALUETYPE_NEST_C2_IDL
+#define VALUETYPE_NEST_C2_IDL
+
+struct ValueType_Nest_C2{
+    double ac2_1;
+};
+
+#endif

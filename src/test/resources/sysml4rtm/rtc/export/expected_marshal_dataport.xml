@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rtc:RtcProfile rtc:version="0.2"
+    rtc:id="RTC:Vendor:Category:com::sample::Block0:1.0.0" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext"
+    xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:rtc="http://www.openrtp.org/namespaces/rtc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="">
+    <rtc:BasicInfo
+        rtc:updateDate="1970-01-01T09:00:00.000+09:00" rtc:creationDate="1970-01-01T09:00:00.000+09:00"
+        rtc:version="1.0" rtc:vendor="Vendor" rtc:executionType="PeriodicExecutionContext"
+        rtc:executionRate="10.0"
+        rtc:description="This is description.
+Escape char &lt;&quot;hoge&quot;&gt;&lt;&apos;&amp;foo&apos;&gt;"
+        rtc:category="Category" rtc:componentKind="DataFlowComponent"
+        rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:maxInstances="0" rtc:name="com::sample::Block0" />
+    <rtc:Actions>
+        <rtc:OnInitialize rtc:implemented="true" />
+        <rtc:OnExecute rtc:implemented="true" />
+    </rtc:Actions>
+    <rtc:DataPorts rtc:type="RTC::TimedLong" rtc:name="Out1" rtc:portType="DataOutPort" />
+    <rtc:DataPorts rtc:type="RTC::TimedLong" rtc:name="In1" rtc:portType="DataInPort" />
+</rtc:RtcProfile>

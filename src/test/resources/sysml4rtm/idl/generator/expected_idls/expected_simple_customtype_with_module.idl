@@ -1,0 +1,11 @@
+#ifndef BLOCK1_IDL
+#define BLOCK1_IDL
+
+module jp{
+    module service{
+        struct Block1{
+        };
+    };
+};
+
+#endif
