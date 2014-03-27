@@ -1,5 +1,6 @@
 #ifndef VALUETYPE_NEST_ASSOSIATION_IDL
 #define VALUETYPE_NEST_ASSOSIATION_IDL
+#include "BasicDataType.idl"
 #include "ValueType_Nest_Assosiation_C1.idl"
 #include "ValueType_Nest_Assosiation_C2.idl"
 

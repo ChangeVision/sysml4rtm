@@ -15,6 +15,8 @@ public class Constants {
 	public static final String NAMESPACE_RTCDOC = "http://www.openrtp.org/namespaces/rtc_doc";
 	public static final String NAMESPACE_RTCDOC_ABBREVIATION = "rtcDoc";
 
+	public static final String RTC_BUILTIN_TYPE = "rtcBuiltinType";
+	
 	private Constants() {
 	}
 

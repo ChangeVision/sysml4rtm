@@ -1,0 +1,11 @@
+#ifndef USINGRTCTYPE_IDL
+#define USINGRTCTYPE_IDL
+#include "BasicDataType.idl"
+
+struct UsingRTCType{
+    RTC::TimedDouble attr1;
+    RTC::Time attr2;
+    RTC::TimedString attr3;
+};
+
+#endif

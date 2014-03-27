@@ -1,5 +1,6 @@
 #ifndef VALUETYPE_COMMENT_IDL
 #define VALUETYPE_COMMENT_IDL
+#include "BasicDataType.idl"
 
 /*
 * This is comment.<br/>

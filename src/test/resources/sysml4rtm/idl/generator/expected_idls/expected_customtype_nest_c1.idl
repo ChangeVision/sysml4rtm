@@ -1,5 +1,6 @@
 #ifndef VALUETYPE_NEST_C1_IDL
 #define VALUETYPE_NEST_C1_IDL
+#include "BasicDataType.idl"
 #include "ValueType_Nest_C2.idl"
 
 struct ValueType_Nest_C1{

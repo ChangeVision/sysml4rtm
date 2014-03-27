@@ -1,0 +1,21 @@
+#ifndef CUSTOMSEQ_IDL
+#define CUSTOMSEQ_IDL
+#include "BasicDataType.idl"
+#include "DataA.idl"
+#include "DataB.idl"
+#include "DataC.idl"
+
+#ifndef DATAASEQ
+#define DATAASEQ
+typedef sequence<::DataA> DataASeq;
+#endif
+#ifndef DATABSEQ
+#define DATABSEQ
+typedef sequence<::DataB> DataBSeq;
+#endif
+struct CustomSeq{
+    DataBSeq dataB;
+    DataASeq dataA;
+};
+
+#endif

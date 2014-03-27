@@ -1,8 +1,7 @@
 package sysml4rtm.idl.generator;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -142,6 +141,53 @@ public class CustomTypeIDLGeneratorTest {
 				getFileContents(pathToOutput + "/ValueType_Nest_Assosiation_C2.idl"));
 	}
 
+	@Test
+	public void should_generate_customtype_using_idltype() throws Exception {
+		String pathToOutput = generateCustomTypeIdl("using_builtin_type.asml", "UsingIdlType");
+		String actual = getFileContents(pathToOutput + "/UsingIdlType.idl");
+		assertEquals(
+				getWorkspaceFileContents("expected_idls/expected_using_idl_type.idl"),
+				actual);
+	}
+	
+	@Test
+	public void should_generate_customtype_using_rtctype() throws Exception {
+		String pathToOutput = generateCustomTypeIdl("using_builtin_type.asml", "UsingRTCType");
+		String actual = getFileContents(pathToOutput + "/UsingRTCType.idl");
+		assertEquals(
+				getWorkspaceFileContents("expected_idls/expected_using_rtc_type.idl"),
+				actual);
+	}
+	
+	@Test
+	public void should_generate_customtype_using_seqtype() throws Exception {
+		String pathToOutput = generateCustomTypeIdl("using_builtin_type.asml", "UsingSeqType");
+		String actual = getFileContents(pathToOutput + "/UsingSeqType.idl");
+		assertEquals(
+				getWorkspaceFileContents("expected_idls/expected_using_seq_type.idl"),
+				actual);
+	}
+	
+	@Test
+	public void should_generate_customtype_using_corbasequence() throws Exception {
+		String pathToOutput = generateCustomTypeIdl("using_builtin_type.asml", "CustomSeq");
+		String actual = getFileContents(pathToOutput + "/CustomSeq.idl");
+		assertEquals(
+				getWorkspaceFileContents("expected_idls/expected_corbasequence.idl"),
+				actual);
+		
+		actual = getFileContents(pathToOutput + "/DataA.idl");
+		assertEquals(
+				getWorkspaceFileContents("expected_idls/expected_corbasequence_dataa.idl"),
+				actual);
+		
+		actual = getFileContents(pathToOutput + "/DataB.idl");
+		assertEquals(
+				getWorkspaceFileContents("expected_idls/expected_corbasequence_datab.idl"),
+				actual);
+
+	}
+	
 	private String generateCustomTypeIdl(String pathToModelFile, String modelFullName) {
 		INamedElement element = getTarget(pathToModelFile, modelFullName);
 		Target target = new Target(element, folder.getRoot().getPath());

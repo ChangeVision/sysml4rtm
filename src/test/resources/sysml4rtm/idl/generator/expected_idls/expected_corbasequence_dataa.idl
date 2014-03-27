@@ -1,0 +1,8 @@
+#ifndef DATAA_IDL
+#define DATAA_IDL
+#include "BasicDataType.idl"
+
+struct DataA{
+};
+
+#endif

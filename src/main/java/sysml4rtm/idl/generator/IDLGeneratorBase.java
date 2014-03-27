@@ -106,7 +106,6 @@ public abstract class IDLGeneratorBase {
 		return builder.toString();
 	}
 
-	@SuppressWarnings("unchecked")
 	public String getIDLCommentBody(int indentCount, String comment) {
 		String indent = getIndentString(indentCount);
 
@@ -179,10 +178,6 @@ public abstract class IDLGeneratorBase {
 		return typedefs;
 	}
 
-	private boolean isBuiltinClass(String type) {
-		return SYSMLTYPE_TO_IDLTYPE_MAPPING.containsKey(type);
-	}
-
 	protected void addSequenceType(Map<String, String> typedefs, IClass clazz, String targetName,
 			String typeModifier) {
 		String type = IDLUtils.getElementTypeOfSequence(typeModifier, clazz, targetName);
@@ -242,8 +237,10 @@ public abstract class IDLGeneratorBase {
 
 	public String getAttributeType(IAttribute attribute) {
 		String typeName = attribute.getType().getFullName("::");
-		if (isBuiltinClass(typeName)) {
+		if (IDLUtils.isSysMLBuiltinType(typeName)) {
 			return convertSysmlToIdlType(typeName);
+		}else if (IDLUtils.isIDLPrimitiveType(typeName)){
+			return convertIDLType(typeName);
 		} else if (IDLUtils.isIDLSequenceType(typeName)) {
 			return getSequenceTypeDefType(attribute);
 		} else {
@@ -255,6 +252,13 @@ public abstract class IDLGeneratorBase {
 			builder.append(attribute.getTypeModifier());
 			return builder.toString();
 		}
+	}
+
+	private String convertIDLType(String typeName) {
+		if(IDLUtils.isIDLPrimitiveType(typeName)){
+			return StringUtils.substringAfter(typeName, "IDL::");
+		}
+		return typeName;
 	}
 
 	private String convertSysmlToIdlType(String typeName) {

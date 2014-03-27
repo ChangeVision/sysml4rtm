@@ -1,0 +1,8 @@
+#ifndef DATAB_IDL
+#define DATAB_IDL
+#include "BasicDataType.idl"
+#include "DataC.idl"
+
+typedef sequence<::DataC> DataB;
+
+#endif

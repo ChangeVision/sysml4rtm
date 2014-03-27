@@ -1,5 +1,6 @@
 #ifndef VALUETYPE_SYSMLNATIVETYPE_IDL
 #define VALUETYPE_SYSMLNATIVETYPE_IDL
+#include "BasicDataType.idl"
 
 struct ValueType_SysMLNativeType{
     boolean attribute0;

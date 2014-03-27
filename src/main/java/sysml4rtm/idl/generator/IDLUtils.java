@@ -17,11 +17,14 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
 import sysml4rtm.Messages;
+import sysml4rtm.ProjectAccessorFacade;
+import sysml4rtm.constants.Constants;
 import sysml4rtm.exception.ApplicationException;
 
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IClass;
 import com.change_vision.jude.api.inf.model.IMultiplicityRange;
+import com.change_vision.jude.api.inf.model.INamedElement;
 
 public class IDLUtils {
 
@@ -75,9 +78,9 @@ public class IDLUtils {
 	public static Pattern sequencePattern = Pattern.compile("<([\\s\\w:]*)>");
 
 	public static boolean isIDLPrimitiveType(String type) {
-		String[] primitives = new String[] { "short", "long", "long long", "unsigned short",
-				"unsigned long", "unsigned long long", "float", "double", "long double", "boolean",
-				"char", "wchar", "octet", "string", "wstring", "sequence", "any", "fixed" };
+		String[] primitives = new String[] { "IDL::short", "IDL::long", "IDL::long long", "IDL::unsigned short",
+				"IDL::unsigned long", "IDL::unsigned long long", "IDL::float", "IDL::double", "IDL::long double", "IDL::boolean",
+				"IDL::char", "IDL::wchar", "IDL::octet", "IDL::string", "IDL::wstring", "IDL::sequence", "IDL::any", "IDL::fixed" };
 		return ArrayUtils.contains(primitives, type);
 	}
 
@@ -135,12 +138,24 @@ public class IDLUtils {
 		return isRecursive ? name + "_" : name;
 	}
 
+	public static boolean isSysMLBuiltinType(String type){
+		return StringUtils.startsWith(type, "SysML::");
+	}
+	
 	public static boolean isCustomType(String type) {
 		if (StringUtils.equals(type, "void") || isIDLPrimitiveType(type)
-				|| StringUtils.startsWith(type, "SysML::")) {
+				|| isSysMLBuiltinType(type) || isRTCDataType(type)) {
 			return false;
 		}
 		return true;
+	}
+
+	private static boolean isRTCDataType(String type) {
+		if(StringUtils.startsWith(type, "RTC::")){
+			INamedElement element = ProjectAccessorFacade.findElement(type);
+			return element.hasStereotype(Constants.RTC_BUILTIN_TYPE);
+		}
+		return false;
 	}
 
 	public static boolean isOtherCustomTypeSequence(IClass clazz, IAttribute attribute) {

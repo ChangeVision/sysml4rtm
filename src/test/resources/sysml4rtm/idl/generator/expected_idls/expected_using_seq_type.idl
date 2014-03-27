@@ -1,0 +1,13 @@
+#ifndef USINGSEQTYPE_IDL
+#define USINGSEQTYPE_IDL
+#include "BasicDataType.idl"
+#include "IDL/DoubleSeq.idl"
+#include "IDL/StringSeq.idl"
+
+struct UsingSeqType{
+    IDL::StringSeq attr1;
+    IDL::DoubleSeq attr2;
+    RTC::TimedULongSeq attr3;
+};
+
+#endif

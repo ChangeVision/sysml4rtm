@@ -1,5 +1,6 @@
 #ifndef VALUETYPE_SYSMLNATIVETYPE_MULTIPLICITY_IDL
 #define VALUETYPE_SYSMLNATIVETYPE_MULTIPLICITY_IDL
+#include "BasicDataType.idl"
 
 struct ValueType_SysMLNativeType_Multiplicity{
     double attribute7[1];

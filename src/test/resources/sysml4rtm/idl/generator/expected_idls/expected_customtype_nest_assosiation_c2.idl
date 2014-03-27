@@ -1,5 +1,6 @@
 #ifndef VALUETYPE_NEST_ASSOSIATION_C2_IDL
 #define VALUETYPE_NEST_ASSOSIATION_C2_IDL
+#include "BasicDataType.idl"
 
 struct ValueType_Nest_Assosiation_C2{
     double attribute19;

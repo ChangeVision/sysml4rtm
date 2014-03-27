@@ -1,5 +1,6 @@
 #ifndef WITHOUTPACKAGE_IDL
 #define WITHOUTPACKAGE_IDL
+#include "BasicDataType.idl"
 
 struct WithoutPackage{
 };
