@@ -1,0 +1,39 @@
+#ifndef ${stringutil.upperCase($interface.name)}_IDL
+\#define ${stringutil.upperCase($interface.name)}_IDL
+\#include "BasicDataType.idl"
+#foreach($idl in $includedIDLs)
+\#include "$idl"
+#end
+
+#set($moduleBegin = $this.getIDLModuleDeclare($interface))
+#if($stringutil.isNotEmpty($moduleBegin))
+$moduleBegin
+#end
+#if(${stringutil.isNotEmpty(${interface.definition})})${this.getIDLComment(${this.getIndent()}, ${interface.definition})}#end
+${this.getIndentString()}interface ${interface.name}{
+#foreach($key in $typedefs.keySet())
+#if($helper.isCustomType($key) && !$stringutil.contains($key, "::"))
+#set($element = "::" + $key)
+#else
+#set($element = $key)
+#end
+${this.getIndentString()}    typedef sequence<$element> ${typedefs.get($key)};
+#end
+#set($j = ${this.getIndent()} + 1)
+#set($attributes = $this.getAttributes($interface, "attribute"))
+#if($stringutil.isNotEmpty($attributes))
+$attributes
+#end
+#foreach($operation in $interface.operations)
+#if($this.getOperationReturnType($operation) && $this.getOperationParameter($operation))
+#if(${stringutil.isNotEmpty(${operation.definition})})${this.getIDLComment($j, ${operation.definition})}#end
+${this.getIndentString()}    ${this.getOperationReturnType(${operation})} ${this.getOperationName(${operation})}(${this.getOperationParameter($operation)});
+#end
+#end
+${this.getIndentString()}};
+#set($moduleEnd = $this.getIDLModuleDeclareClose($interface))
+#if($stringutil.isNotEmpty($moduleEnd))
+$moduleEnd
+#end
+
+#endif

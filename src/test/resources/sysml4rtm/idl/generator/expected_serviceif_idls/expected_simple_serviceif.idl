@@ -1,0 +1,11 @@
+#ifndef INTERFACE0_IDL
+#define INTERFACE0_IDL
+#include "BasicDataType.idl"
+
+/*
+* Interface0_def
+*/
+interface Interface0{
+};
+
+#endif

@@ -1,0 +1,15 @@
+#ifndef USINGINTERFACE_IDL
+#define USINGINTERFACE_IDL
+#include "BasicDataType.idl"
+#include "UsingInterfaceReturn.idl"
+#include "jp/UsingInterfaceParam.idl"
+
+module jp{
+    module service{
+        interface UsingInterface{
+            ::UsingInterfaceReturn op1(in jp::UsingInterfaceParam param0);
+        };
+    };
+};
+
+#endif

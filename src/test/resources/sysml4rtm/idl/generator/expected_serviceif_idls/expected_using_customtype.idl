@@ -1,0 +1,17 @@
+#ifndef USINGCUSTOMTYPE_IDL
+#define USINGCUSTOMTYPE_IDL
+#include "BasicDataType.idl"
+#include "jp/V1.idl"
+
+module jp{
+    module service{
+        interface UsingCustomType{
+            void op1();
+            float op2();
+            RTC::TimedDouble op3();
+            jp::V1 op4(in double param2, in jp::V1 param3);
+        };
+    };
+};
+
+#endif

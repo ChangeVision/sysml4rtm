@@ -1,0 +1,33 @@
+#ifndef USINGATTRIBUTE_IDL
+#define USINGATTRIBUTE_IDL
+#include "BasicDataType.idl"
+#include "V0.idl"
+#include "jp/V1.idl"
+
+/*
+* UsingAttribute_def
+*/
+interface UsingAttribute{
+    /*
+    * radius_def
+    */
+    attribute float radius;
+    /*
+    * material_def
+    */
+    attribute RTC::TimedLong material;
+    /*
+    * name_def
+    */
+    attribute string<10> name;
+    /*
+    * custom_def
+    */
+    attribute ::V0 custom;
+    /*
+    * custom1_def
+    */
+    attribute jp::V1 custom1;
+};
+
+#endif

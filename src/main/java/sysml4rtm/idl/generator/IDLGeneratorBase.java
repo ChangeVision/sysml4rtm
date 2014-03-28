@@ -253,15 +253,15 @@ public abstract class IDLGeneratorBase {
 			return builder.toString();
 		}
 	}
-
-	private String convertIDLType(String typeName) {
+	
+	protected String convertIDLType(String typeName) {
 		if(IDLUtils.isIDLPrimitiveType(typeName)){
 			return StringUtils.substringAfter(typeName, "IDL::");
 		}
 		return typeName;
 	}
 
-	private String convertSysmlToIdlType(String typeName) {
+	protected String convertSysmlToIdlType(String typeName) {
 		return SYSMLTYPE_TO_IDLTYPE_MAPPING.get(typeName);
 	}
 
