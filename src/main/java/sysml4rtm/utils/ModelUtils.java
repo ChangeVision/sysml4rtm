@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import org.apache.commons.lang3.StringUtils;
 
+import sysml4rtm.constants.Constants;
 import sysml4rtm.constants.Constants.DataPortType;
 
 import com.change_vision.jude.api.inf.model.IAssociation;
@@ -64,6 +65,10 @@ public class ModelUtils {
 	
 	public static boolean isBlock(INamedElement element) {
 		return element instanceof IBlock;
+	}
+	
+	public static boolean isRTCBlock(INamedElement element){
+		return isBlock(element) && element.hasStereotype(Constants.STEREOTYPE_RTC);
 	}
 
 	public static String getPortName(IPort port) {
@@ -143,4 +148,5 @@ public class ModelUtils {
 
 		return null;
 	}
+	
 }

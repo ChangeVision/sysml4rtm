@@ -23,7 +23,6 @@ import sysml4rtm.rtc.export.profilebuilder.RtcProfileBuilder;
 
 import com.change_vision.jude.api.inf.model.IBlock;
 import com.change_vision.jude.api.inf.model.INamedElement;
-import com.sun.xml.internal.bind.marshaller.NamespacePrefixMapper;
 
 @SuppressWarnings("restriction")
 public class RtcMarshaller {
@@ -43,29 +42,40 @@ public class RtcMarshaller {
 		return new File(pathToOutput, block.getFullName("_") + ".xml");
 	}
 
-	public void marshal(String pathToModelFile, String pathToOutput) {
-		ProjectAccessorFacade.openProject(pathToModelFile);
-
+	public void marshal(String pathToOutput) {
 		INamedElement[] blocks = ProjectAccessorFacade.findBlocksWithRTCStereotype();
 
-		for (INamedElement block : blocks) {
-			RtcProfile contents = profileBuilder.createRtcProfile((IBlock) block);
+		marshal(blocks,pathToOutput);
+	}
+	
+	public void marshal(INamedElement[] targets , String pathToOutput){
+		for (INamedElement block : targets) {
+			marshalAsFile(pathToOutput, block);
+		}
+	}
+	
+	public void marshal(String pathToModelFile, String pathToOutput) {
+		ProjectAccessorFacade.openProject(pathToModelFile);
+		marshal(pathToOutput);
+	}
 
-			BufferedWriter writer = null;
-			try {
-				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-						buildOutputFileName(pathToOutput, block)), Constants.ENCODING));
+	private void marshalAsFile(String pathToOutput, INamedElement block) {
+		RtcProfile contents = profileBuilder.createRtcProfile((IBlock) block);
 
-				marshal(contents, writer);
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+					buildOutputFileName(pathToOutput, block)), Constants.ENCODING));
 
-				if (writer != null) {
-					writer.close();
-				}
-			} catch (Exception e) {
-				throw new ApplicationException(e);
-			} finally {
-				IOUtils.closeQuietly(writer);
+			marshal(contents, writer);
+
+			if (writer != null) {
+				writer.close();
 			}
+		} catch (Exception e) {
+			throw new ApplicationException(e);
+		} finally {
+			IOUtils.closeQuietly(writer);
 		}
 	}
 
@@ -77,21 +87,6 @@ public class RtcMarshaller {
 		marshaller.setProperty(Marshaller.JAXB_ENCODING, Constants.ENCODING);
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "");
-		marshaller.setProperty("com.sun.xml.internal.bind.namespacePrefixMapper",
-				new NamespacePrefixMapper() {
-					@Override
-					public String getPreferredPrefix(String namespaceUri, String suggestion,
-							boolean requirePrefix) {
-						if (namespaceUri.equals(Constants.NAMESPACE_RTC)) {
-							return Constants.NAMESPACE_RTC_ABBREVIATION;
-						} else if (namespaceUri.equals(Constants.NAMESPACE_RTCEXT)) {
-							return Constants.NAMESPACE_RTCEXT_ABBREVIATION;
-						} else if (namespaceUri.equals(Constants.NAMESPACE_RTCDOC)) {
-							return Constants.NAMESPACE_RTCDOC_ABBREVIATION;
-						}
-						return suggestion;
-					}
-				});
 		marshaller.marshal(new JAXBElement(new QName(Constants.NAMESPACE_RTC, "RtcProfile"),
 				RtcProfile.class, profile), writer);
 	}
