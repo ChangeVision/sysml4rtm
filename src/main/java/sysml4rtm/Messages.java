@@ -8,7 +8,7 @@ import com.change_vision.jude.api.inf.ui.IMessageProvider;
 
 public class Messages implements IMessageProvider {
 
-	public static final String DEFAULT_BUNDLE = "com.change_vision.astah.sysml4rtm";
+	public static final String DEFAULT_BUNDLE = "sysml4rtm.messages";
 
 	private static ResourceBundle INTERNAL_MESSAGES = ResourceBundle.getBundle(DEFAULT_BUNDLE,
 			Locale.getDefault(), Messages.class.getClassLoader());

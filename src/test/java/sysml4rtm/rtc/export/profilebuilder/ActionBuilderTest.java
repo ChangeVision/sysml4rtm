@@ -13,7 +13,7 @@ import sysml4rtm.rtc.export.profilebuilder.ActionBuilder;
 public class ActionBuilderTest {
 
 	@Test
-	public void shouldReturnActions_for_DataFlowComponent() {
+	public void データフローコンポーネント種別が生成されること() {
 		ActionBuilder builder = new ActionBuilder();
 		BasicInfo basicinfo = new BasicInfo();
 		basicinfo.setComponentKind(Constants.ComponentKind.DFC.toString());

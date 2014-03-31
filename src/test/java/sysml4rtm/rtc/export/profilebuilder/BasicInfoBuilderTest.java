@@ -23,7 +23,7 @@ import com.change_vision.jude.api.inf.model.IBlock;
 public class BasicInfoBuilderTest {
 
 	@Test
-	public void fixedProperty() {
+	public void 固定プロパティが正しく生成されること() {
 		BasicInfo basicinfo = findTestTarget(this.getClass().getResource("marshal_basic.asml")
 				.getPath(), "Block0");
 		assertThat(basicinfo.getComponentType(), is("STATIC"));
@@ -38,35 +38,35 @@ public class BasicInfoBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_name() {
+	public void basicinfo_nameに_ブロック名が設定されること() {
 		BasicInfo basicinfo = findTestTarget(this.getClass().getResource("marshal_basic.asml")
 				.getPath(), "Block0");
 		assertThat(basicinfo.getName(), is("Block0"));
 	}
 
 	@Test
-	public void shouldExtract_name_with_namespace() throws Exception {
+	public void basicinfo_nameに_名前空間をもつブロックから_名前空間を含むブロック名が設定されること() throws Exception {
 		BasicInfo basicinfo = findTestTarget(this.getClass().getResource("marshal_basic.asml")
 				.getPath(), "com::changevision::sample::Block1");
 		assertThat(basicinfo.getName(), is("com::changevision::sample::Block1"));
 	}
 
 	@Test
-	public void shouldExtract_description() throws Exception {
+	public void basicinfo_descriptionには_ブロックの定義が設定されること() throws Exception {
 		BasicInfo basicinfo = findTestTarget(this.getClass().getResource("marshal_basic.asml")
 				.getPath(), "Block0");
 		assertThat(basicinfo.getDescription(), is("This is description.\nNext line."));
 	}
 
 	@Test
-	public void shouldExtract_descriptionUsingJapanese() throws Exception {
+	public void basicinfo_descriptionに_日本語を含むブロックの定義が設定されること() throws Exception {
 		BasicInfo basicinfo = findTestTarget(
 				this.getClass().getResource("marshal_basic_japanese.asml").getPath(), "Block0");
 		assertThat(basicinfo.getDescription(), is("日本語です。\n次の行です。"));
 	}
 
 	@Test
-	public void shouldExtract_creationDate_and_updateDate() throws Exception {
+	public void creationDateとupdateDateが設定されること() throws Exception {
 		ProjectAccessorFacade.openProject(this.getClass().getResource("marshal_basic.asml")
 				.getPath());
 		IBlock block = ProjectAccessorFacade.findBlock("Block0");

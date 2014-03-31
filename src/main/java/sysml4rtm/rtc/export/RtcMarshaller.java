@@ -69,6 +69,7 @@ public class RtcMarshaller {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void marshal(RtcProfile profile, Writer writer) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(RtcProfile.class);
 		Marshaller marshaller = context.createMarshaller();

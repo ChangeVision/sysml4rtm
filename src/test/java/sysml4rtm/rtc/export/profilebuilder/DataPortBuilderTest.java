@@ -11,14 +11,13 @@ import org.openrtp.namespaces.rtc.Dataport;
 
 import sysml4rtm.ProjectAccessorFacade;
 import sysml4rtm.constants.Constants;
-import sysml4rtm.rtc.export.profilebuilder.DataPortBuilder;
 
 import com.change_vision.jude.api.inf.model.IBlock;
 
 public class DataPortBuilderTest {
 
 	@Test
-	public void shouldExtract_portName() {
+	public void port_nameはポート名から設定されること() {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "Block0");
 
@@ -27,7 +26,7 @@ public class DataPortBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_portDirection_out_by_flowproperty() throws Exception {
+	public void OUT_flowPropertyからポートの方向種別が決定されること() throws Exception {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "Block1");
 
@@ -37,7 +36,7 @@ public class DataPortBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_portDirection_out_by_flowproperties() throws Exception {
+	public void 複数のOUT_flowPropertyからポートの方向種別が決定されること() throws Exception {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "Block1");
 
@@ -47,17 +46,7 @@ public class DataPortBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_portDirection_not_defined_flowproperty() throws Exception {
-		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
-				.getPath(), "Block1");
-
-		Dataport port = findPort(dataports, "NotDefined_FlowProperty");
-		assertNotNull(port);
-		assertThat(port.getPortType(), is(Constants.DataPortType.OUT.toString()));
-	}
-
-	@Test
-	public void shouldExtract_portDirection_in_by_flowproperty() throws Exception {
+	public void IN_flowPropertyからポートの方向種別が決定されること() throws Exception {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "Block1");
 
@@ -67,7 +56,7 @@ public class DataPortBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_portDirection_in_by_flowproperties() throws Exception {
+	public void 複数のIN_flowPropertyからポートの方向種別が決定されること() throws Exception {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "Block1");
 
@@ -77,27 +66,7 @@ public class DataPortBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_portDirection_by_inout_flowproperty() throws Exception {
-		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
-				.getPath(), "Block1");
-
-		Dataport port = findPort(dataports, "InOut");
-		assertNotNull(port);
-		assertThat(port.getPortType(), is(Constants.DataPortType.OUT.toString()));
-	}
-
-	@Test
-	public void shouldExtract_portDirection_by_inout_mixflowproperty() throws Exception {
-		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
-				.getPath(), "Block1");
-
-		Dataport port = findPort(dataports, "InOutMix");
-		assertNotNull(port);
-		assertThat(port.getPortType(), is(Constants.DataPortType.OUT.toString()));
-	}
-
-	@Test
-	public void shouldExtract_portDirection_out_by_itemflow() throws Exception {
+	public void ItemFlowからOUT方向のポートの方向種別が決定されること() throws Exception {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "itemflow::BlockB");
 
@@ -107,7 +76,7 @@ public class DataPortBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_portDirection_in_by_itemflow() throws Exception {
+	public void ItemFlowからIN方向のポートの方向種別が決定されること() throws Exception {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "itemflow::BlockA");
 
@@ -117,7 +86,7 @@ public class DataPortBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_portDirection_out_by_multiple_itemflow() throws Exception {
+	public void 複数のItemFlowからOUT方向のポートの方向種別が決定されること() throws Exception {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "itemflow::BlockB");
 
@@ -127,7 +96,7 @@ public class DataPortBuilderTest {
 	}
 
 	@Test
-	public void shouldExtract_portDirection_in_by_multiple_itemflow() throws Exception {
+	public void 複数のItemFlowからIN方向のポートの方向種別が決定されること() throws Exception {
 		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
 				.getPath(), "itemflow::BlockA");
 
@@ -136,35 +105,6 @@ public class DataPortBuilderTest {
 		assertThat(port.getPortType(), is(Constants.DataPortType.IN.toString()));
 	}
 
-	@Test
-	public void shouldExtract_portDirection_out_by_itemflow_with_portType() throws Exception {
-		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
-				.getPath(), "itemflow::BlockB");
-
-		Dataport port = findPort(dataports, "NothingFlowPropery");
-		assertNotNull(port);
-		assertThat(port.getPortType(), is(Constants.DataPortType.OUT.toString()));
-	}
-
-	@Test
-	public void shouldExtract_portDirection_in_by_itemflow_with_portType() throws Exception {
-		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
-				.getPath(), "itemflow::BlockA");
-
-		Dataport port = findPort(dataports, "NothingFlowPropery");
-		assertNotNull(port);
-		assertThat(port.getPortType(), is(Constants.DataPortType.IN.toString()));
-	}
-
-	@Test
-	public void shouldExtract_portDirection_multiple_bydirectional_itemflow() throws Exception {
-		List<Dataport> dataports = findTestTarget(this.getClass().getResource("port.asml")
-				.getPath(), "itemflow::BlockC");
-
-		Dataport port = findPort(dataports, "unknown");
-		assertNotNull(port);
-		assertThat(port.getPortType(), is(Constants.DataPortType.OUT.toString()));
-	}
 
 	private Dataport findPort(List<Dataport> ports, String portName) {
 		for (Dataport port : ports) {

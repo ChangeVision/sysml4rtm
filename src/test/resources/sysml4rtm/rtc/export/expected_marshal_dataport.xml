@@ -16,6 +16,6 @@ Escape char &lt;&quot;hoge&quot;&gt;&lt;&apos;&amp;foo&apos;&gt;"
         <rtc:OnInitialize rtc:implemented="true" />
         <rtc:OnExecute rtc:implemented="true" />
     </rtc:Actions>
-    <rtc:DataPorts rtc:type="RTC::TimedLong" rtc:name="Out1" rtc:portType="DataOutPort" />
-    <rtc:DataPorts rtc:type="RTC::TimedLong" rtc:name="In1" rtc:portType="DataInPort" />
+    <rtc:DataPorts rtc:type="double" rtc:name="out_a" rtc:portType="DataOutPort" />
+    <rtc:DataPorts rtc:type="RTC::TimedDouble" rtc:name="in_a" rtc:portType="DataInPort" />
 </rtc:RtcProfile>
