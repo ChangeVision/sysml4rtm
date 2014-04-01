@@ -16,7 +16,7 @@ public class ConnectorMustAttachPortRule extends DefaultValidationRule {
 
 	@Override
 	public boolean isTargetModel(INamedElement target) {
-		return ModelUtils.isPart(target);
+		return ModelUtils.isBlock(target);
 	}
 
 	@Override

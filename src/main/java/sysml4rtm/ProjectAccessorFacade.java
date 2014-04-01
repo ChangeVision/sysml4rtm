@@ -1,7 +1,5 @@
 package sysml4rtm;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import sysml4rtm.constants.Constants;
 import sysml4rtm.exception.ApplicationException;
 import sysml4rtm.exception.AstahApiException;
@@ -79,7 +77,7 @@ public class ProjectAccessorFacade {
 				public boolean isTarget(INamedElement element) {
 					if (!(element instanceof IBlock))
 						return false;
-					return ArrayUtils.contains(element.getStereotypes(), Constants.STEREOTYPE_RTC);
+					return element.hasStereotype(Constants.STEREOTYPE_RTC);
 				}
 			});
 		} catch (Exception e) {

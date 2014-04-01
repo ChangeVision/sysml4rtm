@@ -23,7 +23,7 @@ import org.jdesktop.swingx.error.ErrorInfo;
 import sysml4rtm.Activator;
 import sysml4rtm.Messages;
 import sysml4rtm.ProjectAccessorFacade;
-import sysml4rtm.exception.ApplicationException;
+import sysml4rtm.exception.ValidationException;
 import sysml4rtm.rtc.export.RtcMarshaller;
 import sysml4rtm.utils.ConfigUtil;
 
@@ -157,16 +157,24 @@ public class ComponentSelectionDialog extends JDialog {
 
 			openGeneratedFolderAutomatically();
 
-		} catch  (ApplicationException ex){
-			String showErrorMessage = ex.getMessage();
-			String errorDetailMessage = ex.getMessage();
-			errorDetailMessage = showErrorMessage.replaceAll("\n", "<br />") + "<br /><br />" + errorDetailMessage;
+		} catch (ValidationException ve) {
+			String errorDetailMessage = ve.getMessage().replaceAll(SystemUtils.LINE_SEPARATOR, "<br />");
 			ErrorInfo errInfo = new ErrorInfo(
-			        "Alert",
-			        showErrorMessage,
+			        "Warning",
+			        Messages.getMessage("validationerror.occur"),
 			        errorDetailMessage,
 			        null,
 			        null,
+			        org.jdesktop.swingx.error.ErrorLevel.WARNING,
+			        null);
+			JXErrorPane.showDialog(ComponentSelectionDialog.this, errInfo);
+		} catch (Exception ex) {
+			ErrorInfo errInfo = new ErrorInfo(
+			        "Alert",
+			        Messages.getMessage("unexpectedexception.occur"),
+			        null,
+			        null,
+			        ex,
 			        org.jdesktop.swingx.error.ErrorLevel.WARNING,
 			        null);
 			JXErrorPane.showDialog(ComponentSelectionDialog.this, errInfo);

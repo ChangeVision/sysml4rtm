@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -18,13 +19,15 @@ import org.openrtp.namespaces.rtc.RtcProfile;
 import sysml4rtm.ProjectAccessorFacade;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.exception.ApplicationException;
+import sysml4rtm.exception.ValidationException;
 import sysml4rtm.rtc.export.profilebuilder.BasicInfoBuilder;
 import sysml4rtm.rtc.export.profilebuilder.RtcProfileBuilder;
+import sysml4rtm.validation.ModelValidator;
+import sysml4rtm.validation.ValidationError;
 
 import com.change_vision.jude.api.inf.model.IBlock;
 import com.change_vision.jude.api.inf.model.INamedElement;
 
-@SuppressWarnings("restriction")
 public class RtcMarshaller {
 
 	private RtcProfileBuilder profileBuilder = null;
@@ -49,6 +52,7 @@ public class RtcMarshaller {
 	}
 	
 	public void marshal(INamedElement[] targets , String pathToOutput){
+		validate();
 		for (INamedElement block : targets) {
 			marshalAsFile(pathToOutput, block);
 		}
@@ -76,6 +80,14 @@ public class RtcMarshaller {
 			throw new ApplicationException(e);
 		} finally {
 			IOUtils.closeQuietly(writer);
+		}
+	}
+	
+	private void validate() {
+		ModelValidator validator = new ModelValidator();
+		List<ValidationError> errors = validator.validate();
+		if(errors != null && errors.size() > 0){
+			throw new ValidationException(errors);
 		}
 	}
 

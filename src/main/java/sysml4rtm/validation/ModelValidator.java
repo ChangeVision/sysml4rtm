@@ -32,11 +32,6 @@ public class ModelValidator {
     private List<INamedElement> getTargetModels() {
         List<INamedElement> targetModels = new ArrayList<INamedElement>();
 
-//        //add target internal block diagram
-//        targetModels.add(generator.getTargetDiagram());
-//        
-//        //add target elements(block or part) in ibd.
-//        targetModels.addAll(generator.getGeneratedTargetElements());
         
         return targetModels;
     }

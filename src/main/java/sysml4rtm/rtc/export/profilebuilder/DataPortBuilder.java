@@ -50,13 +50,14 @@ public class DataPortBuilder {
 		if (portType == null) {
 			IItemFlow[] itemFlows = port.getItemFlows();
 			if (itemFlows == null || itemFlows.length == 0)
-				return DEFAULT_PORT_DIRECTION;
+				throw new IllegalStateException("must validate");
 
 			return getPortDirectionTypeWithItemFlow(port);
 		}
 
-		if (!(portType instanceof IBlock))
-			return DEFAULT_PORT_DIRECTION;
+		if (!(portType instanceof IBlock)){
+			throw new IllegalStateException("must validate");
+		}
 
 		IBlock value = (IBlock) portType;
 		if (value.getFlowProperties().length == 0) {

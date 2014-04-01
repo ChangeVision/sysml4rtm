@@ -3,6 +3,13 @@ package sysml4rtm.validation;
 import java.util.ArrayList;
 import java.util.List;
 
+import sysml4rtm.validation.rules.ConnectorMustAttachPortRule;
+import sysml4rtm.validation.rules.DefineDirectionRule;
+import sysml4rtm.validation.rules.NotExistInOutFlowPropertyRule;
+import sysml4rtm.validation.rules.NotExistInOutItemFlowPropertyRule;
+import sysml4rtm.validation.rules.NotExistInconsitencyItemFlowAndFlowPropertyRelationRule;
+import sysml4rtm.validation.rules.PartMustHaveTypeRule;
+
 public class ValidationRuleManager {
 
     private static ValidationRuleManager instance = null;
@@ -20,17 +27,12 @@ public class ValidationRuleManager {
     }
 
     private void setValidationRule() {
-//    	rules.add(new BlockPortMustHaveFlowPropertyRule(generator));
-//    	rules.add(new ConnectorMustAttachPortRule(generator));
-//    	rules.add(new DefineDirectionRule(generator));
-//    	rules.add(new NotExistDuplicatePartNameRule(generator));
-//    	rules.add(new NotExistInconsitencyItemFlowAndFlowPropertyRelationRule(generator));
-//    	rules.add(new NotExistInOutFlowPropertyRule(generator));
-//    	rules.add(new NotExistInvalidLevelRelationForBlockRule(generator));
-//    	rules.add(new NotExistInvalidLevelRelationForPartRule(generator));
-//    	rules.add(new PartMustHaveTypeRule(generator));
-//        rules.add(new PortMustHaveSingleConnectorRule(generator));
-//        rules.add(new SimulinkValidIbdDiagramNameRule(generator));
+    	rules.add(new ConnectorMustAttachPortRule());
+    	rules.add(new DefineDirectionRule());
+    	rules.add(new NotExistInconsitencyItemFlowAndFlowPropertyRelationRule());
+    	rules.add(new NotExistInOutFlowPropertyRule());
+    	rules.add(new NotExistInOutItemFlowPropertyRule());
+    	rules.add(new PartMustHaveTypeRule());
     }
 
     public List<ValidationRule> getValidationRule() {
