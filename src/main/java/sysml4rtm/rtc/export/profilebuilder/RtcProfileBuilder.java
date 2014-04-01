@@ -3,7 +3,7 @@ package sysml4rtm.rtc.export.profilebuilder;
 import org.openrtp.namespaces.rtc.BasicInfo;
 import org.openrtp.namespaces.rtc.RtcProfile;
 
-import com.change_vision.jude.api.inf.model.IBlock;
+import com.change_vision.jude.api.inf.model.IAttribute;
 
 public class RtcProfileBuilder {
 
@@ -19,15 +19,15 @@ public class RtcProfileBuilder {
 		this.basicInfoBuilder = builder;
 	}
 
-	public RtcProfile createRtcProfile(IBlock block) {
-		BasicInfo basicinfo = basicInfoBuilder.build(block);
+	public RtcProfile createRtcProfile(IAttribute part) {
+		BasicInfo basicinfo = basicInfoBuilder.build(part);
 		profile.setBasicInfo(basicinfo);
 
 		ActionBuilder actionBuilder = new ActionBuilder();
 		profile.setActions(actionBuilder.build(basicinfo));
 
 		DataPortBuilder dataportBuilder = new DataPortBuilder();
-		profile.getDataPorts().addAll(dataportBuilder.build(block));
+		profile.getDataPorts().addAll(dataportBuilder.build(part));
 
 		buildBase(basicinfo);
 		return profile;

@@ -4,6 +4,10 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2014.03.31 at 03:47:14 午後 JST 
 //
-
-@javax.xml.bind.annotation.XmlSchema(namespace = "rtcExt", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema (
+    xmlns = { 
+        @javax.xml.bind.annotation.XmlNs(prefix = "rtcExt", 
+        namespaceURI="http://www.openrtp.org/namespaces/rtc_ext")
+    }
+)
 package org.openrtp.namespaces.rtc_ext;

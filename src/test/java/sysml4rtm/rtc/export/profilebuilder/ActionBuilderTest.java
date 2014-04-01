@@ -8,7 +8,6 @@ import org.openrtp.namespaces.rtc.Actions;
 import org.openrtp.namespaces.rtc.BasicInfo;
 
 import sysml4rtm.constants.Constants;
-import sysml4rtm.rtc.export.profilebuilder.ActionBuilder;
 
 public class ActionBuilderTest {
 

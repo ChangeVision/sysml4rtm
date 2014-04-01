@@ -14,7 +14,7 @@ import com.change_vision.jude.api.inf.project.ModelFinder;
 
 public class AstahModelFinder {
 
-	public static IAttribute findPart(final String target) throws Exception {
+	public static IAttribute findPart(final String partNameAndTypeFullName) throws Exception {
 		INamedElement[] elements = AstahAPI.getAstahAPI().getProjectAccessor()
 				.findElements(new ModelFinder() {
 
@@ -32,7 +32,7 @@ public class AstahModelFinder {
 								typeName = attr.getType().getFullName("::");
 							}
 							String expression = attr.getName() + ":" + typeName;
-							if (expression.equals(target))
+							if (expression.equals(partNameAndTypeFullName))
 								return true;
 						}
 						return false;
@@ -40,7 +40,7 @@ public class AstahModelFinder {
 				});
 
 		if (elements.length == 0)
-			throw new AssertionFailedError(String.format("missing %s", target));
+			throw new AssertionFailedError(String.format("missing %s", partNameAndTypeFullName));
 
 		return (IAttribute) elements[0];
 	}
@@ -62,9 +62,18 @@ public class AstahModelFinder {
 		AstahAPI.getAstahAPI().getProjectAccessor().open(stream);
 	}
 
-	public static IBlock findBlock(String target) throws Exception {
+	public static IBlock findBlock(final String target) throws Exception {
 		INamedElement[] elements = AstahAPI.getAstahAPI().getProjectAccessor()
-				.findElements(IBlock.class, target);
+				.findElements(new ModelFinder() {
+
+					@Override
+					public boolean isTarget(INamedElement element) {
+						if (element instanceof IBlock) {
+							return element.getFullName("::").equals(target);
+						}
+						return false;
+					}
+				});
 
 		if (elements.length == 0)
 			throw new AssertionFailedError(String.format("missing %s", target));

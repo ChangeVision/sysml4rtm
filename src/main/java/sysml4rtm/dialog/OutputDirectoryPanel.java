@@ -11,8 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -22,6 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.jdesktop.swingx.JXErrorPane;
+import org.jdesktop.swingx.error.ErrorInfo;
+
 import sysml4rtm.Messages;
 import sysml4rtm.utils.ConfigUtil;
 
@@ -30,7 +31,7 @@ public class OutputDirectoryPanel extends JPanel {
 	static final String NAME = "output_directory_panel";
 	private OutputDirectoryText outputDirectoryText;
 	private AutoOpenBtn autoOpenBtn;
-	
+
 	public OutputDirectoryPanel() {
 		setName(NAME);
 		setLayout(new GridBagLayout());
@@ -46,7 +47,6 @@ public class OutputDirectoryPanel extends JPanel {
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.insets = new Insets(2, 10, 0, 10);
-		add(new Number1Icon(), gbc);
 		gbc.gridx = 1;
 		gbc.gridwidth = 3;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -67,24 +67,13 @@ public class OutputDirectoryPanel extends JPanel {
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.gridx = 3;
 		add(new ReferenceButton(), gbc);
-		
+
 		gbc.gridy = 3;
 		gbc.gridx = 1;
 		gbc.gridwidth = 3;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(autoOpenBtn = new AutoOpenBtn(), gbc);
-    }
 
-	class Number1Icon extends JLabel {
-		private static final String ICON_PNG = "ico1.png";
-		private static final long serialVersionUID = 5133031462398236549L;
-		static final String NAME = "number_1";
-
-		public Number1Icon() {
-			Icon icon = new ImageIcon(ImageLoader.getImage(OutputDirectoryPanel.class, ICON_PNG));
-			setIcon(icon);
-			setName(NAME);
-		}
 	}
 
 	class ExtractLabel extends JLabel {
@@ -136,7 +125,8 @@ public class OutputDirectoryPanel extends JPanel {
 					JFileChooser chooser = new JFileChooser();
 					chooser.setDialogTitle(Messages.getMessage("explain_output_directory"));
 					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					chooser.setCurrentDirectory(new File(ConfigUtil.getDefaultCodeOutputDirectoryPath()));
+					chooser.setCurrentDirectory(new File(ConfigUtil
+							.getDefaultCodeOutputDirectoryPath()));
 					int option = chooser.showOpenDialog(OutputDirectoryPanel.this);
 					if (JFileChooser.APPROVE_OPTION == option) {
 						File file = chooser.getSelectedFile();
@@ -148,10 +138,10 @@ public class OutputDirectoryPanel extends JPanel {
 	}
 
 	class AutoOpenBtn extends JCheckBox {
-		
-		private static final long serialVersionUID = 8271948686976249443L;
-		static final String NAME = "auto_open_codegeneration";
-		
+
+		private static final long serialVersionUID = 2343757561722416100L;
+		static final String NAME = "auto_open";
+
 		public AutoOpenBtn() {
 			setText(Messages.getMessage(NAME));
 			setName(NAME);
@@ -164,8 +154,9 @@ public class OutputDirectoryPanel extends JPanel {
 				}
 			});
 		}
+		
 	}
-	
+
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("OutputDirectoryPanelTest");
 		JDialog dialog = new JDialog(frame);
@@ -174,14 +165,29 @@ public class OutputDirectoryPanel extends JPanel {
 		frame.setSize(400, 300);
 		dialog.pack();
 		dialog.setVisible(true);
+		
+		String errorDetailMessage = "test\ntest2".replaceAll("\n", "<br />");
+		ErrorInfo errInfo = new ErrorInfo(
+		        "Warning",
+		        Messages.getMessage("validationerror.occur"),
+		        errorDetailMessage,
+		        null,
+		        null,
+		        org.jdesktop.swingx.error.ErrorLevel.WARNING,
+		        null);
+		JXErrorPane.showDialog(frame, errInfo);
 	}
 
 	public String getOutputPath() {
 		return outputDirectoryText.getText();
 	}
 
+	OutputDirectoryText getOutputDirectoryText() {
+		return outputDirectoryText;
+	}
+
 	public boolean getAutoOpenBtn() {
 		return autoOpenBtn.isSelected();
 	}
-	
+
 }

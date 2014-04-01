@@ -15,17 +15,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.junit.Test;
 import org.openrtp.namespaces.rtc.BasicInfo;
 
-import sysml4rtm.ProjectAccessorFacade;
-import sysml4rtm.rtc.export.profilebuilder.BasicInfoBuilder;
+import sysml4rtm.AstahModelFinder;
 
-import com.change_vision.jude.api.inf.model.IBlock;
+import com.change_vision.jude.api.inf.model.IAttribute;
 
 public class BasicInfoBuilderTest {
 
 	@Test
-	public void 固定プロパティが正しく生成されること() {
-		BasicInfo basicinfo = findTestTarget(this.getClass().getResource("marshal_basic.asml")
-				.getPath(), "Block0");
+	public void 固定プロパティが正しく生成されること() throws Exception{
+		BasicInfo basicinfo = findTestTarget("marshal_basic.asml", ":Block0");
 		assertThat(basicinfo.getComponentType(), is("STATIC"));
 		assertThat(basicinfo.getActivityType(), is("PERIODIC"));
 		assertThat(basicinfo.getComponentKind(), is("DataFlowComponent"));
@@ -38,38 +36,33 @@ public class BasicInfoBuilderTest {
 	}
 
 	@Test
-	public void basicinfo_nameに_ブロック名が設定されること() {
-		BasicInfo basicinfo = findTestTarget(this.getClass().getResource("marshal_basic.asml")
-				.getPath(), "Block0");
+	public void basicinfo_nameに_ブロック名が設定されること() throws Exception{
+		BasicInfo basicinfo = findTestTarget("marshal_basic.asml", ":Block0");
 		assertThat(basicinfo.getName(), is("Block0"));
 	}
 
 	@Test
 	public void basicinfo_nameに_名前空間をもつブロックから_名前空間を含むブロック名が設定されること() throws Exception {
-		BasicInfo basicinfo = findTestTarget(this.getClass().getResource("marshal_basic.asml")
-				.getPath(), "com::changevision::sample::Block1");
+		BasicInfo basicinfo = findTestTarget("marshal_basic.asml", "part0:com::changevision::sample::Block1");
 		assertThat(basicinfo.getName(), is("com::changevision::sample::Block1"));
 	}
 
 	@Test
 	public void basicinfo_descriptionには_ブロックの定義が設定されること() throws Exception {
-		BasicInfo basicinfo = findTestTarget(this.getClass().getResource("marshal_basic.asml")
-				.getPath(), "Block0");
+		BasicInfo basicinfo = findTestTarget("marshal_basic.asml", ":Block0");
 		assertThat(basicinfo.getDescription(), is("This is description.\nNext line."));
 	}
 
 	@Test
 	public void basicinfo_descriptionに_日本語を含むブロックの定義が設定されること() throws Exception {
-		BasicInfo basicinfo = findTestTarget(
-				this.getClass().getResource("marshal_basic_japanese.asml").getPath(), "Block0");
+		BasicInfo basicinfo = findTestTarget("marshal_basic_japanese.asml", ":Block0");
 		assertThat(basicinfo.getDescription(), is("日本語です。\n次の行です。"));
 	}
 
 	@Test
 	public void creationDateとupdateDateが設定されること() throws Exception {
-		ProjectAccessorFacade.openProject(this.getClass().getResource("marshal_basic.asml")
-				.getPath());
-		IBlock block = ProjectAccessorFacade.findBlock("Block0");
+		AstahModelFinder.open(this.getClass().getResourceAsStream("marshal_basic.asml"));
+		IAttribute part = AstahModelFinder.findPart(":Block0");
 
 		final Date now = new Date();
 		BasicInfoBuilder builder = new BasicInfoBuilder() {
@@ -78,7 +71,7 @@ public class BasicInfoBuilderTest {
 				return now;
 			}
 		};
-		BasicInfo basicinfo = builder.build(block);
+		BasicInfo basicinfo = builder.build(part);
 		XMLGregorianCalendar cal = createCalender(now);
 
 		assertThat(basicinfo.getCreationDate(), is(cal));
@@ -98,12 +91,12 @@ public class BasicInfoBuilderTest {
 		return cal;
 	}
 
-	private BasicInfo findTestTarget(String pathToModelFile, String blockFullName) {
-		ProjectAccessorFacade.openProject(pathToModelFile);
-		IBlock block = ProjectAccessorFacade.findBlock(blockFullName);
+	private BasicInfo findTestTarget(String pathToModelFile, String partFullName) throws Exception{
+		AstahModelFinder.open(this.getClass().getResourceAsStream(pathToModelFile));
+		IAttribute part = AstahModelFinder.findPart(partFullName);
 
 		BasicInfoBuilder builder = new BasicInfoBuilder();
-		BasicInfo basicinfo = builder.build(block);
+		BasicInfo basicinfo = builder.build(part);
 		return basicinfo;
 	}
 

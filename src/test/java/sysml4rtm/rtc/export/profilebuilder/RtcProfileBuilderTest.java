@@ -6,41 +6,37 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.openrtp.namespaces.rtc.RtcProfile;
 
-import sysml4rtm.ProjectAccessorFacade;
-import sysml4rtm.rtc.export.profilebuilder.RtcProfileBuilder;
+import sysml4rtm.AstahModelFinder;
 
-import com.change_vision.jude.api.inf.model.IBlock;
+import com.change_vision.jude.api.inf.model.IAttribute;
 
 public class RtcProfileBuilderTest {
 
 	@Test
-	public void shouldExtract_version() {
-		RtcProfile profile = findTestTarget(this.getClass().getResource("marshal_basic.asml")
-				.getPath(), "Block0");
+	public void shouldExtract_version()  throws Exception{
+		RtcProfile profile = findTestTarget("marshal_basic.asml", ":Block0");
 		assertThat(profile.getVersion(), is("0.2"));
 	}
 
 	@Test
-	public void shouldExtrace_id() {
-		RtcProfile profile = findTestTarget(this.getClass().getResource("marshal_basic.asml")
-				.getPath(), "Block0");
+	public void shouldExtrace_id()  throws Exception{
+		RtcProfile profile = findTestTarget("marshal_basic.asml", ":Block0");
 		assertThat(profile.getId(), is("RTC:Vendor:Category:Block0:1.0.0"));
 	}
 
 	@Test
-	public void shouldExtrace_id_with_namespace() {
-		RtcProfile profile = findTestTarget(this.getClass().getResource("marshal_basic.asml")
-				.getPath(), "com::changevision::sample::Block1");
+	public void shouldExtrace_id_with_namespace() throws Exception {
+		RtcProfile profile = findTestTarget("marshal_basic.asml", ":com::changevision::sample::Block1");
 		assertThat(profile.getId(),
 				is("RTC:Vendor:Category:com::changevision::sample::Block1:1.0.0"));
 	}
 
-	private RtcProfile findTestTarget(String pathToModelFile, String blockFullName) {
-		ProjectAccessorFacade.openProject(pathToModelFile);
-		IBlock block = ProjectAccessorFacade.findBlock(blockFullName);
+	private RtcProfile findTestTarget(String pathToModelFile, String partFullname) throws Exception{
+		AstahModelFinder.open(this.getClass().getResourceAsStream(pathToModelFile));
+		IAttribute part = AstahModelFinder.findPart(partFullname);
 
 		RtcProfileBuilder builder = new RtcProfileBuilder();
-		RtcProfile basicinfo = builder.createRtcProfile(block);
+		RtcProfile basicinfo = builder.createRtcProfile(part);
 		return basicinfo;
 	}
 }

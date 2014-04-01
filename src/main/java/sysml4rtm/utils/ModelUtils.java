@@ -7,10 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.constants.Constants.DataPortType;
 
+import com.change_vision.jude.api.inf.AstahAPI;
+import com.change_vision.jude.api.inf.exception.InvalidUsingException;
 import com.change_vision.jude.api.inf.model.IAssociation;
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IBlock;
 import com.change_vision.jude.api.inf.model.IConnector;
+import com.change_vision.jude.api.inf.model.IDiagram;
 import com.change_vision.jude.api.inf.model.IElement;
 import com.change_vision.jude.api.inf.model.IFlowProperty;
 import com.change_vision.jude.api.inf.model.IItemFlow;
@@ -83,7 +86,7 @@ public class ModelUtils {
 	
 	public static DataPortType getDirection(IFlowProperty[] flowProperties) {
 		if (flowProperties == null || flowProperties.length == 0)
-			throw new IllegalArgumentException();
+			return DataPortType.UNKNOWN;
 
 		HashSet<DataPortType> directions = new HashSet<DataPortType>();
 		for (IFlowProperty flow : flowProperties) {
@@ -117,6 +120,9 @@ public class ModelUtils {
 	}
 	
 	public static DataPortType getDirection(IAttribute me, IItemFlow[] itemflows)	{
+		if(itemflows == null || itemflows.length == 0)
+			return DataPortType.UNKNOWN;
+		
 		HashSet<DataPortType> directions = new HashSet<DataPortType>();
 		for(IItemFlow itemflow : itemflows){
 			directions.add(getDirection(me, itemflow));
@@ -149,4 +155,8 @@ public class ModelUtils {
 		return null;
 	}
 	
+	public static IDiagram getCurrentDiagram() throws InvalidUsingException, ClassNotFoundException {
+		return AstahAPI.getAstahAPI().getProjectAccessor().getViewManager().getDiagramViewManager()
+				.getCurrentDiagram();
+	}
 }

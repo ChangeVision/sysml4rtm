@@ -5,6 +5,11 @@
 // Generated on: 2014.03.31 at 03:47:14 午後 JST 
 //
 
-// modify namespace http://www.openrtp.org/namespaces/rtc -> rtc
-@javax.xml.bind.annotation.XmlSchema(namespace = "rtc", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema (
+    xmlns = { 
+        @javax.xml.bind.annotation.XmlNs(prefix = "rtc", 
+        namespaceURI="http://www.openrtp.org/namespaces/rtc")
+    }
+)
 package org.openrtp.namespaces.rtc;
+

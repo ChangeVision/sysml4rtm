@@ -16,17 +16,20 @@ import javax.xml.namespace.QName;
 import org.apache.commons.io.IOUtils;
 import org.openrtp.namespaces.rtc.RtcProfile;
 
-import sysml4rtm.ProjectAccessorFacade;
+import sysml4rtm.Messages;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.exception.ApplicationException;
+import sysml4rtm.exception.UnSupportDiagramException;
 import sysml4rtm.exception.ValidationException;
+import sysml4rtm.finder.InternalBlockDiagramExportedTargetFinder;
 import sysml4rtm.rtc.export.profilebuilder.BasicInfoBuilder;
 import sysml4rtm.rtc.export.profilebuilder.RtcProfileBuilder;
 import sysml4rtm.validation.ModelValidator;
 import sysml4rtm.validation.ValidationError;
 
-import com.change_vision.jude.api.inf.model.IBlock;
-import com.change_vision.jude.api.inf.model.INamedElement;
+import com.change_vision.jude.api.inf.model.IAttribute;
+import com.change_vision.jude.api.inf.model.IDiagram;
+import com.change_vision.jude.api.inf.model.IInternalBlockDiagram;
 
 public class RtcMarshaller {
 
@@ -41,35 +44,40 @@ public class RtcMarshaller {
 		profileBuilder.setBasicInfoBuilder(basicInfoBuilder);
 	}
 
-	private static File buildOutputFileName(String pathToOutput, INamedElement block) {
-		return new File(pathToOutput, block.getFullName("_") + ".xml");
+	private static File buildOutputFileName(String pathToOutput, IAttribute part) {
+		return new File(pathToOutput, part.getType().getFullName("_") + ".xml");
 	}
 
-	public void marshal(String pathToOutput) {
-		INamedElement[] blocks = ProjectAccessorFacade.findBlocksWithRTCStereotype();
-
-		marshal(blocks,pathToOutput);
-	}
-	
-	public void marshal(INamedElement[] targets , String pathToOutput){
+	public void marshal(IDiagram currentDiagram, String pathToOutputFolder) {
+		checkSupportDiagram(currentDiagram);
 		validate();
-		for (INamedElement block : targets) {
-			marshalAsFile(pathToOutput, block);
+		List<IAttribute> parts = getGeneratedTargetElements(currentDiagram);
+
+		for (IAttribute part : parts) {
+			marshalAsFile(pathToOutputFolder, part);
 		}
 	}
-	
-	public void marshal(String pathToModelFile, String pathToOutput) {
-		ProjectAccessorFacade.openProject(pathToModelFile);
-		marshal(pathToOutput);
+
+	private List<IAttribute> getGeneratedTargetElements(IDiagram diagram) {
+		List<IAttribute> elements = new InternalBlockDiagramExportedTargetFinder()
+				.find((IInternalBlockDiagram) diagram);
+		return elements;
 	}
 
-	private void marshalAsFile(String pathToOutput, INamedElement block) {
-		RtcProfile contents = profileBuilder.createRtcProfile((IBlock) block);
+	private void checkSupportDiagram(IDiagram diagram) {
+		if (!(diagram instanceof IInternalBlockDiagram)) {
+			throw new UnSupportDiagramException(Messages
+					.getMessage("error.notsupport_diagram"));
+		}
+	}
+
+	private void marshalAsFile(String pathToOutput, IAttribute part) {
+		RtcProfile contents = profileBuilder.createRtcProfile(part);
 
 		BufferedWriter writer = null;
 		try {
 			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-					buildOutputFileName(pathToOutput, block)), Constants.ENCODING));
+					buildOutputFileName(pathToOutput, part)), Constants.ENCODING));
 
 			marshal(contents, writer);
 
@@ -82,11 +90,11 @@ public class RtcMarshaller {
 			IOUtils.closeQuietly(writer);
 		}
 	}
-	
+
 	private void validate() {
 		ModelValidator validator = new ModelValidator();
 		List<ValidationError> errors = validator.validate();
-		if(errors != null && errors.size() > 0){
+		if (errors != null && errors.size() > 0) {
 			throw new ValidationException(errors);
 		}
 	}

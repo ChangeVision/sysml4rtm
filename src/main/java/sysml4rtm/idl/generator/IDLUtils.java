@@ -100,7 +100,7 @@ public class IDLUtils {
 	public static String getElementTypeFullName(IClass type, String typeModifier, IClass clazz,
 			String targetName) {
 		return isIDLSequenceType(type.getName()) ? IDLUtils.getElementTypeOfSequence(typeModifier,
-				clazz, targetName) : type.getFullName("::");
+				clazz, targetName) : type.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 	}
 
 	public static String getElementTypeOfSequence(String typeModifier, IClass clazz,
@@ -109,7 +109,7 @@ public class IDLUtils {
 		Matcher matcher = sequencePattern.matcher(modifier);
 		if (!matcher.matches()) {
 			String message = Messages.getMessage("error.sequence.serviceinterface",
-					clazz.getFullName("::"), targetName, modifier);
+					clazz.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR), targetName, modifier);
 			throw new ApplicationException(message);
 		}
 
@@ -117,8 +117,8 @@ public class IDLUtils {
 	}
 
 	public static String extractTypeName(String fullName) {
-		if (StringUtils.contains(fullName, "::")) {
-			return StringUtils.substringAfterLast(fullName, "::");
+		if (StringUtils.contains(fullName, Constants.MODEL_NAMESPACE_SEPARATOR)) {
+			return StringUtils.substringAfterLast(fullName, Constants.MODEL_NAMESPACE_SEPARATOR);
 		}
 		return fullName;
 
@@ -129,7 +129,7 @@ public class IDLUtils {
 		if (!StringUtils.isEmpty(name)) {
 			return name;
 		}
-		String typeName = attribute.getType().getFullName("::");
+		String typeName = attribute.getType().getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 		name = StringUtils.uncapitalize(extractTypeName(typeName));
 		/*
 		 * 自クラスへの再帰でメンバ名を自動生成する場合、名前の衝突を避けるため、メンバ名の最後に"_"を付ける struct Class0{
@@ -164,7 +164,7 @@ public class IDLUtils {
 			String elementTypeName = getElementTypeFullName(attributeClass,
 					attribute.getTypeModifier(), clazz, attribute.getName());
 			return isCustomType(elementTypeName)
-					&& !StringUtils.equals(elementTypeName, clazz.getFullName("::"));
+					&& !StringUtils.equals(elementTypeName, clazz.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR));
 		}
 		return false;
 	}

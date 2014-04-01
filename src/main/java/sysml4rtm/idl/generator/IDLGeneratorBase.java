@@ -16,6 +16,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 import sysml4rtm.Messages;
 import sysml4rtm.ProjectAccessorFacade;
+import sysml4rtm.constants.Constants;
 import sysml4rtm.exception.ApplicationException;
 import sysml4rtm.utils.ModelUtils;
 
@@ -151,7 +152,7 @@ public abstract class IDLGeneratorBase {
 					if (!IDLUtils.isNavigable(memberEnd.getNavigability())) {
 						continue;
 					}
-					String type = memberEnd.getType().getFullName("::");
+					String type = memberEnd.getType().getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 					if (IDLUtils.isMultiple(memberEnd.getMultiplicity()[0])
 							&& !typedefs.containsKey(type)) {
 						String seqType = IDLUtils.extractTypeName(type) + "Seq";
@@ -183,7 +184,7 @@ public abstract class IDLGeneratorBase {
 		String type = IDLUtils.getElementTypeOfSequence(typeModifier, clazz, targetName);
 		if (!isPreDefineType(type)) {
 			String message = Messages.getMessage("error.sequence.serviceinterface",
-					clazz.getFullName("::"), targetName, typeModifier);
+					clazz.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR), targetName, typeModifier);
 			throw new ApplicationException(message);
 		}
 
@@ -236,7 +237,7 @@ public abstract class IDLGeneratorBase {
 	}
 
 	public String getAttributeType(IAttribute attribute) {
-		String typeName = attribute.getType().getFullName("::");
+		String typeName = attribute.getType().getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 		if (IDLUtils.isSysMLBuiltinType(typeName)) {
 			return convertSysmlToIdlType(typeName);
 		}else if (IDLUtils.isIDLPrimitiveType(typeName)){
@@ -245,8 +246,8 @@ public abstract class IDLGeneratorBase {
 			return getSequenceTypeDefType(attribute);
 		} else {
 			StringBuilder builder = new StringBuilder();
-			if (IDLUtils.isCustomType(typeName) && !StringUtils.contains(typeName, "::")) {
-				builder.append("::");
+			if (IDLUtils.isCustomType(typeName) && !StringUtils.contains(typeName, Constants.MODEL_NAMESPACE_SEPARATOR)) {
+				builder.append(Constants.MODEL_NAMESPACE_SEPARATOR);
 			}
 			builder.append(typeName);
 			builder.append(attribute.getTypeModifier());
@@ -266,13 +267,13 @@ public abstract class IDLGeneratorBase {
 	}
 
 	private String getMemberEndType(IAttribute memberEnd) {
-		String typeName = memberEnd.getType().getFullName("::");
+		String typeName = memberEnd.getType().getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 		if (IDLUtils.isMultiple(memberEnd.getMultiplicity()[0])) {
 			return IDLUtils.extractTypeName(typeName) + "Seq";
 		} else {
 			StringBuilder builder = new StringBuilder();
-			if (IDLUtils.isCustomType(typeName) && !StringUtils.contains(typeName, "::")) {
-				builder.append("::");
+			if (IDLUtils.isCustomType(typeName) && !StringUtils.contains(typeName, Constants.MODEL_NAMESPACE_SEPARATOR)) {
+				builder.append(Constants.MODEL_NAMESPACE_SEPARATOR);
 			}
 			builder.append(typeName);
 			builder.append(memberEnd.getTypeModifier());
@@ -310,12 +311,12 @@ public abstract class IDLGeneratorBase {
 	protected Set<String> getIncludedIDLs(IClass clazz) {
 		Set<String> idls = new TreeSet<String>();
 
-		String typeName = clazz.getFullName("::");
+		String typeName = clazz.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 		for (IAttribute attribute : clazz.getAttributes()) {
 			IAssociation association = attribute.getAssociation();
 			if (association == null) {
 				IClass attributeClass = attribute.getType();
-				String attributeTypeName = attributeClass.getFullName("::");
+				String attributeTypeName = attributeClass.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 				IClass type = (IClass) ProjectAccessorFacade.findElement(attributeTypeName);
 				if (IDLUtils.isCustomType(attributeTypeName)
 						&& !StringUtils.equals(typeName, attributeTypeName) && type != null) {
@@ -342,7 +343,7 @@ public abstract class IDLGeneratorBase {
 						continue;
 					}
 					IClass memberEndClass = memberEnd.getType();
-					String memberEndTypeName = memberEndClass.getFullName("::");
+					String memberEndTypeName = memberEndClass.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 					IClass type = (IClass) ProjectAccessorFacade.findElement(memberEndTypeName);
 					if (IDLUtils.isCustomType(memberEndTypeName) && type != null) {
 						idls.add(getIncludedIDL(type));

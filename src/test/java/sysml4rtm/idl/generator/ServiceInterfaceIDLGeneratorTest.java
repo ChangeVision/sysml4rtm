@@ -16,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import sysml4rtm.AstahModelFinder;
 import sysml4rtm.ProjectAccessorFacade;
 
 import com.change_vision.jude.api.inf.model.IClass;
@@ -148,7 +149,7 @@ public class ServiceInterfaceIDLGeneratorTest {
 				actual);
     }
     
-    private String generateCustomTypeIdl(String pathToModelFile, String modelFullName) {
+    private String generateCustomTypeIdl(String pathToModelFile, String modelFullName) throws Exception {
 		INamedElement element = getTarget(pathToModelFile, modelFullName);
 		Target target = new Target(element, folder.getRoot().getPath());
 		ServiceInterfaceIDLGenerator generator = new ServiceInterfaceIDLGenerator(target);
@@ -172,8 +173,8 @@ public class ServiceInterfaceIDLGeneratorTest {
 		}
 	}
 
-	private INamedElement getTarget(String pathToModelFile, String modelFullName) {
-		ProjectAccessorFacade.openProject(this.getClass().getResource(pathToModelFile).getPath());
+	private INamedElement getTarget(String pathToModelFile, String modelFullName) throws Exception{
+		AstahModelFinder.open(this.getClass().getResourceAsStream(pathToModelFile));
 		INamedElement element = ProjectAccessorFacade.findElement(modelFullName);
 		if(element == null)
 			throw new AssertionFailedError(String.format("missing %s.",modelFullName));

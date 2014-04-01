@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 
 import sysml4rtm.ProjectAccessorFacade;
+import sysml4rtm.constants.Constants;
 
 import com.change_vision.jude.api.inf.model.IAssociation;
 import com.change_vision.jude.api.inf.model.IAttribute;
@@ -110,7 +111,7 @@ public class CustomTypeIDLGenerator extends IDLGeneratorBase {
 			IAssociation association = attribute.getAssociation();
 			if (association == null) {
 				IClass attributeClass = attribute.getType();
-				String attributeTypeName = attributeClass.getFullName("::");
+				String attributeTypeName = attributeClass.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 				if (IDLUtils.isCustomType(attributeTypeName)) {
 					generateCustomTypeIdl(attributeClass, encoding);
 				}
@@ -131,7 +132,7 @@ public class CustomTypeIDLGenerator extends IDLGeneratorBase {
 						continue;
 					}
 					IClass memberEndClass = memberEnd.getType();
-					String memberEndTypeName = memberEndClass.getFullName("::");
+					String memberEndTypeName = memberEndClass.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 					if (IDLUtils.isCustomType(memberEndTypeName)) {
 						generateCustomTypeIdl(memberEndClass, encoding);
 					}
@@ -165,7 +166,7 @@ public class CustomTypeIDLGenerator extends IDLGeneratorBase {
 		if (IDLUtils.isIDLSequenceType(attributeClass.getName())) {
 			String elementTypeName = IDLUtils.getElementTypeFullName(attributeClass,
 					attribute.getTypeModifier(), clazz, attribute.getName());
-			return StringUtils.equals(elementTypeName, clazz.getFullName("::"));
+			return StringUtils.equals(elementTypeName, clazz.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR));
 		}
 		return false;
 	}

@@ -3,6 +3,8 @@ package sysml4rtm.idl.generator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.VelocityContext;
 
+import sysml4rtm.constants.Constants;
+
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IClass;
 import com.change_vision.jude.api.inf.model.INamedElement;
@@ -55,8 +57,8 @@ public class ServiceInterfaceIDLGenerator extends IDLGeneratorBase {
 		}else if (IDLUtils.isIDLSequenceType(typeName)) {
 			builder.append(getSequenceTypeDefType(element));
         } else {
-            if (IDLUtils.isCustomType(typeName) && !StringUtils.contains(typeName, "::")) {
-            	builder.append("::");
+            if (IDLUtils.isCustomType(typeName) && !StringUtils.contains(typeName, Constants.MODEL_NAMESPACE_SEPARATOR)) {
+            	builder.append(Constants.MODEL_NAMESPACE_SEPARATOR);
             }
             builder.append(typeName);
         }
@@ -66,7 +68,7 @@ public class ServiceInterfaceIDLGenerator extends IDLGeneratorBase {
 
     public String getOperationReturnType(IOperation operation) {
         IClass returnType = operation.getReturnType();
-        String typeName = returnType != null? returnType.getFullName("::") : "void";
+        String typeName = returnType != null? returnType.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR) : "void";
         
         return getType(operation,typeName);
     }
@@ -85,7 +87,7 @@ public class ServiceInterfaceIDLGenerator extends IDLGeneratorBase {
 
     public String getParameterType(IParameter param){
     	IClass type = param.getType();
-    	String typeexpression = type.getFullName("::");
+    	String typeexpression = type.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
    	 	return getType(param, typeexpression);
 	}
     

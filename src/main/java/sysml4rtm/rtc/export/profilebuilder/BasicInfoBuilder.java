@@ -13,6 +13,7 @@ import org.openrtp.namespaces.rtc.BasicInfo;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.exception.ApplicationException;
 
+import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IBlock;
 
 public class BasicInfoBuilder {
@@ -20,9 +21,10 @@ public class BasicInfoBuilder {
 	public BasicInfoBuilder() {
 	}
 
-	public BasicInfo build(IBlock block) {
+	public BasicInfo build(IAttribute part) {
 		BasicInfo basicinfo = new BasicInfo();
 
+		IBlock block = (IBlock) part.getType();
 		basicinfo.setName(block.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR));
 
 		basicinfo.setComponentType("STATIC");
