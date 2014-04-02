@@ -1,8 +1,7 @@
 package sysml4rtm.rtc.export.profilebuilder;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -96,7 +95,60 @@ public class DataPortBuilderTest {
 		assertThat(port.getPortType(), is(Constants.DataPortType.IN.toString()));
 	}
 
+	@Test
+	public void RTC組み込み型を利用しているフロープロパティからポートのデータ型を判断できること() throws Exception {
+		List<Dataport> dataports = findTestTarget("port_type.asml", ":Block1");
 
+		Dataport port = findPort(dataports, "rtcType");
+		assertNotNull(port);
+		assertThat(port.getType(), is("RTC::TimedDouble"));
+	}
+	
+	@Test
+	public void 独自型を利用しているフロープロパティからポートのデータ型を判断できること() throws Exception {
+		List<Dataport> dataports = findTestTarget("port_type.asml", ":Block1");
+
+		Dataport port = findPort(dataports, "customer");
+		assertNotNull(port);
+		assertThat(port.getType(), is("Customer"));
+	}
+
+	@Test
+	public void ItemFlowのItemPropertyからポートのデータ型を判断できること() throws Exception {
+		List<Dataport> dataports = findTestTarget("port_type.asml", ":Block1");
+
+		Dataport port = findPort(dataports, "itemflow");
+		assertNotNull(port);
+		assertThat(port.getType(), is("RTC::TimedDouble"));
+	}
+	
+	@Test
+	public void FlowPropertyとItemFlowが両方定義されていて_ItemFlowのItemPropertyが定義されている場合_ItemPropertyの型からポートのデータ型を判断できること() throws Exception {
+		List<Dataport> dataports = findTestTarget("port_type.asml", ":Block1");
+
+		Dataport port = findPort(dataports, "flowPropAndItemFlow");
+		assertNotNull(port);
+		assertThat(port.getType(), is("RTC::TimedString"));
+	}
+	
+	@Test
+	public void ItemFlowのConveyからポートのデータ型を判断できること() throws Exception {
+		List<Dataport> dataports = findTestTarget("port_type.asml", ":Block1");
+
+		Dataport port = findPort(dataports, "convey");
+		assertNotNull(port);
+		assertThat(port.getType(), is("RTC::TimedFloat"));
+	}
+	
+	@Test
+	public void FlowPropertyとItemFlowが両方定義されて_ItemFlowのConveyが定義されている場合_Conveyの型からポートのデータ型を判断できること() throws Exception {
+		List<Dataport> dataports = findTestTarget("port_type.asml", ":Block1");
+
+		Dataport port = findPort(dataports, "conveyAndFlowProperties");
+		assertNotNull(port);
+		assertThat(port.getType(), is("RTC::TimedBoolean"));
+	}
+	
 	private Dataport findPort(List<Dataport> ports, String portName) {
 		for (Dataport port : ports) {
 			if (port.getName().equals(portName))

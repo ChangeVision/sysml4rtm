@@ -3,6 +3,7 @@ package sysml4rtm.idl.generator;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +20,7 @@ import org.apache.velocity.app.Velocity;
 import sysml4rtm.Messages;
 import sysml4rtm.ProjectAccessorFacade;
 import sysml4rtm.constants.Constants;
-import sysml4rtm.exception.ApplicationException;
+import sysml4rtm.exceptions.ApplicationException;
 
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IClass;
@@ -31,8 +32,11 @@ public class IDLUtils {
 	public static String templatesPath = System.getProperty("user.home") + File.separator
 			+ ".astah" + File.separator + "sysml" + File.separator;
 
+	private static HashMap<String, String> SYSMLTYPE_TO_IDLTYPE_MAPPING;
+	
 	static {
 		initVelocity();
+		initSysMLTypeToIdlTypeMapping();
 	}
 
 	private static void initVelocity() {
@@ -54,6 +58,27 @@ public class IDLUtils {
 		}
 	}
 
+	private static void initSysMLTypeToIdlTypeMapping() {
+		SYSMLTYPE_TO_IDLTYPE_MAPPING = new HashMap<String, String>();
+		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Boolean", "boolean");
+		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Complex", "double");
+		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Integer", "long");
+		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Number", "double");
+		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Real", "double");
+		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::String", "string");
+	}
+
+	public static String convertSysmlToIdlType(String typeName){
+		return SYSMLTYPE_TO_IDLTYPE_MAPPING.get(typeName);
+	}
+	
+	public static  String convertIDLType(String typeName) {
+		if(IDLUtils.isIDLPrimitiveType(typeName)){
+			return StringUtils.substringAfter(typeName, "IDL::");
+		}
+		return typeName;
+	}
+	
 	public static String getSequenceTypeDefType(String typeModifier) {
 		typeModifier = IDLUtils.upperCaseAfterSpace(typeModifier);
 		String modifier = StringUtils.remove(typeModifier, " ");

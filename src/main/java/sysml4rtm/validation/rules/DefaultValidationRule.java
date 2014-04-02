@@ -3,7 +3,7 @@ package sysml4rtm.validation.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import sysml4rtm.exception.ApplicationException;
+import sysml4rtm.exceptions.ApplicationException;
 import sysml4rtm.validation.ValidationError;
 import sysml4rtm.validation.ValidationRule;
 

@@ -12,7 +12,7 @@ import org.openrtp.namespaces.rtc.BasicInfo;
 import org.openrtp.namespaces.rtc_ext.BasicInfoExt;
 
 import sysml4rtm.constants.Constants;
-import sysml4rtm.exception.ApplicationException;
+import sysml4rtm.exceptions.ApplicationException;
 
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IBlock;

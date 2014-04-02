@@ -51,9 +51,9 @@ public class ServiceInterfaceIDLGenerator extends IDLGeneratorBase {
 		StringBuilder builder = new StringBuilder();
 
         if (IDLUtils.isSysMLBuiltinType(typeName)) {
-			builder.append(convertSysmlToIdlType(typeName));
+			builder.append(IDLUtils.convertSysmlToIdlType(typeName));
 		}else if (IDLUtils.isIDLPrimitiveType(typeName)){
-			builder.append(convertIDLType(typeName));
+			builder.append(IDLUtils.convertIDLType(typeName));
 		}else if (IDLUtils.isIDLSequenceType(typeName)) {
 			builder.append(getSequenceTypeDefType(element));
         } else {

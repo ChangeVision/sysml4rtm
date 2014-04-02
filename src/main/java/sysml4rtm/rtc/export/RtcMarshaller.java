@@ -18,9 +18,9 @@ import org.openrtp.namespaces.rtc.RtcProfile;
 
 import sysml4rtm.Messages;
 import sysml4rtm.constants.Constants;
-import sysml4rtm.exception.ApplicationException;
-import sysml4rtm.exception.UnSupportDiagramException;
-import sysml4rtm.exception.ValidationException;
+import sysml4rtm.exceptions.ApplicationException;
+import sysml4rtm.exceptions.UnSupportDiagramException;
+import sysml4rtm.exceptions.ValidationException;
 import sysml4rtm.finder.InternalBlockDiagramExportedTargetFinder;
 import sysml4rtm.rtc.export.profilebuilder.BasicInfoBuilder;
 import sysml4rtm.rtc.export.profilebuilder.RtcProfileBuilder;

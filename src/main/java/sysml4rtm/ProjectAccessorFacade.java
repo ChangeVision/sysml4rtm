@@ -1,6 +1,6 @@
 package sysml4rtm;
 
-import sysml4rtm.exception.ApplicationException;
+import sysml4rtm.exceptions.ApplicationException;
 
 import com.change_vision.jude.api.inf.AstahAPI;
 import com.change_vision.jude.api.inf.model.INamedElement;

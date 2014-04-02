@@ -3,7 +3,7 @@ package sysml4rtm.actions;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import sysml4rtm.dialog.GenerateRtmProfileDialog;
+import sysml4rtm.dialogs.GenerateRtmProfileDialog;
 
 import com.change_vision.jude.api.inf.ui.IPluginActionDelegate;
 import com.change_vision.jude.api.inf.ui.IWindow;

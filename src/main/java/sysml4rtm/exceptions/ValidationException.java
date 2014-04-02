@@ -1,4 +1,4 @@
-package sysml4rtm.exception;
+package sysml4rtm.exceptions;
 
 import java.util.List;
 

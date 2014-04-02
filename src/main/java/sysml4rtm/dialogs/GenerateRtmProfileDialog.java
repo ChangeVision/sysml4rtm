@@ -1,4 +1,4 @@
-package sysml4rtm.dialog;
+package sysml4rtm.dialogs;
 
 import java.awt.Cursor;
 import java.awt.GridBagConstraints;
@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
 
 import sysml4rtm.Activator;
 import sysml4rtm.Messages;
-import sysml4rtm.exception.UnSupportDiagramException;
-import sysml4rtm.exception.ValidationException;
+import sysml4rtm.exceptions.UnSupportDiagramException;
+import sysml4rtm.exceptions.ValidationException;
 import sysml4rtm.rtc.export.RtcMarshaller;
 import sysml4rtm.utils.ConfigUtil;
 import sysml4rtm.utils.ModelUtils;

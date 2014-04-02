@@ -2,7 +2,6 @@ package sysml4rtm.idl.generator;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,7 @@ import org.apache.commons.lang3.SystemUtils;
 import sysml4rtm.Messages;
 import sysml4rtm.ProjectAccessorFacade;
 import sysml4rtm.constants.Constants;
-import sysml4rtm.exception.ApplicationException;
+import sysml4rtm.exceptions.ApplicationException;
 import sysml4rtm.utils.ModelUtils;
 
 import com.change_vision.jude.api.inf.model.IAssociation;
@@ -32,16 +31,7 @@ public abstract class IDLGeneratorBase {
 	protected Target target;
 	private int indent = 0;
 
-	private HashMap<String, String> SYSMLTYPE_TO_IDLTYPE_MAPPING;
-
 	public IDLGeneratorBase() {
-		SYSMLTYPE_TO_IDLTYPE_MAPPING = new HashMap<String, String>();
-		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Boolean", "boolean");
-		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Complex", "double");
-		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Integer", "long");
-		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Number", "double");
-		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::Real", "double");
-		SYSMLTYPE_TO_IDLTYPE_MAPPING.put("SysML::String", "string");
 	}
 
 	@Deprecated
@@ -239,9 +229,9 @@ public abstract class IDLGeneratorBase {
 	public String getAttributeType(IAttribute attribute) {
 		String typeName = attribute.getType().getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 		if (IDLUtils.isSysMLBuiltinType(typeName)) {
-			return convertSysmlToIdlType(typeName);
+			return IDLUtils.convertSysmlToIdlType(typeName);
 		}else if (IDLUtils.isIDLPrimitiveType(typeName)){
-			return convertIDLType(typeName);
+			return IDLUtils.convertIDLType(typeName);
 		} else if (IDLUtils.isIDLSequenceType(typeName)) {
 			return getSequenceTypeDefType(attribute);
 		} else {
@@ -255,17 +245,6 @@ public abstract class IDLGeneratorBase {
 		}
 	}
 	
-	protected String convertIDLType(String typeName) {
-		if(IDLUtils.isIDLPrimitiveType(typeName)){
-			return StringUtils.substringAfter(typeName, "IDL::");
-		}
-		return typeName;
-	}
-
-	protected String convertSysmlToIdlType(String typeName) {
-		return SYSMLTYPE_TO_IDLTYPE_MAPPING.get(typeName);
-	}
-
 	private String getMemberEndType(IAttribute memberEnd) {
 		String typeName = memberEnd.getType().getFullName(Constants.MODEL_NAMESPACE_SEPARATOR);
 		if (IDLUtils.isMultiple(memberEnd.getMultiplicity()[0])) {

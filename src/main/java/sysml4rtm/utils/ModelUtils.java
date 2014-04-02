@@ -159,4 +159,6 @@ public class ModelUtils {
 		return AstahAPI.getAstahAPI().getProjectAccessor().getViewManager().getDiagramViewManager()
 				.getCurrentDiagram();
 	}
+
+
 }

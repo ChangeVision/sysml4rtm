@@ -1,4 +1,4 @@
-package sysml4rtm.dialog;
+package sysml4rtm.dialogs;
 
 import javax.swing.JLabel;
 

@@ -1,4 +1,4 @@
-package sysml4rtm.dialog;
+package sysml4rtm.dialogs;
 
 import java.awt.Component;
 import java.awt.Dimension;
