@@ -3,6 +3,7 @@ package sysml4rtm.rtc.export.profilebuilder;
 import org.openrtp.namespaces.rtc.ActionStatus;
 import org.openrtp.namespaces.rtc.Actions;
 import org.openrtp.namespaces.rtc.BasicInfo;
+import org.openrtp.namespaces.rtc_doc.ActionStatusDoc;
 
 import sysml4rtm.constants.Constants;
 
@@ -21,7 +22,7 @@ public class ActionBuilder {
 	}
 
 	private ActionStatus getActionStatus(boolean isImplemented) {
-		ActionStatus actionStatus = new ActionStatus();
+		ActionStatus actionStatus = new ActionStatusDoc();
 		actionStatus.setImplemented(isImplemented);
 		return actionStatus;
 	}

@@ -8,12 +8,12 @@ import com.change_vision.jude.api.inf.model.INamedElement;
 public class ModelValidator {
 
 	
-    public List<ValidationError> validate() {
+    public List<ValidationError> validate(List<? extends INamedElement> parts) {
         ValidationRuleManager manager = ValidationRuleManager.getInstance();
-        return validate(manager.getValidationRule(), getTargetModels());
+        return validate(manager.getValidationRule(), parts);
     }
 
-    private List<ValidationError> validate(List<ValidationRule> rules, List<INamedElement> targetModels) {
+    private List<ValidationError> validate(List<ValidationRule> rules, List<? extends INamedElement> targetModels) {
         List<ValidationError> errors = new ArrayList<ValidationError>();
 
         for (INamedElement namedElement : targetModels) {
@@ -29,10 +29,4 @@ public class ModelValidator {
         return errors;
     }
 
-    private List<INamedElement> getTargetModels() {
-        List<INamedElement> targetModels = new ArrayList<INamedElement>();
-
-        
-        return targetModels;
-    }
 }

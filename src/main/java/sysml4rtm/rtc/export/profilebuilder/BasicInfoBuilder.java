@@ -9,6 +9,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.openrtp.namespaces.rtc.BasicInfo;
+import org.openrtp.namespaces.rtc_ext.BasicInfoExt;
 
 import sysml4rtm.constants.Constants;
 import sysml4rtm.exception.ApplicationException;
@@ -22,7 +23,7 @@ public class BasicInfoBuilder {
 	}
 
 	public BasicInfo build(IAttribute part) {
-		BasicInfo basicinfo = new BasicInfo();
+		BasicInfo basicinfo = new BasicInfoExt();
 
 		IBlock block = (IBlock) part.getType();
 		basicinfo.setName(block.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR));

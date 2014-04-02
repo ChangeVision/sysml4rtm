@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openrtp.namespaces.rtc.Dataport;
+import org.openrtp.namespaces.rtc_ext.DataportExt;
 
 import sysml4rtm.constants.Constants;
 import sysml4rtm.constants.Constants.DataPortType;
@@ -21,7 +22,7 @@ public class DataPortBuilder {
 		List<Dataport> dataPorts = new ArrayList<Dataport>();
 		
 		for (IPort port : block.getPorts()) {
-			Dataport dataPort = new Dataport();
+			Dataport dataPort = new DataportExt();
 			dataPort.setName(port.getName());
 			dataPort.setPortType(getPortDirectionType(part,port).toString());
 			dataPort.setType(getDataType(port));

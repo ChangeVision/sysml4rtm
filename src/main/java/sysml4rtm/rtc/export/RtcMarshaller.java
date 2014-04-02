@@ -30,6 +30,7 @@ import sysml4rtm.validation.ValidationError;
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IDiagram;
 import com.change_vision.jude.api.inf.model.IInternalBlockDiagram;
+import com.change_vision.jude.api.inf.model.INamedElement;
 
 public class RtcMarshaller {
 
@@ -50,8 +51,8 @@ public class RtcMarshaller {
 
 	public void marshal(IDiagram currentDiagram, String pathToOutputFolder) {
 		checkSupportDiagram(currentDiagram);
-		validate();
 		List<IAttribute> parts = getGeneratedTargetElements(currentDiagram);
+		validate(parts);
 
 		for (IAttribute part : parts) {
 			marshalAsFile(pathToOutputFolder, part);
@@ -91,9 +92,9 @@ public class RtcMarshaller {
 		}
 	}
 
-	private void validate() {
+	private void validate(List<? extends INamedElement> parts) {
 		ModelValidator validator = new ModelValidator();
-		List<ValidationError> errors = validator.validate();
+		List<ValidationError> errors = validator.validate(parts);
 		if (errors != null && errors.size() > 0) {
 			throw new ValidationException(errors);
 		}
