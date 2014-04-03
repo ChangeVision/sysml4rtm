@@ -202,5 +202,12 @@ public class ModelUtils {
 		return conveyDataType;
 	}
 
+	public static boolean hasServiceInterface(IPort port) {
+		IClass[] requires = port.getRequiredInterfaces();
+		IClass[] provides = port.getProvidedInterfaces();
+		
+		return (requires != null && requires.length > 0) || (provides != null && provides.length > 0);
+	}
+
 
 }

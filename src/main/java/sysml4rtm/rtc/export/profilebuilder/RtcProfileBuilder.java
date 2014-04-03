@@ -29,6 +29,9 @@ public class RtcProfileBuilder {
 		DataPortBuilder dataportBuilder = new DataPortBuilder();
 		profile.getDataPorts().addAll(dataportBuilder.build(part));
 
+		ServicePortBuilder serviceportBuilder = new ServicePortBuilder();
+		profile.getServicePorts().addAll(serviceportBuilder.build(part));
+		
 		buildBase(basicinfo);
 		return profile;
 	}
