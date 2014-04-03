@@ -25,6 +25,9 @@ public class MustDefinePortTypeRule extends DefaultValidationRule {
 		IAttribute part = (IAttribute)target;
 		IBlock block = (IBlock) part.getType();
 		for (IPort port : block.getPorts()) {
+			if(ModelUtils.hasServiceInterface(port)){
+				continue;
+			}
 			if(hasItemFlow(port)){
 				if(ModelUtils.getConveyDataType(port.getItemFlows()[0]) == null){
 					setResult(new ValidationError(Messages.getMessage(

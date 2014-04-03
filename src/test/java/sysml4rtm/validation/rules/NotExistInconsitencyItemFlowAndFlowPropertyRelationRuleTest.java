@@ -31,4 +31,12 @@ public class NotExistInconsitencyItemFlowAndFlowPropertyRelationRuleTest {
 		assertThat(rule.getResults().size(),is(1));
 		assertThat(rule.getResults().get(0).getMessage(),is(Messages.getMessage("error.Inconsistency_flowproperty_itemflow", ":Block4", ":Block4Port")));
 	}
+	
+	@Test
+	public void サービスポートは妥当性検証の対象外となること() throws Exception {
+		AstahModelFinder.open(this.getClass().getResourceAsStream("marshal_serviceports.asml"));
+		IAttribute part = AstahModelFinder.findPart(":com::Block0");
+		NotExistInconsitencyItemFlowAndFlowPropertyRelationRule rule = new NotExistInconsitencyItemFlowAndFlowPropertyRelationRule();
+		assertThat(rule.validate(part),is(true));
+	}
 }

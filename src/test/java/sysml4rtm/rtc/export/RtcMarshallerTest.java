@@ -8,14 +8,10 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 
 import junit.framework.AssertionFailedError;
 
 import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.NamespaceContext;
-import org.custommonkey.xmlunit.SimpleNamespaceContext;
-import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -61,20 +57,20 @@ public class RtcMarshallerTest {
 		File expected = new File(this.getClass().getResource("expected_marshal_dataport.xml")
 				.getPath());
 		
-		XMLUnit.setXpathNamespaceContext(createNamespace());
 		assertXMLEqual(FileUtils.readFileToString(expected), FileUtils.readFileToString(actual));
-
 	}
 
-	private NamespaceContext createNamespace() {
-		HashMap<String, String> m = new HashMap<String, String>();
-		m.put("rtcExt", "http://www.openrtp.org/namespaces/rtc_ext");
-		m.put("rtcDoc", "http://www.openrtp.org/namespaces/rtc_doc");
-		m.put("rtc", "http://www.openrtp.org/namespaces/rtc");
-		m.put("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+	@Test
+	public void サービスポートを持つブロックからRTC_XMLファイルが生成されること() throws Exception {
+		File outputFolder = marshal("marshal_serviceports.asml","ibd");
 
-		NamespaceContext ctx = new SimpleNamespaceContext(m);
-		return ctx;
+		File actual = FileUtils.getFile(outputFolder, "com_Block0.xml");
+		assertThat(actual.exists(), is(true));
+
+		File expected = new File(this.getClass().getResource("expected_serviceport.xml")
+				.getPath());
+		System.out.println(FileUtils.readFileToString(actual));
+		assertXMLEqual(FileUtils.readFileToString(expected), FileUtils.readFileToString(actual));
 	}
 	
 	private File marshal(String pathToModelFile, String ibdDiagramName) throws Exception {

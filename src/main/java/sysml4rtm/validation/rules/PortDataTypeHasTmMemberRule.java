@@ -27,6 +27,9 @@ public class PortDataTypeHasTmMemberRule extends DefaultValidationRule {
 		IAttribute part = (IAttribute)target;
 		IBlock block = (IBlock) part.getType();
 		for (IPort port : block.getPorts()) {
+			if(ModelUtils.hasServiceInterface(port))
+				continue;
+			
 			IClass dataType;
 			if(hasItemFlow(port)){
 				dataType = ModelUtils.getConveyDataType(port.getItemFlows()[0]);

@@ -29,6 +29,9 @@ public class NotExistInconsitencyItemFlowAndFlowPropertyRelationRule extends Def
 	private boolean validateInconsistencyItemFlowAndFlowProperty(IAttribute attr) throws InvalidUsingException{
 		IBlock block = (IBlock) attr.getType();
 		for (IPort port : block.getPorts()) {
+			if(ModelUtils.hasServiceInterface(port))
+				continue;
+			
 			IBlock portType = (IBlock) port.getType();
 			if (portType == null)
 				continue;

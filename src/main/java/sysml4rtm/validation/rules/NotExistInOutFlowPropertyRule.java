@@ -29,6 +29,9 @@ public class NotExistInOutFlowPropertyRule extends DefaultValidationRule{
 	private boolean validateInoutFlowpropertyNotSupport(IAttribute attr) {
 		IBlock block = (IBlock) attr.getType();
 		for (IPort port : block.getPorts()) {
+			if(ModelUtils.hasServiceInterface(port))
+				continue;
+			
 			IBlock portType = (IBlock) port.getType();
 			if (portType == null)
 				continue;

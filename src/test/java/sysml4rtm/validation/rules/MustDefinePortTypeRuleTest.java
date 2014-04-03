@@ -1,7 +1,7 @@
 package sysml4rtm.validation.rules;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -70,5 +70,13 @@ public class MustDefinePortTypeRuleTest {
 		assertThat(rule.validate(part),is(false));
 		assertThat(rule.getResults().size(),is(1));
 		assertThat(rule.getResults().get(0).getMessage(),is(Messages.getMessage("error.type_must_same", ":BlockDF", ":ブロック0")));
+	}
+	
+	@Test
+	public void サービスポートは妥当性検証の対象外となること() throws Exception {
+		AstahModelFinder.open(this.getClass().getResourceAsStream("marshal_serviceports.asml"));
+		IAttribute part = AstahModelFinder.findPart(":com::Block0");
+		MustDefinePortTypeRule rule = new MustDefinePortTypeRule();
+		assertThat(rule.validate(part),is(true));
 	}
 }

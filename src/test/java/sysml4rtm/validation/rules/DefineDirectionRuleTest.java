@@ -29,5 +29,13 @@ public class DefineDirectionRuleTest {
 		assertThat(rule.getResults().get(0).getMessage(),is(Messages.getMessage("error.direction_not_define", ":ErrorBlock4", ":ErrorBlockPort1")));
 
 	}
+	
+	@Test
+	public void サービスポートは妥当性検証の対象外となること() throws Exception {
+		AstahModelFinder.open(this.getClass().getResourceAsStream("marshal_serviceports.asml"));
+		IAttribute part = AstahModelFinder.findPart(":com::Block0");
+		DefineDirectionRule rule = new DefineDirectionRule();
+		assertThat(rule.validate(part),is(true));
+	}
 
 }

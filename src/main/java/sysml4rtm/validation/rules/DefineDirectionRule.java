@@ -25,6 +25,9 @@ public class DefineDirectionRule extends DefaultValidationRule {
 		IAttribute part = (IAttribute)target;
 		IBlock block = (IBlock) part.getType();
 		for (IPort port : block.getPorts()) {
+			if(ModelUtils.hasServiceInterface(port)){
+				continue;
+			}
 			IItemFlow[] itemFlows = port.getItemFlows();
 			IBlock portType = (IBlock) port.getType();
 			if (portType == null) {

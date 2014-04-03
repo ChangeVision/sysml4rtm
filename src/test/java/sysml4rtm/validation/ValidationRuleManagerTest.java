@@ -8,6 +8,7 @@ import org.junit.Test;
 import sysml4rtm.validation.rules.ConnectorMustAttachPortRule;
 import sysml4rtm.validation.rules.DefineDirectionRule;
 import sysml4rtm.validation.rules.MustDefinePortTypeRule;
+import sysml4rtm.validation.rules.NotEmptyPortNameRule;
 import sysml4rtm.validation.rules.NotExistInOutFlowPropertyRule;
 import sysml4rtm.validation.rules.NotExistInOutItemFlowPropertyRule;
 import sysml4rtm.validation.rules.NotExistInconsitencyItemFlowAndFlowPropertyRelationRule;
@@ -19,11 +20,12 @@ public class ValidationRuleManagerTest {
 	@Test
 	public void ルールが登録されていること() {
 		ValidationRuleManager manager = ValidationRuleManager.getInstance();
-		assertThat(manager.getValidationRule().size(),is(8));
+		assertThat(manager.getValidationRule().size(),is(9));
 		
 		assertThat(manager.hasRule(ConnectorMustAttachPortRule.class),is(true));
 		assertThat(manager.hasRule(DefineDirectionRule.class),is(true));
 		assertThat(manager.hasRule(MustDefinePortTypeRule.class),is(true));		
+		assertThat(manager.hasRule(NotEmptyPortNameRule.class),is(true));		
 		assertThat(manager.hasRule(NotExistInconsitencyItemFlowAndFlowPropertyRelationRule.class),is(true));
 		assertThat(manager.hasRule(NotExistInOutFlowPropertyRule.class),is(true));
 		assertThat(manager.hasRule(NotExistInOutItemFlowPropertyRule.class),is(true));
