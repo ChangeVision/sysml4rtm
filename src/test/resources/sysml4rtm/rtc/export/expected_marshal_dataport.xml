@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rtc:RtcProfile rtc:version="0.2" xsi:type="rtcExt:basic_info_ext"
+<rtc:RtcProfile rtc:version="0.2"
     rtc:id="RTC:Vendor:Category:com::sample::Block0:1.0.0" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext"
     xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:rtc="http://www.openrtp.org/namespaces/rtc"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -17,6 +17,6 @@ Escape char &lt;&quot;hoge&quot;&gt;&lt;&apos;&amp;foo&apos;&gt;"
         <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true" />
         <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true" />
     </rtc:Actions>
-    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtc:type="double" rtc:name="out_a" rtc:portType="DataOutPort" />
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtc:type="RTC::TimedShort" rtc:name="out_a" rtc:portType="DataOutPort" />
     <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtc:type="RTC::TimedDouble" rtc:name="in_a" rtc:portType="DataInPort" />
 </rtc:RtcProfile>

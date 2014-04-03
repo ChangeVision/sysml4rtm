@@ -62,7 +62,6 @@ public class RtcMarshallerTest {
 				.getPath());
 		
 		XMLUnit.setXpathNamespaceContext(createNamespace());
-		System.out.println(FileUtils.readFileToString(actual));
 		assertXMLEqual(FileUtils.readFileToString(expected), FileUtils.readFileToString(actual));
 
 	}
