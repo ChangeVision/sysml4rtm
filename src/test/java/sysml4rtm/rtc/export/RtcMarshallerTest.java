@@ -61,7 +61,7 @@ public class RtcMarshallerTest {
 	}
 
 	@Test
-	public void サービスポートを持つブロックからRTC_XMLファイルが生成されること() throws Exception {
+	public void サービスポートを持つブロックからRTC_XMLファイルと依存するIDLファイルが生成されること() throws Exception {
 		File outputFolder = marshal("marshal_serviceports.asml","ibd");
 
 		File actual = FileUtils.getFile(outputFolder, "com_Block0.xml");
@@ -69,8 +69,12 @@ public class RtcMarshallerTest {
 
 		File expected = new File(this.getClass().getResource("expected_serviceport.xml")
 				.getPath());
-		System.out.println(FileUtils.readFileToString(actual));
 		assertXMLEqual(FileUtils.readFileToString(expected), FileUtils.readFileToString(actual));
+		
+		assertThat(new File(outputFolder,"InterfaceA.idl").exists(), is(true));
+		assertThat(new File(outputFolder,"InterfaceB.idl").exists(), is(true));
+		assertThat(new File(outputFolder.getPath() + "/com/service/InterfaceC.idl").exists(), is(true));
+		assertThat(new File(outputFolder.getPath() + "/com/service/InterfaceD.idl").exists(), is(true));
 	}
 	
 	private File marshal(String pathToModelFile, String ibdDiagramName) throws Exception {

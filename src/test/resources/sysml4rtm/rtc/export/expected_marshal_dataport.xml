@@ -6,8 +6,11 @@
     xsi:schemaLocation="">
     <rtc:BasicInfo
         xsi:type="rtcExt:basic_info_ext"
-        rtc:updateDate="1970-01-01T09:00:00.000+09:00" rtc:creationDate="1970-01-01T09:00:00.000+09:00"
-        rtc:version="1.0" rtc:vendor="Vendor" rtc:executionType="PeriodicExecutionContext"
+        rtc:updateDate="1970-01-01T09:00:00.000+09:00" 
+        rtc:creationDate="1970-01-01T09:00:00.000+09:00"
+        rtc:version="1.0" 
+        rtc:vendor="Vendor" 
+        rtc:executionType="PeriodicExecutionContext"
         rtc:executionRate="10.0"
         rtc:description="This is description.
 Escape char &lt;&quot;hoge&quot;&gt;&lt;&apos;&amp;foo&apos;&gt;"

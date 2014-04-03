@@ -13,10 +13,11 @@ import com.change_vision.jude.api.inf.model.IParameter;
 
 public class ServiceInterfaceIDLGenerator extends IDLGeneratorBase {
 
-    private static final String TEMPLATE_SERVICE_IDL = "serviceinterface_idl.vm";;
+    private static final String TEMPLATE_SERVICE_IDL = "serviceinterface_idl.vm";
+	private String pathToOutputFolder;
 
-    public ServiceInterfaceIDLGenerator(Target target) {
-        this.target = target;
+    public ServiceInterfaceIDLGenerator(String pathToOutputFolder) {
+    	this.pathToOutputFolder = pathToOutputFolder;
     }
 
 
@@ -31,7 +32,7 @@ public class ServiceInterfaceIDLGenerator extends IDLGeneratorBase {
         context.put("stringutil", StringUtils.class);
         context.put("includedIDLs", getIncludedIDLs(serviceInterface));
         String pathToOutput = IDLUtils
-                .getPathToOutputWithPackage(target.getPathToOutput(), serviceInterface);
+                .getPathToOutputWithPackage(pathToOutputFolder, serviceInterface);
 
         String result = IDLUtils
                 .saveTemplate(pathToOutput, idlFileName, TEMPLATE_SERVICE_IDL, context, encoding);

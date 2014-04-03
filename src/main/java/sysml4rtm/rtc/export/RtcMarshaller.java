@@ -73,6 +73,7 @@ public class RtcMarshaller {
 	}
 
 	private void marshalAsFile(String pathToOutput, IAttribute part) {
+		profileBuilder.setPathToOutputFolder(pathToOutput);
 		RtcProfile contents = profileBuilder.createRtcProfile(part);
 
 		BufferedWriter writer = null;

@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rtc:RtcProfile rtc:version="0.2" rtc:id="RTC:Vendor:Category:com::sample::Block0:1.0" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext" xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:rtc="http://www.openrtp.org/namespaces/rtc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="test" rtc:updateDate="2014-04-01T17:22:31+09:00" rtc:creationDate="1970-01-01T09:00:00+09:00" rtc:version="1.0" rtc:vendor="Vendor" rtc:maxInstances="0" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="10.0" rtc:description="This is description. Escape char &lt;&quot;hoge&quot;&gt;&lt;'&amp;foo'&gt;" rtc:category="Category" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="com::sample::Block0"/>
+<rtc:RtcProfile 
+    rtc:version="0.2" 
+    rtc:id="RTC:Vendor:Category:com::Block0:1.0.0" 
+    xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext"
+    xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" 
+    xmlns:rtc="http://www.openrtp.org/namespaces/rtc" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="">
+    <rtc:BasicInfo 
+    xsi:type="rtcExt:basic_info_ext" 
+    rtc:updateDate="1970-01-01T09:00:00.000+09:00" 
+    rtc:creationDate="1970-01-01T09:00:00.000+09:00" 
+    rtc:version="1.0" 
+    rtc:vendor="Vendor" 
+    rtc:executionType="PeriodicExecutionContext" 
+    rtc:executionRate="10.0" 
+    rtc:description="" 
+    rtc:maxInstances="0"
+    rtc:category="Category" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" 
+    rtc:componentType="STATIC" rtc:name="com::Block0"/>
     <rtc:Actions>
         <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
         <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
     </rtc:Actions>
-    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="ServicePortA">
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="com_service_MyService" rtc:idlFile="MyService.idl" rtc:direction="Provided" rtc:name="myService" path="" instanceName=""/>
+    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="a">
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="InterfaceA" rtc:idlFile="InterfaceA.idl" rtc:direction="Provided" rtc:name="interfaceA" rtc:path="" rtc:instanceName=""/>
+    </rtc:ServicePorts>
+    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="b">
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="InterfaceB" rtc:idlFile="InterfaceB.idl" rtc:direction="Required" rtc:name="interfaceB" rtc:path="" rtc:instanceName=""/>
+    </rtc:ServicePorts>
+    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="c">
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="com_service_InterfaceC" rtc:idlFile="com/service/InterfaceC.idl" rtc:direction="Provided" rtc:name="interfaceC" rtc:path="" rtc:instanceName=""/>
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="com_service_InterfaceD" rtc:idlFile="com/service/InterfaceD.idl" rtc:direction="Required" rtc:name="interfaceD" rtc:path="" rtc:instanceName=""/>
     </rtc:ServicePorts>
 </rtc:RtcProfile>

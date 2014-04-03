@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.openrtp.namespaces.rtc.Serviceinterface;
 import org.openrtp.namespaces.rtc.Serviceport;
 
@@ -15,6 +17,9 @@ import com.change_vision.jude.api.inf.model.IAttribute;
 
 public class ServicePortBuilderTest {
 
+	@Rule
+	public TemporaryFolder folder = new TemporaryFolder();
+	
 	@Test
 	public void Serviceport_nameは_提供か要求インタフェースがひもづいているポート名から設定されること() throws Exception{
 		List<Serviceport> ports = findTestTarget("serviceport.asml", ":Block0");
@@ -98,7 +103,7 @@ public class ServicePortBuilderTest {
 		
 		port = findPort(ports, "WithNameSpace");
 		si = port.getServiceInterface().get(0);
-		assertThat(si.getIdlFile(),is("MyService.idl"));
+		assertThat(si.getIdlFile(),is("com/service/MyService.idl"));
 	}
 	
 	private Serviceport findPort(List<Serviceport> ports, String portName) {
@@ -113,7 +118,7 @@ public class ServicePortBuilderTest {
 		AstahModelFinder.open(this.getClass().getResourceAsStream(pathToModelFile));
 		IAttribute part = AstahModelFinder.findPart(partFullName);
 
-		ServicePortBuilder builder = new ServicePortBuilder();
+		ServicePortBuilder builder = new ServicePortBuilder(folder.newFolder().getPath());
 		return builder.build(part);
 	}
 }

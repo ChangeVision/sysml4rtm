@@ -191,8 +191,7 @@ public class CustomTypeIDLGeneratorTest {
 	
 	private String generateCustomTypeIdl(String pathToModelFile, String modelFullName) throws Exception{
 		INamedElement element = getTarget(pathToModelFile, modelFullName);
-		Target target = new Target(element, folder.getRoot().getPath());
-		CustomTypeIDLGenerator generator = new CustomTypeIDLGenerator(target);
+		CustomTypeIDLGenerator generator = new CustomTypeIDLGenerator(folder.getRoot().getPath());
 
 		generator.generateCustomTypeIdl((IClass) element, "UTF-8");
 		return folder.getRoot().getPath();

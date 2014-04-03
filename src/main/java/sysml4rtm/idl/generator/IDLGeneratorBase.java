@@ -28,7 +28,6 @@ import com.change_vision.jude.api.inf.model.IOperation;
 import com.change_vision.jude.api.inf.model.IParameter;
 
 public abstract class IDLGeneratorBase {
-	protected Target target;
 	private int indent = 0;
 
 	public IDLGeneratorBase() {

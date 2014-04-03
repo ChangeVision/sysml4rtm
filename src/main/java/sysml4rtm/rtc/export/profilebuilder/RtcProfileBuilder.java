@@ -9,6 +9,7 @@ public class RtcProfileBuilder {
 
 	private RtcProfile profile = null;
 	private BasicInfoBuilder basicInfoBuilder;
+	private String pathToOutput;
 
 	public RtcProfileBuilder() {
 		profile = new RtcProfile();
@@ -29,7 +30,7 @@ public class RtcProfileBuilder {
 		DataPortBuilder dataportBuilder = new DataPortBuilder();
 		profile.getDataPorts().addAll(dataportBuilder.build(part));
 
-		ServicePortBuilder serviceportBuilder = new ServicePortBuilder();
+		ServicePortBuilder serviceportBuilder = new ServicePortBuilder(pathToOutput);
 		profile.getServicePorts().addAll(serviceportBuilder.build(part));
 		
 		buildBase(basicinfo);
@@ -40,6 +41,10 @@ public class RtcProfileBuilder {
 		profile.setId(String.format("RTC:%s:%s:%s:1.0.0", basicinfo.getVendor(),
 				basicinfo.getCategory(), basicinfo.getName()));
 		profile.setVersion("0.2");
+	}
+
+	public void setPathToOutputFolder(String pathToOutput) {
+		this.pathToOutput = pathToOutput;
 	}
 
 }

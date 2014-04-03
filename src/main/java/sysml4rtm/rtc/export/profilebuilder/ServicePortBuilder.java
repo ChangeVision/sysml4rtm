@@ -9,6 +9,8 @@ import org.openrtp.namespaces.rtc.Serviceport;
 import org.openrtp.namespaces.rtc_ext.ServiceinterfaceExt;
 import org.openrtp.namespaces.rtc_ext.ServiceportExt;
 
+import sysml4rtm.constants.Constants;
+import sysml4rtm.idl.generator.ServiceInterfaceIDLGenerator;
 import sysml4rtm.utils.ModelUtils;
 
 import com.change_vision.jude.api.inf.model.IAttribute;
@@ -18,6 +20,12 @@ import com.change_vision.jude.api.inf.model.IPort;
 
 public class ServicePortBuilder {
 
+	private ServiceInterfaceIDLGenerator generator;
+
+	public ServicePortBuilder(String pathToOutputFolder) {
+		generator = new ServiceInterfaceIDLGenerator(pathToOutputFolder);
+	}
+	
 	public List<Serviceport> build(IAttribute part) {
 		IBlock block = (IBlock) part.getType();
 		List<Serviceport> servicePorts = new ArrayList<Serviceport>();
@@ -45,8 +53,10 @@ public class ServicePortBuilder {
 			serviceinterface.setType(target.getFullName("_"));
 			serviceinterface.setInstanceName("");
 			serviceinterface.setDirection(direction);
-			serviceinterface.setIdlFile(target.getName() + ".idl");
+			serviceinterface.setIdlFile(target.getFullName("/") + ".idl");
 			serviceinterface.setPath("");
+			
+			generator.generateIDL(target, Constants.ENCODING);
 		}
 
 	}

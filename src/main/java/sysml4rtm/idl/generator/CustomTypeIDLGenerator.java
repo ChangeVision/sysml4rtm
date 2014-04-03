@@ -16,8 +16,10 @@ import com.change_vision.jude.api.inf.model.IParameter;
 public class CustomTypeIDLGenerator extends IDLGeneratorBase {
 	private static final String TEMPLATE_CUSTOMTYPE_IDL = "customtype_idl.vm";;
 
-	public CustomTypeIDLGenerator(Target target) {
-		this.target = target;
+	private String pathToOutputFolder;
+	
+	public CustomTypeIDLGenerator(String pathToOutputFolder) {
+		this.pathToOutputFolder = pathToOutputFolder;
 	}
 
 	public String generateCustomTypeIdl(IClass clazz, String encoding) {
@@ -32,7 +34,7 @@ public class CustomTypeIDLGenerator extends IDLGeneratorBase {
 		context.put("includedIDLs", getIncludedIDLs(clazz));
 		context.put("hasRecursiveSequence", hasRecursiveSequence(clazz));
 		context.put("idlLines", clazz.getDefinition().split("\n"));
-		String pathToOutput = IDLUtils.getPathToOutputWithPackage(target.getPathToOutput(), clazz);
+		String pathToOutput = IDLUtils.getPathToOutputWithPackage(pathToOutputFolder, clazz);
 
 		String result = IDLUtils.saveTemplate(pathToOutput, idlFileName, TEMPLATE_CUSTOMTYPE_IDL,
 				context, encoding);
