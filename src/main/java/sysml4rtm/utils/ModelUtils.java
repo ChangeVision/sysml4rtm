@@ -12,6 +12,7 @@ import com.change_vision.jude.api.inf.exception.InvalidUsingException;
 import com.change_vision.jude.api.inf.model.IAssociation;
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IBlock;
+import com.change_vision.jude.api.inf.model.IClass;
 import com.change_vision.jude.api.inf.model.IConnector;
 import com.change_vision.jude.api.inf.model.IDiagram;
 import com.change_vision.jude.api.inf.model.IElement;
@@ -158,6 +159,47 @@ public class ModelUtils {
 	public static IDiagram getCurrentDiagram() throws InvalidUsingException, ClassNotFoundException {
 		return AstahAPI.getAstahAPI().getProjectAccessor().getViewManager().getDiagramViewManager()
 				.getCurrentDiagram();
+	}
+
+	public static boolean hasPortType(IPort port){
+		return port.getType() != null;
+	}
+
+	public static boolean hasConvey(IItemFlow itemflow) {
+		return itemflow.getConveys().length > 0;
+	}
+
+	public static boolean hasTypeFromItemProperty(IAttribute itemProperty) {
+		return itemProperty !=null && itemProperty.getType() != null;
+	}
+
+	public static boolean hasItemPropertiesHaveSameType(IItemFlow[] itemflows){
+		HashSet<IClass> types = new HashSet<IClass>();
+		for (IItemFlow itemflow : itemflows) {
+			IClass conveyDataType = ModelUtils.getConveyDataType(itemflow);
+			types.add(conveyDataType);
+		}
+	
+		return types.size() == 1;
+	}
+
+	public static boolean hasFlowPropertieshaveSameType(IFlowProperty[] flowProperties) {
+		HashSet<IClass> types = new HashSet<IClass>();
+		for (IFlowProperty flowProperty : flowProperties) {
+			types.add(flowProperty.getType());
+		}
+		return types.size() == 1;
+	}
+
+	public static IClass getConveyDataType(IItemFlow itemflow) {
+		IAttribute itemProperty = itemflow.getItemProperty();
+		IClass conveyDataType = null;
+		if(hasTypeFromItemProperty(itemProperty)){
+			conveyDataType = itemProperty.getType();
+		}else if (hasConvey(itemflow)){
+			conveyDataType = itemflow.getConveys()[0];
+		}
+		return conveyDataType;
 	}
 
 

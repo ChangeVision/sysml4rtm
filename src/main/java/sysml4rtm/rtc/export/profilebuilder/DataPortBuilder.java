@@ -1,7 +1,6 @@
 package sysml4rtm.rtc.export.profilebuilder;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.openrtp.namespaces.rtc.Dataport;
@@ -62,7 +61,7 @@ public class DataPortBuilder {
 		if(flowProperties == null || flowProperties.length == 0)
 			return null;
 		
-		if(!hasFlowPropertieshaveSameType(flowProperties)){
+		if(!ModelUtils.hasFlowPropertieshaveSameType(flowProperties)){
 			throw new IllegalStateException(String.format("%s.%s must validate",ModelUtils.getPartName(part),ModelUtils.getPortName(port)));
 		}
 		
@@ -74,10 +73,10 @@ public class DataPortBuilder {
 		if(itemflows == null || itemflows.length == 0)
 			return null;
 		
-		if(!hasItemPropertiesHaveSameType(itemflows)){
+		if(!ModelUtils.hasItemPropertiesHaveSameType(itemflows)){
 			throw new IllegalStateException(String.format("%s.%s must validate",ModelUtils.getPartName(part),ModelUtils.getPortName(port)));
 		}
-		return getConveyDataType(itemflows[0]);
+		return ModelUtils.getConveyDataType(itemflows[0]);
 	}
 
 	private String getPortType(IClass dataType) {
@@ -90,14 +89,11 @@ public class DataPortBuilder {
 			return typeName;
 		}
 	}
-	
-	private boolean hasPortType(IPort port){
-		return port.getType() != null;
-	}
+
 	
 	private Constants.DataPortType getPortDirectionType(IAttribute part, IPort port) {
 		DataPortType direction;
-		if (hasPortType(port)) {
+		if (ModelUtils.hasPortType(port)) {
 			IBlock portType = (IBlock) port.getType();
 			direction = ModelUtils.getDirection(portType.getFlowProperties());
 			if(!direction.equals(DataPortType.UNKNOWN))
@@ -105,43 +101,6 @@ public class DataPortBuilder {
 		}
 		
 		return ModelUtils.getDirection(part, port.getItemFlows());
-	}
-	
-	
-	private static boolean hasItemPropertiesHaveSameType(IItemFlow[] itemflows){
-		HashSet<IClass> types = new HashSet<IClass>();
-		for (IItemFlow itemflow : itemflows) {
-			types.add(getConveyDataType(itemflow));
-		}
-
-		return types.size() == 1;
-	}
-
-	private static IClass getConveyDataType(IItemFlow itemflow) {
-		IAttribute itemProperty = itemflow.getItemProperty();
-		IClass conveyDataType = null;
-		if(hasTypeFromItemProperty(itemProperty)){
-			conveyDataType = itemProperty.getType();
-		}else if (hasConvey(itemflow)){
-			conveyDataType = itemflow.getConveys()[0];
-		}
-		return conveyDataType;
-	}
-
-	private static boolean hasConvey(IItemFlow itemflow) {
-		return itemflow.getConveys().length > 0;
-	}
-
-	private static boolean hasTypeFromItemProperty(IAttribute itemProperty) {
-		return itemProperty !=null && itemProperty.getType() != null;
-	}
-	
-	private static boolean hasFlowPropertieshaveSameType(IFlowProperty[] flowProperties) {
-		HashSet<IClass> types = new HashSet<IClass>();
-		for (IFlowProperty flowProperty : flowProperties) {
-			types.add(flowProperty.getType());
-		}
-		return types.size() == 1;
 	}
 
 }
