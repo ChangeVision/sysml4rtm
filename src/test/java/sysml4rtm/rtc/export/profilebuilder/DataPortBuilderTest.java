@@ -3,9 +3,13 @@ package sysml4rtm.rtc.export.profilebuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.List;
 
+import org.apache.commons.lang.SystemUtils;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.openrtp.namespaces.rtc.Dataport;
 
 import sysml4rtm.AstahModelFinder;
@@ -15,6 +19,10 @@ import com.change_vision.jude.api.inf.model.IAttribute;
 
 public class DataPortBuilderTest {
 
+	@Rule
+	public TemporaryFolder folder = new TemporaryFolder();
+	private String pathToOutputFolder;
+	
 	@Test
 	public void port_nameはポート名から設定されること() throws Exception{
 		List<Dataport> dataports = findTestTarget("port.asml", ":Block0");
@@ -149,6 +157,15 @@ public class DataPortBuilderTest {
 		assertThat(port.getType(), is("RTC::TimedBoolean"));
 	}
 	
+	@Test
+	public void ポートの型が独自型の場合_そのIDLファイルが生成されること() throws Exception {
+		findTestTarget("dataport_customtype_idl.asml", ":BlockA");
+		
+		assertThat(new File(pathToOutputFolder + SystemUtils.FILE_SEPARATOR + "v1/V1.idl").exists(),is(true));
+		assertThat(new File(pathToOutputFolder + SystemUtils.FILE_SEPARATOR + "com/v2/V2.idl").exists(),is(true));
+		assertThat(new File(pathToOutputFolder + SystemUtils.FILE_SEPARATOR + "V3.idl").exists(),is(true));
+	}
+	
 	private Dataport findPort(List<Dataport> ports, String portName) {
 		for (Dataport port : ports) {
 			if (port.getName().equals(portName))
@@ -161,7 +178,8 @@ public class DataPortBuilderTest {
 		AstahModelFinder.open(this.getClass().getResourceAsStream(pathToModelFile));
 		IAttribute part = AstahModelFinder.findPart(partFullName);
 
-		DataPortBuilder builder = new DataPortBuilder();
+		pathToOutputFolder = folder.newFolder().getPath();
+		DataPortBuilder builder = new DataPortBuilder(pathToOutputFolder);
 		return builder.build(part);
 	}
 }

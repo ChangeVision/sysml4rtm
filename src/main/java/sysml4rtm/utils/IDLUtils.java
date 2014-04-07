@@ -1,4 +1,4 @@
-package sysml4rtm.idl.generator;
+package sysml4rtm.utils;
 
 import java.io.File;
 import java.io.IOException;

@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.VelocityContext;
 
 import sysml4rtm.constants.Constants;
+import sysml4rtm.utils.IDLUtils;
 
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IClass;

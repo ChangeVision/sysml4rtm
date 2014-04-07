@@ -17,6 +17,7 @@ import sysml4rtm.Messages;
 import sysml4rtm.ProjectAccessorFacade;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.exceptions.ApplicationException;
+import sysml4rtm.utils.IDLUtils;
 import sysml4rtm.utils.ModelUtils;
 
 import com.change_vision.jude.api.inf.model.IAssociation;
