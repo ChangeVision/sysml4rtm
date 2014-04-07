@@ -23,14 +23,14 @@
         <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
         <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
     </rtc:Actions>
-    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="a">
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="InterfaceA" rtc:idlFile="InterfaceA.idl" rtc:direction="Provided" rtc:name="interfaceA" rtc:path="" rtc:instanceName=""/>
+    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="a" rtcExt:position="TOP" >
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="InterfaceA" rtc:idlFile="@output/InterfaceA.idl" rtc:direction="Provided" rtc:name="interfaceA" rtc:path="" rtc:instanceName=""/>
     </rtc:ServicePorts>
-    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="b">
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="InterfaceB" rtc:idlFile="InterfaceB.idl" rtc:direction="Required" rtc:name="interfaceB" rtc:path="" rtc:instanceName=""/>
+    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="b" rtcExt:position="TOP" >
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="InterfaceB" rtc:idlFile="@output/InterfaceB.idl" rtc:direction="Required" rtc:name="interfaceB" rtc:path="" rtc:instanceName=""/>
     </rtc:ServicePorts>
-    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="c">
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="com_service_InterfaceC" rtc:idlFile="com/service/InterfaceC.idl" rtc:direction="Provided" rtc:name="interfaceC" rtc:path="" rtc:instanceName=""/>
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtc:type="com_service_InterfaceD" rtc:idlFile="com/service/InterfaceD.idl" rtc:direction="Required" rtc:name="interfaceD" rtc:path="" rtc:instanceName=""/>
+    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="c" rtcExt:position="TOP" >
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="com_service_InterfaceC" rtc:idlFile="@output/com/service/InterfaceC.idl" rtc:direction="Provided" rtc:name="interfaceC" rtc:path="" rtc:instanceName=""/>
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="com_service_InterfaceD" rtc:idlFile="@output/com/service/InterfaceD.idl" rtc:direction="Required" rtc:name="interfaceD" rtc:path="" rtc:instanceName=""/>
     </rtc:ServicePorts>
 </rtc:RtcProfile>

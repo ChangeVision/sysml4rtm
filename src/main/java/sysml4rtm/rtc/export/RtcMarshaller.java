@@ -14,6 +14,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.openrtp.namespaces.rtc.RtcProfile;
 
 import sysml4rtm.Messages;
@@ -45,8 +46,13 @@ public class RtcMarshaller {
 		profileBuilder.setBasicInfoBuilder(basicInfoBuilder);
 	}
 
-	private static File buildOutputFileName(String pathToOutput, IAttribute part) {
-		return new File(pathToOutput, part.getType().getFullName("_") + ".xml");
+	private static File buildOutputFileName(String pathToOutputFolder, IAttribute part) {
+		String pathToParentFolder = pathToOutputFolder + SystemUtils.FILE_SEPARATOR + part.getType().getFullNamespace("/");
+		File parent =  new File(pathToParentFolder);
+		if(!parent.exists())
+			parent.mkdirs();
+		
+		return new File(parent,part.getType().getName() + ".xml");
 	}
 
 	public void marshal(IDiagram currentDiagram, String pathToOutputFolder) {

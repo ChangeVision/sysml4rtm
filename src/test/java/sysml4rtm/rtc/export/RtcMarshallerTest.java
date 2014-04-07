@@ -12,6 +12,7 @@ import java.util.Date;
 import junit.framework.AssertionFailedError;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -40,10 +41,10 @@ public class RtcMarshallerTest {
 	}
 
 	@Test
-	public void 名前空間をもつブロックからはRTC_XMLファイルがアンダースコアに変換された名前で生成されること() throws Exception {
+	public void 名前空間をもつブロックからはRTC_XMLファイルが名前空間のフォルダに_ブロック名のファイル名で生成されること() throws Exception {
 		File outputFolder = marshal("marshal_dataports.asml","ibd");
 
-		File actual = FileUtils.getFile(outputFolder, "com_sample_Block0.xml");
+		File actual = FileUtils.getFile(outputFolder.getPath() + "/com/sample/Block0.xml");
 		assertThat(actual.exists(), is(true));
 	}
 
@@ -51,7 +52,7 @@ public class RtcMarshallerTest {
 	public void データポートを持つブロックからRTC_XMLファイルが生成されること() throws Exception {
 		File outputFolder = marshal("marshal_dataports.asml","ibd");
 
-		File actual = FileUtils.getFile(outputFolder, "com_sample_Block0.xml");
+		File actual = FileUtils.getFile(outputFolder.getPath() + "/com/sample/Block0.xml");
 		assertThat(actual.exists(), is(true));
 
 		File expected = new File(this.getClass().getResource("expected_marshal_dataport.xml")
@@ -64,17 +65,22 @@ public class RtcMarshallerTest {
 	public void サービスポートを持つブロックからRTC_XMLファイルと依存するIDLファイルが生成されること() throws Exception {
 		File outputFolder = marshal("marshal_serviceports.asml","ibd");
 
-		File actual = FileUtils.getFile(outputFolder, "com_Block0.xml");
+		File actual = FileUtils.getFile(outputFolder.getPath() + "/com/Block0.xml");
 		assertThat(actual.exists(), is(true));
 
 		File expected = new File(this.getClass().getResource("expected_serviceport.xml")
 				.getPath());
-		assertXMLEqual(FileUtils.readFileToString(expected), FileUtils.readFileToString(actual));
+		assertXMLEqual(getExpectedXml(expected,outputFolder.getPath()), FileUtils.readFileToString(actual));
 		
 		assertThat(new File(outputFolder,"InterfaceA.idl").exists(), is(true));
 		assertThat(new File(outputFolder,"InterfaceB.idl").exists(), is(true));
 		assertThat(new File(outputFolder.getPath() + "/com/service/InterfaceC.idl").exists(), is(true));
 		assertThat(new File(outputFolder.getPath() + "/com/service/InterfaceD.idl").exists(), is(true));
+	}
+	
+	private String getExpectedXml(File expected,String replacement) throws Exception {
+		String contents = FileUtils.readFileToString(expected);
+		return StringUtils.replace(contents, "@output", replacement);
 	}
 	
 	private File marshal(String pathToModelFile, String ibdDiagramName) throws Exception {
