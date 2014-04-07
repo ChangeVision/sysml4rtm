@@ -117,8 +117,12 @@ public class DataPortBuilder {
 		if (ModelUtils.hasPortType(port)) {
 			IBlock portType = (IBlock) port.getType();
 			direction = ModelUtils.getDirection(portType.getFlowProperties());
-			if (!direction.equals(DataPortType.UNKNOWN))
-				return direction;
+			if (!direction.equals(DataPortType.UNKNOWN)){
+				if(port.isConjugated()){
+					return DataPortType.getConjugatedType(direction);
+				}
+				return direction;				
+			}
 		}
 
 		return ModelUtils.getDirection(part, port.getItemFlows());

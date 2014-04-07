@@ -166,6 +166,15 @@ public class DataPortBuilderTest {
 		assertThat(new File(pathToOutputFolder + SystemUtils.FILE_SEPARATOR + "V3.idl").exists(),is(true));
 	}
 	
+	@Test
+	public void ポートの共役が有効である場合_フロープロパティから判断される方向性は逆になること() throws Exception {
+		List<Dataport> dataports = findTestTarget("port_conjugated.asml", ":BlockB");
+
+		assertThat(findPort(dataports, "a").getPortType(), is(Constants.DataPortType.IN.toString()));
+		assertThat(findPort(dataports, "b").getPortType(), is(Constants.DataPortType.OUT.toString()));
+		assertThat(findPort(dataports, "c").getPortType(), is(Constants.DataPortType.OUT.toString()));
+	}
+	
 	private Dataport findPort(List<Dataport> ports, String portName) {
 		for (Dataport port : ports) {
 			if (port.getName().equals(portName))

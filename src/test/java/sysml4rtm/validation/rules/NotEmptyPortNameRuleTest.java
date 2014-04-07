@@ -19,7 +19,7 @@ public class NotEmptyPortNameRuleTest {
 		NotEmptyPortNameRule rule = new NotEmptyPortNameRule();
 		assertThat(rule.validate(part),is(false));
 		assertThat(rule.getResults().size(),is(1));
-		assertThat(rule.getResults().get(0).getMessage(),is(Messages.getMessage("error.port_name_is_empty", ":Block0")));
+		assertThat(rule.getResults().get(0).getMessage(),is(Messages.getMessage("error.port_name_is_empty", ":Block0","")));
 	}
 	
 	@Test
@@ -29,7 +29,7 @@ public class NotEmptyPortNameRuleTest {
 		NotEmptyPortNameRule rule = new NotEmptyPortNameRule();
 		assertThat(rule.validate(part),is(false));
 		assertThat(rule.getResults().size(),is(1));
-		assertThat(rule.getResults().get(0).getMessage(),is(Messages.getMessage("error.port_name_is_empty", ":Block1")));
+		assertThat(rule.getResults().get(0).getMessage(),is(Messages.getMessage("error.port_name_is_empty", ":Block1",":ブロック2")));
 	}
 
 }

@@ -38,6 +38,17 @@ public class Constants {
 			DataPortType.this.value = value;
 		}
 
+		public static DataPortType getConjugatedType(DataPortType type){
+			switch(type){
+			case OUT:
+				return DataPortType.IN;
+			case IN:
+				return DataPortType.OUT;
+			default:
+				return type;
+			}				
+		}
+		
 		@Override
 		public String toString() {
 			return DataPortType.this.value;

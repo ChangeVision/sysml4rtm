@@ -2,7 +2,7 @@ package sysml4rtm.rtc.export;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.InputStream;
@@ -76,6 +76,22 @@ public class RtcMarshallerTest {
 		assertThat(new File(outputFolder,"InterfaceB.idl").exists(), is(true));
 		assertThat(new File(outputFolder.getPath() + "/com/service/InterfaceC.idl").exists(), is(true));
 		assertThat(new File(outputFolder.getPath() + "/com/service/InterfaceD.idl").exists(), is(true));
+	}
+	
+	@Test
+	public void データポート_サービスポート_独自型を利用しているモデルから_RTCXMLファイルとインタフェースや独自型のIDLファイルが生成されること() throws Exception {
+		File outputFolder = marshal("sample_model.asml","actuator");
+
+		File path = FileUtils.getFile(outputFolder.getPath() + "/sample/controllers/PathPlanningController.xml");
+		assertThat(path.exists(), is(true));
+
+		System.out.println(FileUtils.readFileToString(path));
+
+		System.out.println("-------------------------------------------");
+		File motor = FileUtils.getFile(outputFolder.getPath() + "/sample/MotorAssembly.xml");
+		assertThat(motor.exists(), is(true));
+
+		System.out.println(FileUtils.readFileToString(motor));
 	}
 	
 	private String getExpectedXml(File expected,String replacement) throws Exception {
