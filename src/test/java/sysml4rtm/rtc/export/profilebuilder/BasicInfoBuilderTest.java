@@ -42,9 +42,9 @@ public class BasicInfoBuilderTest {
 	}
 
 	@Test
-	public void basicinfo_nameに_名前空間をもつブロックから_名前空間を含むブロック名が設定されること() throws Exception {
+	public void basicinfo_nameに_名前空間をもつブロックから_名前空間を除くブロック名が設定されること() throws Exception {
 		BasicInfo basicinfo = findTestTarget("marshal_basic.asml", "part0:com::changevision::sample::Block1");
-		assertThat(basicinfo.getName(), is("com::changevision::sample::Block1"));
+		assertThat(basicinfo.getName(), is("Block1"));
 	}
 
 	@Test

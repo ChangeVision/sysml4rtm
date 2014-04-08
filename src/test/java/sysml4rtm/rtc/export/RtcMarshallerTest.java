@@ -72,6 +72,8 @@ public class RtcMarshallerTest {
 				.getPath());
 		assertXMLEqual(getExpectedXml(expected,outputFolder.getPath()), FileUtils.readFileToString(actual));
 		
+		assertThat(FileUtils.listFiles(outputFolder, new String[]{"idl"}, true).size(),is(4));
+		
 		assertThat(new File(outputFolder,"InterfaceA.idl").exists(), is(true));
 		assertThat(new File(outputFolder,"InterfaceB.idl").exists(), is(true));
 		assertThat(new File(outputFolder.getPath() + "/com/service/InterfaceC.idl").exists(), is(true));
@@ -82,16 +84,16 @@ public class RtcMarshallerTest {
 	public void データポート_サービスポート_独自型を利用しているモデルから_RTCXMLファイルとインタフェースや独自型のIDLファイルが生成されること() throws Exception {
 		File outputFolder = marshal("sample_model.asml","actuator");
 
-		File path = FileUtils.getFile(outputFolder.getPath() + "/sample/controllers/PathPlanningController.xml");
-		assertThat(path.exists(), is(true));
+		File actual = FileUtils.getFile(outputFolder.getPath() + "/sample/controllers/PathPlanningController.xml");
+		assertThat(actual.exists(), is(true));
 
-		System.out.println(FileUtils.readFileToString(path));
-
-		System.out.println("-------------------------------------------");
-		File motor = FileUtils.getFile(outputFolder.getPath() + "/sample/MotorAssembly.xml");
-		assertThat(motor.exists(), is(true));
-
-		System.out.println(FileUtils.readFileToString(motor));
+		File expected = new File(this.getClass().getResource("expected_pathplanningcontroller.xml")
+				.getPath());
+		assertXMLEqual(getExpectedXml(expected,outputFolder.getPath()), FileUtils.readFileToString(actual));
+		
+		assertThat(FileUtils.listFiles(outputFolder, new String[]{"idl"}, true).size(),is(2));
+		assertThat(new File(outputFolder.getPath() + "/sample/valuetypes/Angle.idl").exists(), is(true));
+		assertThat(new File(outputFolder.getPath() + "/sample/MotorCommandService.idl").exists(), is(true));
 	}
 	
 	private String getExpectedXml(File expected,String replacement) throws Exception {

@@ -3,8 +3,9 @@ package sysml4rtm.rtc.export.profilebuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openrtp.namespaces.rtc.Dataport;
+import org.apache.commons.lang.SystemUtils;
 import org.openrtp.namespaces.rtc_ext.DataportExt;
+import org.openrtp.namespaces.rtc_ext.Position;
 
 import sysml4rtm.constants.Constants;
 import sysml4rtm.constants.Constants.DataPortType;
@@ -23,26 +24,30 @@ public class DataPortBuilder {
 
 	private IAttribute part;
 	private CustomTypeIDLGenerator customTypeIDLGenerator;
+	private String pathToOutputFolder;
 
 	public DataPortBuilder(String pathToOutputFolder) {
+		this.pathToOutputFolder = pathToOutputFolder;
 		customTypeIDLGenerator = new CustomTypeIDLGenerator(pathToOutputFolder);
 	}
 
-	public List<Dataport> build(IAttribute part) {
+	public List<DataportExt> build(IAttribute part) {
 		this.part = part;
 		IBlock block = (IBlock) part.getType();
-		List<Dataport> dataPorts = new ArrayList<Dataport>();
+		List<DataportExt> dataPorts = new ArrayList<DataportExt>();
 
 		for (IPort port : block.getPorts()) {
 			if (!ModelUtils.hasServiceInterface(port)) {
-				Dataport dataPort = new DataportExt();
+				DataportExt dataPort = new DataportExt();
 				dataPort.setName(port.getName());
 				dataPort.setPortType(getPortDirectionType(part, port).toString());
+				dataPort.setPosition(Position.LEFT);
 				
 				IClass portDataType = getDataType(port);
 				dataPort.setType(getDataTypeExpression(portDataType));
 				
 				if(IDLUtils.isCustomType(portDataType.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR))){
+					dataPort.setIdlFile(getPathToIdlFile(portDataType));
 					generateCustomTypeIdl(portDataType);
 				}
 				
@@ -52,7 +57,11 @@ public class DataPortBuilder {
 
 		return dataPorts;
 	}
-
+	
+	private String getPathToIdlFile(IClass target) {
+		return pathToOutputFolder + SystemUtils.FILE_SEPARATOR + target.getFullName("/") + ".idl";
+	}
+	
 	private IClass getDataType(IPort port) {
 		IClass portDataType = null;
 

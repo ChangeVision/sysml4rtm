@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rtc:RtcProfile 
+    rtc:version="0.2" 
+    rtc:id="RTC:Vendor:Category:sample::controllers::PathPlanningController:1.0.0" 
+    xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext"
+    xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" 
+    xmlns:rtc="http://www.openrtp.org/namespaces/rtc" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="">
+    <rtc:BasicInfo 
+    xsi:type="rtcExt:basic_info_ext" 
+    rtc:updateDate="1970-01-01T09:00:00.000+09:00" 
+    rtc:creationDate="1970-01-01T09:00:00.000+09:00" 
+    rtc:version="1.0" 
+    rtc:vendor="Vendor" 
+    rtc:executionType="PeriodicExecutionContext" 
+    rtc:executionRate="10.0" 
+    rtc:description="" 
+    rtc:maxInstances="0"
+    rtc:category="Category" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" 
+    rtc:componentType="STATIC" rtc:name="PathPlanningController"/>
+    <rtc:Actions>
+        <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+    </rtc:Actions>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtc:type="sample::valuetypes::Angle" rtc:name="angle" rtc:portType="DataInPort"  rtcExt:position="LEFT" rtc:idlFile="@output/sample/valuetypes/Angle.idl"/>
+    <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="commandservice" rtcExt:position="TOP" >
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="sample::MotorCommandService" rtc:idlFile="@output/sample/MotorCommandService.idl" rtc:direction="Required" rtc:name="motorCommandService" rtc:path="" rtc:instanceName=""/>
+    </rtc:ServicePorts>
+</rtc:RtcProfile>

@@ -15,11 +15,11 @@
         rtc:description="This is description.
 Escape char &lt;&quot;hoge&quot;&gt;&lt;&apos;&amp;foo&apos;&gt;"
         rtc:category="Category" rtc:componentKind="DataFlowComponent"
-        rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:maxInstances="0" rtc:name="com::sample::Block0" />
+        rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:maxInstances="0" rtc:name="Block0" />
     <rtc:Actions>
         <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true" />
         <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true" />
     </rtc:Actions>
-    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtc:type="RTC::TimedShort" rtc:name="out_a" rtc:portType="DataOutPort" />
-    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtc:type="RTC::TimedDouble" rtc:name="in_a" rtc:portType="DataInPort" />
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtc:type="RTC::TimedShort" rtc:name="out_a" rtc:portType="DataOutPort" rtcExt:position="LEFT"/>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtc:type="RTC::TimedDouble" rtc:name="in_a" rtc:portType="DataInPort"  rtcExt:position="LEFT"/>
 </rtc:RtcProfile>

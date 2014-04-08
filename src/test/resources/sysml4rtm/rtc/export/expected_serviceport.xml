@@ -18,7 +18,7 @@
     rtc:description="" 
     rtc:maxInstances="0"
     rtc:category="Category" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" 
-    rtc:componentType="STATIC" rtc:name="com::Block0"/>
+    rtc:componentType="STATIC" rtc:name="Block0"/>
     <rtc:Actions>
         <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
         <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
@@ -30,7 +30,7 @@
         <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="InterfaceB" rtc:idlFile="@output/InterfaceB.idl" rtc:direction="Required" rtc:name="interfaceB" rtc:path="" rtc:instanceName=""/>
     </rtc:ServicePorts>
     <rtc:ServicePorts xsi:type="rtcExt:serviceport_ext" rtc:name="c" rtcExt:position="TOP" >
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="com_service_InterfaceC" rtc:idlFile="@output/com/service/InterfaceC.idl" rtc:direction="Provided" rtc:name="interfaceC" rtc:path="" rtc:instanceName=""/>
-        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="com_service_InterfaceD" rtc:idlFile="@output/com/service/InterfaceD.idl" rtc:direction="Required" rtc:name="interfaceD" rtc:path="" rtc:instanceName=""/>
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="com::service::InterfaceC" rtc:idlFile="@output/com/service/InterfaceC.idl" rtc:direction="Provided" rtc:name="interfaceC" rtc:path="" rtc:instanceName=""/>
+        <rtc:ServiceInterface xsi:type="rtcExt:serviceinterface_ext" rtcExt:variableName="" rtc:type="com::service::InterfaceD" rtc:idlFile="@output/com/service/InterfaceD.idl" rtc:direction="Required" rtc:name="interfaceD" rtc:path="" rtc:instanceName=""/>
     </rtc:ServicePorts>
 </rtc:RtcProfile>

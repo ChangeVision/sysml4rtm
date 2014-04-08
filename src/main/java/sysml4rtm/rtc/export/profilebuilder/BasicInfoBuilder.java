@@ -26,7 +26,7 @@ public class BasicInfoBuilder {
 		BasicInfo basicinfo = new BasicInfoExt();
 
 		IBlock block = (IBlock) part.getType();
-		basicinfo.setName(block.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR));
+		basicinfo.setName(block.getName());
 
 		basicinfo.setComponentType("STATIC");
 		basicinfo.setActivityType("PERIODIC");

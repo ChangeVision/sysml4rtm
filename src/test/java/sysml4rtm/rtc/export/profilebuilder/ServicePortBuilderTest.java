@@ -67,7 +67,7 @@ public class ServicePortBuilderTest {
 	}
 	
 	@Test
-	public void Serviceinterface_typeは_名前空間をアンダースコアに変換したインタフェース名が設定されること() throws Exception {
+	public void Serviceinterface_typeは_名前空間付きのインタフェース名が設定されること() throws Exception {
 		List<ServiceportExt> ports = findTestTarget("serviceport.asml", ":Block1");
 		
 		ServiceportExt port = findPort(ports, "ProvidedA");
@@ -76,7 +76,7 @@ public class ServicePortBuilderTest {
 		
 		port = findPort(ports, "WithNameSpace");
 		si = port.getServiceInterface().get(0);
-		assertThat(si.getType(),is("com_service_MyService"));
+		assertThat(si.getType(),is("com::service::MyService"));
 	}
 	
 	@Test

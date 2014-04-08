@@ -45,6 +45,9 @@ public class NotExistInconsitencyItemFlowAndFlowPropertyRelationRule extends Def
 				continue;
 
 			DataPortType directionFromFlowProperty = ModelUtils.getDirection(flowProperties);
+			if(port.isConjugated()){
+				directionFromFlowProperty = DataPortType.getConjugatedType(directionFromFlowProperty);
+			}
 			DataPortType directionFromItemFlow = ModelUtils.getDirection(attr,itemFlows);
 			if (!directionFromFlowProperty.equals(directionFromItemFlow)) {
 				setResult(new ValidationError(Messages.getMessage(

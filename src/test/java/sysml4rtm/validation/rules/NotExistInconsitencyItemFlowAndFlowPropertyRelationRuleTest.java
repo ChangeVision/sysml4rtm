@@ -1,7 +1,7 @@
 package sysml4rtm.validation.rules;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -36,6 +36,24 @@ public class NotExistInconsitencyItemFlowAndFlowPropertyRelationRuleTest {
 	public void サービスポートは妥当性検証の対象外となること() throws Exception {
 		AstahModelFinder.open(this.getClass().getResourceAsStream("marshal_serviceports.asml"));
 		IAttribute part = AstahModelFinder.findPart(":com::Block0");
+		NotExistInconsitencyItemFlowAndFlowPropertyRelationRule rule = new NotExistInconsitencyItemFlowAndFlowPropertyRelationRule();
+		assertThat(rule.validate(part),is(true));
+	}
+	
+	@Test
+	public void 共役を使った場合もFlowPropertyとItemFlowの方向が違う場合はエラーとなること() throws Exception {
+		AstahModelFinder.open(this.getClass().getResourceAsStream("error_flow_property_part.asml"));
+		IAttribute part = AstahModelFinder.findPart(":BlockET");
+		NotExistInconsitencyItemFlowAndFlowPropertyRelationRule rule = new NotExistInconsitencyItemFlowAndFlowPropertyRelationRule();
+		assertThat(rule.validate(part),is(false));
+		assertThat(rule.getResults().size(),is(1));
+		assertThat(rule.getResults().get(0).getMessage(),is(Messages.getMessage("error.Inconsistency_flowproperty_itemflow", ":BlockET", ":PortTypeA")));
+	}
+	
+	@Test
+	public void 共役を使った場合もFlowPropertyとItemFlowの方向が正しい場合はエラーとならない() throws Exception {
+		AstahModelFinder.open(this.getClass().getResourceAsStream("error_flow_property_part.asml"));
+		IAttribute part = AstahModelFinder.findPart(":BlockET2");
 		NotExistInconsitencyItemFlowAndFlowPropertyRelationRule rule = new NotExistInconsitencyItemFlowAndFlowPropertyRelationRule();
 		assertThat(rule.validate(part),is(true));
 	}

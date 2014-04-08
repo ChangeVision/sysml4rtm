@@ -58,7 +58,7 @@ public class ServicePortBuilder {
 			servicePort.getServiceInterface().add(serviceinterface);
 
 			serviceinterface.setName(StringUtils.uncapitalize(target.getName()));
-			serviceinterface.setType(target.getFullName("_"));
+			serviceinterface.setType(target.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR));
 			serviceinterface.setDirection(direction);
 			serviceinterface.setIdlFile(getPathToIdlFile(target));
 
