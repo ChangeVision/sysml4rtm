@@ -28,6 +28,7 @@ import sysml4rtm.Messages;
 import sysml4rtm.exceptions.UnSupportDiagramException;
 import sysml4rtm.exceptions.ValidationException;
 import sysml4rtm.rtc.export.RtcMarshaller;
+import sysml4rtm.rts.export.RtsMarshaller;
 import sysml4rtm.utils.ConfigUtil;
 import sysml4rtm.utils.ModelUtils;
 
@@ -126,8 +127,13 @@ public class GenerateRtmProfileDialog extends JDialog {
 			ConfigUtil.saveCodeOutputPath(outputPath);
 
 			IDiagram currentDiagram = ModelUtils.getCurrentDiagram();
+			
 			RtcMarshaller rtcMarshaller = new RtcMarshaller();
 			rtcMarshaller.marshal(currentDiagram,outputPath);
+			
+			RtsMarshaller rtsMarshaller = new RtsMarshaller();
+			rtsMarshaller.marshal(currentDiagram,outputPath);
+			
 			util.showInformationMessage(GenerateRtmProfileDialog.this,
 					Messages.getMessage("success.doc.generation"));
 			

@@ -8,6 +8,7 @@ public class Constants {
 	public static final String DEFAULT_DATA_TYPE = "RTC::TimedDouble";
 
 	public static final String NAMESPACE_RTC = "http://www.openrtp.org/namespaces/rtc";
+	public static final String NAMESPACE_RTS = "http://www.openrtp.org/namespaces/rts";
 
 	public static final String RTC_BUILTIN_TYPE = "rtcBuiltinType";
 

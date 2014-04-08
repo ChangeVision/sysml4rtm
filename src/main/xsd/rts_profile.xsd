@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:rts="http://www.openrtp.org/namespaces/rts"
+	targetNamespace="http://www.openrtp.org/namespaces/rts"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified">
+
+	<xsd:element name="RtsProfile" type="rts:rts_profile"/>
+	<xsd:complexType name="rts_profile">
+		<xsd:sequence>
+			<xsd:element name="Components" type="rts:component" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Groups" type="rts:componentGroup" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="DataPortConnectors" type="rts:dataport_connector" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ServicePortConnectors" type="rts:serviceport_connector" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="StartUp" type="rts:startup" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ShutDown" type="rts:shutdown" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Activation" type="rts:activation" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Deactivation" type="rts:deactivation" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Resetting" type="rts:resetting" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Initializing" type="rts:initialize" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Finalizing" type="rts:finalize" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+		<xsd:attribute name="version" type="xsd:string" use="required"/>
+		<xsd:attribute name="abstract" type="xsd:string" use="optional"/>
+		<xsd:attribute name="creationDate" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="updateDate" type="xsd:dateTime" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="component">
+		<xsd:sequence>
+			<xsd:element name="DataPorts" type="rts:dataport" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ServicePorts" type="rts:serviceport" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ConfigurationSets" type="rts:configuration_set" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ExecutionContexts" type="rts:execution_context" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Participants" type="rts:participants" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+		<xsd:attribute name="pathUri" type="xsd:string" use="required"/>
+		<xsd:attribute name="instanceName" type="xsd:string" use="required"/>
+		<xsd:attribute name="activeConfigurationSet" type="xsd:string" use="optional"/>
+		<xsd:attribute name="compositeType">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="None"/>
+					<xsd:enumeration value="PeriodicECShared"/>
+					<xsd:enumeration value="PeriodicStateShared"/>
+					<xsd:enumeration value="Grouping"/>
+					<xsd:enumeration value="FsmECShared"/>
+					<xsd:enumeration value="FsmStateShared"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="isRequired" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="dataport">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="serviceport">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="configuration_set">
+		<xsd:sequence>
+			<xsd:element name="ConfigurationData" type="rts:configuration_data" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="configuration_data">
+		<xsd:sequence>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="data" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="execution_context">
+		<xsd:sequence>
+			<xsd:element name="Participants" type="rts:target_component" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+		<xsd:attribute name="kind" type="xsd:string" use="required"/>
+		<xsd:attribute name="rate" type="xsd:double" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="participants">
+		<xsd:sequence>
+			<xsd:element name="Participant" type="rts:target_component" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="componentGroup">
+		<xsd:sequence>
+			<xsd:element name="Members" type="rts:target_component" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="groupId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="dataport_connector">
+		<xsd:sequence>
+			<xsd:element name="sourceDataPort" type="rts:target_port" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="targetDataPort" type="rts:target_port" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="connectorId" type="xsd:string" use="required"/>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="dataType" type="xsd:string" use="required"/>
+		<xsd:attribute name="interfaceType" type="xsd:string" use="required"/>
+		<xsd:attribute name="dataflowType" type="xsd:string" use="required"/>
+		<xsd:attribute name="subscriptionType" type="xsd:string" use="optional"/>
+		<xsd:attribute name="pushInterval" type="xsd:double" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="serviceport_connector">
+		<xsd:sequence>
+			<xsd:element name="sourceServicePort" type="rts:target_port" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="targetServicePort" type="rts:target_port" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="connectorId" type="xsd:string" use="required"/>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="transMethod" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="target_component">
+		<xsd:sequence>
+		</xsd:sequence>
+		<xsd:attribute name="componentId" type="xsd:string" use="required"/>
+		<xsd:attribute name="instanceName" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="target_port">
+		<xsd:complexContent>
+			<xsd:extension base="rts:target_component">
+				<xsd:attribute name="portName" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="target_executioncontext">
+		<xsd:complexContent>
+			<xsd:extension base="rts:target_component">
+				<xsd:attribute name="id" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="message_sending">
+		<xsd:sequence>
+			<xsd:element name="targets" type="rts:condition" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="startup">
+		<xsd:complexContent>
+			<xsd:extension base ="rts:message_sending">
+				<xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="shutdown">
+		<xsd:complexContent>
+			<xsd:extension base ="rts:message_sending">
+				<xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="activation">
+		<xsd:complexContent>
+			<xsd:extension base ="rts:message_sending">
+				<xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="deactivation">
+		<xsd:complexContent>
+			<xsd:extension base ="rts:message_sending">
+				<xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="resetting">
+		<xsd:complexContent>
+			<xsd:extension base ="rts:message_sending">
+				<xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="initialize">
+		<xsd:complexContent>
+			<xsd:extension base ="rts:message_sending">
+				<xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="finalize">
+		<xsd:complexContent>
+			<xsd:extension base ="rts:message_sending">
+				<xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="condition">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="WaitTime" type="rts:waittime"/>
+				<xsd:element name="Preceding" type="rts:preceding"/>
+			</xsd:choice>
+			<xsd:element name="TargetComponent" type="rts:target_executioncontext"/>
+		</xsd:sequence>
+		<xsd:attribute name="sequence" type="xsd:integer" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="preceding">
+		<xsd:sequence>
+			<xsd:element name="PrecedingComponents" type="rts:target_executioncontext" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="timeout" type="xsd:string" use="optional"/>
+		<xsd:attribute name="sendingTiming" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="waittime">
+		<xsd:sequence>
+		</xsd:sequence>
+		<xsd:attribute name="waitTime" type="xsd:integer" use="optional"/>
+	</xsd:complexType>
+
+</xsd:schema>

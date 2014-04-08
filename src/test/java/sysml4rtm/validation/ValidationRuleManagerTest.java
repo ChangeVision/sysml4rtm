@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import sysml4rtm.validation.rules.ConnectorMustAttachPortRule;
 import sysml4rtm.validation.rules.DefineDirectionRule;
+import sysml4rtm.validation.rules.DefineValidIbdDiagramNameRule;
 import sysml4rtm.validation.rules.MustDefinePortTypeRule;
 import sysml4rtm.validation.rules.NotEmptyPortNameRule;
 import sysml4rtm.validation.rules.NotExistInOutFlowPropertyRule;
@@ -20,7 +21,7 @@ public class ValidationRuleManagerTest {
 	@Test
 	public void ルールが登録されていること() {
 		ValidationRuleManager manager = ValidationRuleManager.getInstance();
-		assertThat(manager.getValidationRule().size(),is(9));
+		assertThat(manager.getValidationRule().size(),is(10));
 		
 		assertThat(manager.hasRule(ConnectorMustAttachPortRule.class),is(true));
 		assertThat(manager.hasRule(DefineDirectionRule.class),is(true));
@@ -31,6 +32,7 @@ public class ValidationRuleManagerTest {
 		assertThat(manager.hasRule(NotExistInOutItemFlowPropertyRule.class),is(true));
 		assertThat(manager.hasRule(PartMustHaveTypeRule.class),is(true));
 		assertThat(manager.hasRule(PortDataTypeHasTmMemberRule.class),is(true));
+		assertThat(manager.hasRule(DefineValidIbdDiagramNameRule.class),is(true));
 	}
 
 }

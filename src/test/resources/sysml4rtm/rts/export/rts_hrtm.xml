@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rts:RtsProfile rts:id="RTSystem:.no_title:1.0"
+    rts:version="0.2" rts:abstract="" rts:creationDate="2014-04-08T13:39:57.858+09:00"
+    rts:updateDate="2014-04-08T13:39:57.858+09:00" xsi:schemaLocation=""
+    xmlns:rtsExt="http://www.openrtp.org/namespaces/rts_ext" xmlns:rts="http://www.openrtp.org/namespaces/rts"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <rts:Components xsi:type="rtsExt:component_ext"
+        rts:id="RTC:Noriaki Ando, AIST:example:ConsoleIn:1.0"
+        rts:pathUri="localhost:2809/ConsoleIn0.rtc" rts:instanceName="ConsoleIn0"
+        rts:compositeType="None" rts:isRequired="false">
+        <rts:DataPorts xsi:type="rtsExt:dataport_ext"
+            rts:name="ConsoleIn0.out" />
+        <rts:ExecutionContexts xsi:type="rtsExt:execution_context_ext"
+            rts:id="0" rts:kind="PERIODIC" rts:rate="1000.0" />
+        <rtsExt:Location rtsExt:x="28" rtsExt:y="79"
+            rtsExt:height="-1" rtsExt:width="-1" rtsExt:direction="RIGHT" />
+    </rts:Components>
+    <rts:Components xsi:type="rtsExt:component_ext"
+        rts:id="RTC:Noriaki Ando, AIST:example:ConsoleOut:1.0"
+        rts:pathUri="localhost:2809/ConsoleOut0.rtc" rts:instanceName="ConsoleOut0"
+        rts:compositeType="None" rts:isRequired="false">
+        <rts:DataPorts xsi:type="rtsExt:dataport_ext"
+            rts:name="ConsoleOut0.in" />
+        <rts:ExecutionContexts xsi:type="rtsExt:execution_context_ext"
+            rts:id="0" rts:kind="PERIODIC" rts:rate="1000.0" />
+        <rtsExt:Location rtsExt:x="126" rtsExt:y="204"
+            rtsExt:height="-1" rtsExt:width="-1" rtsExt:direction="RIGHT" />
+    </rts:Components>
+    <rts:DataPortConnectors xsi:type="rtsExt:dataport_connector_ext"
+        rts:connectorId="1ru-htqp88mb-vxfmzk--yo82io-9caba13b1a636eb1d0d822aa8c82fd3b"
+        rts:name="ConsoleIn0.out_ConsoleOut0.in" rts:dataType="TimedLong"
+        rts:interfaceType="corba_cdr" rts:dataflowType="push"
+        rts:subscriptionType="flush">
+        <rts:sourceDataPort xsi:type="rtsExt:target_port_ext"
+            rts:portName="ConsoleOut0.in" rts:componentId="RTC:Noriaki Ando, AIST:example:ConsoleOut:1.0"
+            rts:instanceName="ConsoleOut0" />
+        <rts:targetDataPort xsi:type="rtsExt:target_port_ext"
+            rts:portName="ConsoleIn0.out" rts:componentId="RTC:Noriaki Ando, AIST:example:ConsoleIn:1.0"
+            rts:instanceName="ConsoleIn0" />
+        <!-- <rtsExt:Properties rtsExt:name="dataport.data_type" rtsExt:value="IDL:RTC/TimedLong:1.0"/> 
+            <rtsExt:Properties rtsExt:name="dataport.publisher.push_policy" rtsExt:value="all"/> 
+            <rtsExt:Properties rtsExt:name="dataport.serializer.cdr.endian" rtsExt:value="little,big"/> 
+            <rtsExt:Properties rtsExt:name="dataport.corba_cdr.inport_ior" rtsExt:value="IOR:010000001a00000049444c3a4f70656e52544d2f496e506f72744364723a312e30000000010000000000000064000000010102000e0000003139322e3136382e302e3133310088b30e000000fec87c4353000059f7000000001700000200000000000000080000000100000000545441010000001c00000001000000010001000100000001000105090101000100000009010100"/> 
+            <rtsExt:Properties rtsExt:name="dataport.outport.buffer.length" rtsExt:value="0"/> 
+            <rtsExt:Properties rtsExt:name="dataport.outport.buffer.write.full_policy" 
+            rtsExt:value="overwrite"/> <rtsExt:Properties rtsExt:name="dataport.outport.buffer.write.timeout" 
+            rtsExt:value="1.0"/> <rtsExt:Properties rtsExt:name="dataport.outport.buffer.read.empty_policy" 
+            rtsExt:value="readback"/> <rtsExt:Properties rtsExt:name="dataport.outport.buffer.read.timeout" 
+            rtsExt:value="1.0"/> <rtsExt:Properties rtsExt:name="dataport.inport.buffer.length" 
+            rtsExt:value="0"/> <rtsExt:Properties rtsExt:name="dataport.inport.buffer.write.full_policy" 
+            rtsExt:value="overwrite"/> <rtsExt:Properties rtsExt:name="dataport.inport.buffer.write.timeout" 
+            rtsExt:value="1.0"/> <rtsExt:Properties rtsExt:name="dataport.inport.buffer.read.empty_policy" 
+            rtsExt:value="readback"/> <rtsExt:Properties rtsExt:name="dataport.inport.buffer.read.timeout" 
+            rtsExt:value="1.0"/> -->
+    </rts:DataPortConnectors>
+</rts:RtsProfile>

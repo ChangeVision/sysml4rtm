@@ -5,6 +5,7 @@ import java.util.List;
 
 import sysml4rtm.validation.rules.ConnectorMustAttachPortRule;
 import sysml4rtm.validation.rules.DefineDirectionRule;
+import sysml4rtm.validation.rules.DefineValidIbdDiagramNameRule;
 import sysml4rtm.validation.rules.MustDefinePortTypeRule;
 import sysml4rtm.validation.rules.NotEmptyPortNameRule;
 import sysml4rtm.validation.rules.NotExistInOutFlowPropertyRule;
@@ -39,6 +40,7 @@ public class ValidationRuleManager {
     	rules.add(new NotExistInOutItemFlowPropertyRule());
     	rules.add(new PartMustHaveTypeRule());
     	rules.add(new PortDataTypeHasTmMemberRule());
+    	rules.add(new DefineValidIbdDiagramNameRule());
     }
 
     public List<ValidationRule> getValidationRule() {
