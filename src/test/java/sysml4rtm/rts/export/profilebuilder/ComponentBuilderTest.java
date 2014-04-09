@@ -1,11 +1,14 @@
 package sysml4rtm.rts.export.profilebuilder;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
 import org.junit.Test;
+import org.openrtp.namespaces.rts.Dataport;
+import org.openrtp.namespaces.rts.Serviceport;
 import org.openrtp.namespaces.rts_ext.ComponentExt;
 
 import sysml4rtm.AstahModelFinder;
@@ -62,6 +65,47 @@ public class ComponentBuilderTest {
 		assertThat(comp.getCompositeType(), is("None"));
 		assertThat(comp.isIsRequired(), is(true));
 		assertThat(comp.isVisible(), is(true));
+	}
+	
+
+	@Test
+	public void ブロックのデータポートとみなされるポートからデータポートタグが生成されること() throws Exception {
+		List<ComponentExt> comps = findTestTarget("comp_port.asml", "targets");
+
+		ComponentExt comp = findComponent(comps, "com::BlockA");
+		assertThat(comp.getDataPorts().size(),is(2));
+		
+		assertNotNull(findDataPort(comp.getDataPorts(),"a"));
+		assertNotNull(findDataPort(comp.getDataPorts(),"b"));
+	}
+
+	@Test
+	public void ブロックのサービスポートとみなされるポートからサービスポートタグが生成されること() throws Exception {
+		List<ComponentExt> comps = findTestTarget("comp_port.asml", "targets");
+
+		ComponentExt comp = findComponent(comps, "com::BlockA");
+		assertThat(comp.getServicePorts().size(),is(2));
+		
+		assertNotNull(findServicePort(comp.getServicePorts(),"c"));
+		assertNotNull(findServicePort(comp.getServicePorts(),"d"));
+	}
+	
+	private Serviceport findServicePort(List<Serviceport> ports, String name){
+		for(Serviceport port : ports){
+			if(port.getName().equals(name))
+				return port;
+		}
+		
+		return null;
+	}
+	
+	private Dataport findDataPort(List<Dataport> ports, String name){
+		for(Dataport port : ports){
+			if(port.getName().equals(name))
+				return port;
+		}
+		
+		return null;
 	}
 	
 	private ComponentExt findComponent(List<ComponentExt> comps, String typeFullName) {
