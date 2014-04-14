@@ -26,6 +26,8 @@ public class RtsProfileBuilder {
 		DataPortConnectorsBuilder dataPortConnectorsBuilder = new DataPortConnectorsBuilder();
 		profile.getDataPortConnectors().addAll(dataPortConnectorsBuilder.build(currentDiagram));
 		
+		ServicePortConnectorsBuilder servicePortConnectorsBuilder = new ServicePortConnectorsBuilder();
+		profile.getServicePortConnectors().addAll(servicePortConnectorsBuilder.build(currentDiagram));
 		
 		return profile;
 	}

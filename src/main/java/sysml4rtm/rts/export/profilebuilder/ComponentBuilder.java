@@ -35,7 +35,7 @@ public class ComponentBuilder {
 		component.setId(String.format("RTC:Vender:%s:1.0", part.getType().getFullName(Constants.MODEL_NAMESPACE_SEPARATOR)));
 		String name = part.getName();
 		if(StringUtils.isEmpty(name)){
-			name = StringUtils.uncapitalize(part.getType().getName()) + Constants.INITIAL_INSTANCE_NUMBER;
+			name = part.getType().getName() + Constants.INITIAL_INSTANCE_NUMBER;
 		}
 		component.setPathUri(String.format("localhost/%s.rtc", name));
 		component.setInstanceName(name);

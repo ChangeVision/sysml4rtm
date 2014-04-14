@@ -146,14 +146,14 @@ public class DataPortConnectorsBuilderTest {
 	}
 	
 	@Test
-	public void sourceDataPortのinstanceNameにはパート名が空の場合_型名をuncapitalizeした文字と0の組み合わせが設定されること() throws Exception{
+	public void sourceDataPortのinstanceNameにはパート名が空の場合_型名と0の組み合わせが設定されること() throws Exception{
 		List<DataportConnectorExt> conexts = findTestTarget("dataport_connectors.asml", "target");
 	
 		IConnector con = AstahModelFinder.findConnector("3");
 		DataportConnectorExt conext = findDataportConnectorExt(conexts, con.getId());
 		
 		TargetPort sourceDataPort = conext.getSourceDataPort();
-		assertThat(sourceDataPort.getInstanceName(),is("bT0"));
+		assertThat(sourceDataPort.getInstanceName(),is("BT0"));
 	}
 	
 	@Test
@@ -190,14 +190,14 @@ public class DataPortConnectorsBuilderTest {
 	}
 	
 	@Test
-	public void targetDataPortのinstanceNameにはパート名が空の場合_型名をuncapitalizeした文字と0の組み合わせが設定されること() throws Exception{
+	public void targetDataPortのinstanceNameにはパート名が空の場合_型名と0の組み合わせが設定されること() throws Exception{
 		List<DataportConnectorExt> conexts = findTestTarget("dataport_connectors.asml", "target");
 	
 		IConnector con = AstahModelFinder.findConnector("3");
 		DataportConnectorExt conext = findDataportConnectorExt(conexts, con.getId());
 		
 		TargetPort target = conext.getTargetDataPort();
-		assertThat(target.getInstanceName(),is("bF0"));
+		assertThat(target.getInstanceName(),is("BF0"));
 	}
 	
 	private Property getProperty(String name, DataportConnectorExt con){

@@ -38,7 +38,7 @@ public class ComponentBuilderTest {
 		List<ComponentExt> comps = findTestTarget("comp_null_part.asml", "targets");
 
 		ComponentExt comp = findComponent(comps, "com::BlockA");
-		assertThat(comp.getPathUri(), is("localhost/blockA0.rtc"));
+		assertThat(comp.getPathUri(), is("localhost/BlockA0.rtc"));
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class ComponentBuilderTest {
 		List<ComponentExt> comps = findTestTarget("comp_null_part.asml", "targets");
 
 		ComponentExt comp = findComponent(comps, "com::BlockA");
-		assertThat(comp.getInstanceName(), is("blockA0"));
+		assertThat(comp.getInstanceName(), is("BlockA0"));
 	}
 	
 	@Test

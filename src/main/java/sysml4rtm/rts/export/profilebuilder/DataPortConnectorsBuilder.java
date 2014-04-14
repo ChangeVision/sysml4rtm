@@ -84,7 +84,7 @@ public class DataPortConnectorsBuilder {
 		
 		String name = part.getName();
 		if(StringUtils.isEmpty(name)){
-			name = StringUtils.uncapitalize(part.getType().getName()) + Constants.INITIAL_INSTANCE_NUMBER;
+			name = part.getType().getName() + Constants.INITIAL_INSTANCE_NUMBER;
 		}
 		targetPort.setInstanceName(name);
 		return targetPort;
