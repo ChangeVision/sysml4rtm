@@ -1,6 +1,7 @@
 package sysml4rtm.rts.export;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -75,9 +76,11 @@ public class RtsMarshaller {
 			RtsProfileExt profile) {
 		BufferedWriter writer = null;
 		try {
+			createOutputFolder(pathToOutputFolder);
+			
 			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 					getOutputRtsFileName(pathToOutputFolder)), Constants.ENCODING));
-
+				
 			marshal(profile, writer);
 
 			if (writer != null) {
@@ -88,6 +91,13 @@ public class RtsMarshaller {
 		} finally {
 			IOUtils.closeQuietly(writer);
 		}
+	}
+
+
+	private void createOutputFolder(String pathToOutputFolder) {
+		File parent =  new File(pathToOutputFolder);
+		if(!parent.exists())
+			parent.mkdirs();
 	}
 	
 	private String getOutputRtsFileName(String pathToOutputFolder) {

@@ -2,7 +2,7 @@ package sysml4rtm.rtc.export;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import java.io.File;
 import java.io.InputStream;
@@ -17,6 +17,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import sysml4rtm.AstahModelFinder;
 import sysml4rtm.rtc.export.profilebuilder.BasicInfoBuilder;
 
 import com.change_vision.jude.api.inf.AstahAPI;
@@ -28,6 +29,17 @@ public class RtcMarshallerTest {
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
 
+	@Test
+	public void まだ存在しないフォルダにRTC_XMLファイルが生成できること() throws Exception {
+		AstahModelFinder.open(this.getClass().getResourceAsStream("stereotype.asml"));
+		IInternalBlockDiagram diagram = AstahModelFinder.findIbdDiagram("ibd");
+		RtcMarshaller marshaller = new RtcMarshaller();
+		
+		File outputFolder = folder.newFolder();
+		marshaller.marshal(diagram, outputFolder.getPath() + "/dummy");
+		assertThat(new File(outputFolder.getPath() +  "/dummy/Block0.xml").exists(), is(true));
+	}
+	
 	@Test
 	public void RTCステレオタイプが付与されたブロックからRTC_XMLファイルが生成されること() throws Exception {
 		File outputFolder = marshal("stereotype.asml","ibd");

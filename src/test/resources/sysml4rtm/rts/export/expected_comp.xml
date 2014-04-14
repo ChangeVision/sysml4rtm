@@ -7,9 +7,13 @@
     <rts:Components xsi:type="rtsExt:component_ext" rts:compositeType="None" rts:id="RTC:Vender:com::BlockA:1.0"
         rts:instanceName="partA" rts:isRequired="true"
         rts:pathUri="localhost:2809/partA.rtc"
-        rtsExt:visible="true"/>
+        rtsExt:visible="true">
+        <rtsExt:Location rtsExt:x="@loc" rtsExt:y="@loc" rtsExt:height="-1" rtsExt:width="-1" rtsExt:direction="RIGHT"/>
+    </rts:Components>
     <rts:Components xsi:type="rtsExt:component_ext" rts:compositeType="None" rts:id="RTC:Vender:BlockB:1.0"
         rts:instanceName="blockB0" rts:isRequired="true"
         rts:pathUri="localhost:2809/blockB0.rtc"
-        rtsExt:visible="true"/>
+        rtsExt:visible="true">
+        <rtsExt:Location rtsExt:x="@loc" rtsExt:y="@loc" rtsExt:height="-1" rtsExt:width="-1" rtsExt:direction="RIGHT"/>
+    </rts:Components>
 </rts:RtsProfile>

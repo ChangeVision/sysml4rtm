@@ -22,7 +22,7 @@ import sysml4rtm.constants.Constants;
 import sysml4rtm.exceptions.ApplicationException;
 import sysml4rtm.exceptions.UnSupportDiagramException;
 import sysml4rtm.exceptions.ValidationException;
-import sysml4rtm.finder.InternalBlockDiagramExportedTargetFinder;
+import sysml4rtm.finder.ExportedPartTargetFinder;
 import sysml4rtm.rtc.export.profilebuilder.BasicInfoBuilder;
 import sysml4rtm.rtc.export.profilebuilder.RtcProfileBuilder;
 import sysml4rtm.validation.ModelValidator;
@@ -49,9 +49,6 @@ public class RtcMarshaller {
 	private static File buildOutputFileName(String pathToOutputFolder, IAttribute part) {
 		String pathToParentFolder = pathToOutputFolder + SystemUtils.FILE_SEPARATOR + part.getType().getFullNamespace("/");
 		File parent =  new File(pathToParentFolder);
-		if(!parent.exists())
-			parent.mkdirs();
-		
 		return new File(parent,part.getType().getName() + ".xml");
 	}
 
@@ -66,7 +63,7 @@ public class RtcMarshaller {
 	}
 
 	private List<IAttribute> getGeneratedTargetElements(IDiagram diagram) {
-		List<IAttribute> elements = new InternalBlockDiagramExportedTargetFinder()
+		List<IAttribute> elements = new ExportedPartTargetFinder()
 				.find((IInternalBlockDiagram) diagram);
 		return elements;
 	}
@@ -84,6 +81,9 @@ public class RtcMarshaller {
 
 		BufferedWriter writer = null;
 		try {
+			
+			createOutputFolder(pathToOutput,part);
+			
 			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 					buildOutputFileName(pathToOutput, part)), Constants.ENCODING));
 
@@ -97,6 +97,14 @@ public class RtcMarshaller {
 		} finally {
 			IOUtils.closeQuietly(writer);
 		}
+	}
+
+	private void createOutputFolder(String pathToOutputFolder,IAttribute part) {
+		String pathToParentFolder = pathToOutputFolder + SystemUtils.FILE_SEPARATOR + part.getType().getFullNamespace("/");
+		File parent =  new File(pathToParentFolder);
+		if(!parent.exists())
+			parent.mkdirs();
+		
 	}
 
 	private void validate(List<? extends INamedElement> parts) {

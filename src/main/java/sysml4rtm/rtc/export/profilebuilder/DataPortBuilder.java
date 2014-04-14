@@ -22,7 +22,6 @@ import com.change_vision.jude.api.inf.model.IPort;
 
 public class DataPortBuilder {
 
-	private IAttribute part;
 	private CustomTypeIDLGenerator customTypeIDLGenerator;
 	private String pathToOutputFolder;
 
@@ -30,9 +29,9 @@ public class DataPortBuilder {
 		this.pathToOutputFolder = pathToOutputFolder;
 		customTypeIDLGenerator = new CustomTypeIDLGenerator(pathToOutputFolder);
 	}
+	
 
 	public List<DataportExt> build(IAttribute part) {
-		this.part = part;
 		IBlock block = (IBlock) part.getType();
 		List<DataportExt> dataPorts = new ArrayList<DataportExt>();
 
@@ -62,7 +61,7 @@ public class DataPortBuilder {
 		return pathToOutputFolder + SystemUtils.FILE_SEPARATOR + target.getFullName("/") + ".idl";
 	}
 	
-	private IClass getDataType(IPort port) {
+	public static IClass getDataType(IPort port) {
 		IClass portDataType = null;
 
 		portDataType = getDataTypeFromItemFlow(port);
@@ -76,32 +75,36 @@ public class DataPortBuilder {
 		return portDataType;
 	}
 
-	private IClass getDataTypeFromFlowProperty(IPort port) {
+	private static IClass getDataTypeFromFlowProperty(IPort port) {
 		IBlock portType = (IBlock) port.getType();
 		if (portType == null)
-			throw new IllegalStateException(String.format("%s.%s must validate",
-					ModelUtils.getPartName(part), ModelUtils.getPortName(port)));
+			throwValidationException(port);
 
 		IFlowProperty[] flowProperties = portType.getFlowProperties();
 		if (flowProperties == null || flowProperties.length == 0)
 			return null;
 
 		if (!ModelUtils.hasFlowPropertieshaveSameType(flowProperties)) {
-			throw new IllegalStateException(String.format("%s.%s must validate",
-					ModelUtils.getPartName(part), ModelUtils.getPortName(port)));
+			throwValidationException(port);
 		}
 
 		return flowProperties[0].getType();
 	}
 
-	private IClass getDataTypeFromItemFlow(IPort port) {
+
+	private static void throwValidationException(IPort port) {
+		IClass type = port.getType();
+		throw new IllegalStateException(String.format("%s.%s must validate",
+				type.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR), ModelUtils.getPortName(port)));
+	}
+
+	private static IClass getDataTypeFromItemFlow(IPort port) {
 		IItemFlow[] itemflows = port.getItemFlows();
 		if (itemflows == null || itemflows.length == 0)
 			return null;
 
 		if (!ModelUtils.hasItemPropertiesHaveSameType(itemflows)) {
-			throw new IllegalStateException(String.format("%s.%s must validate",
-					ModelUtils.getPartName(part), ModelUtils.getPortName(port)));
+			throwValidationException(port);
 		}
 		return ModelUtils.getConveyDataType(itemflows[0]);
 	}

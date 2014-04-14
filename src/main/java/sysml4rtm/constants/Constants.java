@@ -12,6 +12,8 @@ public class Constants {
 
 	public static final String RTC_BUILTIN_TYPE = "rtcBuiltinType";
 
+	public static final String INITIAL_INSTANCE_NUMBER = "0";
+	
 	private Constants() {
 	}
 

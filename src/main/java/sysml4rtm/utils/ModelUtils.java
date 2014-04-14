@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import sysml4rtm.constants.Constants;
 import sysml4rtm.constants.Constants.DataPortType;
+import sysml4rtm.exceptions.ApplicationException;
 
 import com.change_vision.jude.api.inf.AstahAPI;
 import com.change_vision.jude.api.inf.exception.InvalidUsingException;
@@ -207,6 +208,34 @@ public class ModelUtils {
 		IClass[] provides = port.getProvidedInterfaces();
 		
 		return (requires != null && requires.length > 0) || (provides != null && provides.length > 0);
+	}
+
+	public static boolean isMarkedExport(INamedElement element) {
+		if(isPart(element)){
+			IAttribute part = (IAttribute) element;
+			if(part.hasStereotype(Constants.STEREOTYPE_RTC))
+					return true;
+			return part.getType() != null && part.getType().hasStereotype(Constants.STEREOTYPE_RTC);
+		}
+		return false;
+	}
+
+	public static  boolean isOnCurrentDiagram(IDiagram diagram , INamedElement elem) {
+		if (!ModelUtils.hasPresentation(elem))
+			return false;
+		try {
+			return elem.getPresentations()[0].getDiagram().getId().equals(diagram.getId());
+		} catch (Exception e) {
+			throw new ApplicationException(e);
+		}
+	}
+
+	public static  boolean hasPresentation(INamedElement elem) {
+		try {
+			return elem.getPresentations() != null && elem.getPresentations().length > 0;
+		} catch (Exception e) {
+			throw new ApplicationException(e);
+		}
 	}
 
 

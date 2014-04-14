@@ -12,11 +12,11 @@ import sysml4rtm.AstahModelFinder;
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IInternalBlockDiagram;
 
-public class InternalBlockDiagramExportedTargetFinderTest {
+public class ExportedPartTargetFinderTest {
 
 	@Test
 	public void find_nest() throws Exception {
-		InternalBlockDiagramExportedTargetFinder finder = new InternalBlockDiagramExportedTargetFinder();
+		ExportedPartTargetFinder finder = new ExportedPartTargetFinder();
 
 		AstahModelFinder.open(this.getClass().getResourceAsStream("subsystem_from_part_nest.asml"));
 		
@@ -28,7 +28,7 @@ public class InternalBlockDiagramExportedTargetFinderTest {
 
 	@Test
 	public void find_flat() throws Exception {
-		InternalBlockDiagramExportedTargetFinder finder = new InternalBlockDiagramExportedTargetFinder();
+		ExportedPartTargetFinder finder = new ExportedPartTargetFinder();
 
 		AstahModelFinder.open(this.getClass().getResourceAsStream("flat.asml"));
 		IInternalBlockDiagram target = AstahModelFinder.findIbdDiagram("target");

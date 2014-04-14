@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import sysml4rtm.AstahModelFinder;
 import sysml4rtm.rts.export.profilebuilder.RtsProfileBasicInfoBuilder;
 
 import com.change_vision.jude.api.inf.AstahAPI;
@@ -26,6 +27,17 @@ public class RtsMarshallerTest {
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
 
+	@Test
+	public void まだ存在しないフォルダにRTS_XMLファイルが生成できること() throws Exception {
+		AstahModelFinder.open(this.getClass().getResourceAsStream("stereotype.asml"));
+		IInternalBlockDiagram diagram = AstahModelFinder.findIbdDiagram("targets");
+		RtsMarshaller marshaller = new RtsMarshaller();
+		
+		File outputFolder = folder.newFolder();
+		marshaller.marshal(diagram, outputFolder.getPath() + "/dummy");
+		assertThat(new File(outputFolder.getPath() +  "/dummy/targets.xml").exists(), is(true));
+	}
+	
 	@Test
 	public void 内部ブロック図からRTS_XMLファイルが1つ生成されること() throws Exception {
 		File outputFolder = marshal("stereotype.asml","targets");
@@ -43,10 +55,14 @@ public class RtsMarshallerTest {
 
 		File expected = new File(this.getClass().getResource("expected_comp.xml")
 				.getPath());
-		
-		assertXMLEqual(FileUtils.readFileToString(expected), FileUtils.readFileToString(actual));
-	}
 
+		assertXMLEqual(FileUtils.readFileToString(expected), replaceLocation(FileUtils.readFileToString(actual)));
+	}
+	
+	private String replaceLocation(String contents){
+		contents =  contents.replaceAll("x=\"-*[\\p{Digit}]*\"", "x=\"@loc\"");
+		return contents.replaceAll("y=\"-*[\\p{Digit}]*\"", "y=\"@loc\"");
+	}
 	
 	private File marshal(String pathToModelFile, String ibdDiagramName) throws Exception {
 		File outputFolder = folder.newFolder();

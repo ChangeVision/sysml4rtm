@@ -4,10 +4,13 @@ import java.io.InputStream;
 
 import junit.framework.AssertionFailedError;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.change_vision.jude.api.inf.AstahAPI;
 import com.change_vision.jude.api.inf.exception.InvalidUsingException;
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IBlock;
+import com.change_vision.jude.api.inf.model.IConnector;
 import com.change_vision.jude.api.inf.model.IInternalBlockDiagram;
 import com.change_vision.jude.api.inf.model.INamedElement;
 import com.change_vision.jude.api.inf.project.ModelFinder;
@@ -79,5 +82,25 @@ public class AstahModelFinder {
 			throw new AssertionFailedError(String.format("missing %s", target));
 
 		return (IBlock) elements[0];
+	}
+	
+	public static IConnector findConnector(final String taggedValueId) throws Exception{
+		INamedElement[] elements = AstahAPI.getAstahAPI().getProjectAccessor()
+				.findElements(new ModelFinder() {
+
+					@Override
+					public boolean isTarget(INamedElement element) {
+						if (element instanceof IConnector){
+							String taggedValue = element.getTaggedValue("id");
+							return StringUtils.equals(taggedValueId, taggedValue);
+						}
+						return false;
+					}
+				});
+
+		if (elements.length == 0)
+			throw new AssertionFailedError(String.format("missing %s", taggedValueId));
+
+		return (IConnector) elements[0];
 	}
 }
