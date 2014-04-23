@@ -21,17 +21,13 @@ import sysml4rtm.Messages;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.exceptions.ApplicationException;
 import sysml4rtm.exceptions.UnSupportDiagramException;
-import sysml4rtm.exceptions.ValidationException;
 import sysml4rtm.finder.ExportedPartTargetFinder;
 import sysml4rtm.rtc.export.profilebuilder.BasicInfoBuilder;
 import sysml4rtm.rtc.export.profilebuilder.RtcProfileBuilder;
-import sysml4rtm.validation.ModelValidator;
-import sysml4rtm.validation.ValidationError;
 
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.IDiagram;
 import com.change_vision.jude.api.inf.model.IInternalBlockDiagram;
-import com.change_vision.jude.api.inf.model.INamedElement;
 
 public class RtcMarshaller {
 
@@ -55,7 +51,6 @@ public class RtcMarshaller {
 	public void marshal(IDiagram currentDiagram, String pathToOutputFolder) {
 		checkSupportDiagram(currentDiagram);
 		List<IAttribute> parts = getGeneratedTargetElements(currentDiagram);
-		validate(parts);
 
 		for (IAttribute part : parts) {
 			marshalAsFile(pathToOutputFolder, part);
@@ -105,14 +100,6 @@ public class RtcMarshaller {
 		if(!parent.exists())
 			parent.mkdirs();
 		
-	}
-
-	private void validate(List<? extends INamedElement> parts) {
-		ModelValidator validator = new ModelValidator();
-		List<ValidationError> errors = validator.validate(parts);
-		if (errors != null && errors.size() > 0) {
-			throw new ValidationException(errors);
-		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

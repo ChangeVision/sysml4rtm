@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.SystemUtils;
 
-import sysml4rtm.validation.ValidationError;
+import validation.ValidationError;
 
 public class ValidationException extends RuntimeException {
 

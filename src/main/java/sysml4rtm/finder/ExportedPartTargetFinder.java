@@ -20,6 +20,9 @@ public class ExportedPartTargetFinder {
 			this.diagram = target;
 			List<IAttribute> result = new ArrayList<IAttribute>();
 			
+			if(diagram == null || diagram.getStructuredBlockPresentation() == null || diagram.getStructuredBlockPresentation().getModel() == null)
+				return result;
+			
 			IBlock block = (IBlock) diagram.getStructuredBlockPresentation().getModel();
 			collectParts(result , block);
 

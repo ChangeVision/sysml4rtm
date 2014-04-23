@@ -1,7 +1,7 @@
 package sysml4rtm.validation.rules;
 
 import sysml4rtm.Messages;
-import sysml4rtm.validation.ValidationError;
+import validation.ValidationError;
 
 import com.change_vision.jude.api.inf.exception.InvalidUsingException;
 import com.change_vision.jude.api.inf.model.IInternalBlockDiagram;
@@ -17,9 +17,9 @@ public class DefineValidIbdDiagramNameRule extends DefaultValidationRule {
 	@Override
 	public boolean validateRule(INamedElement target) throws InvalidUsingException {
 		IInternalBlockDiagram diagram = (IInternalBlockDiagram) target;
-		if(!isValidDiagramName(diagram.getName())) {
-			setResult(new ValidationError(Messages.getMessage(
-					"error.invalid_diagram_name"),target));
+		if (!isValidDiagramName(diagram.getName())) {
+			setResult(new ValidationError(Messages.getMessage("error.invalid_diagram_name"),
+					target, this));
 			return false;
 		}
 		return true;

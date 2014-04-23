@@ -2,7 +2,7 @@ package sysml4rtm.validation.rules;
 
 import sysml4rtm.Messages;
 import sysml4rtm.utils.ModelUtils;
-import sysml4rtm.validation.ValidationError;
+import validation.ValidationError;
 
 import com.change_vision.jude.api.inf.model.IAttribute;
 import com.change_vision.jude.api.inf.model.INamedElement;
@@ -15,7 +15,7 @@ public class PartMustHaveTypeRule extends DefaultValidationRule {
 		if (target instanceof IAttribute) {
 			IAttribute attr = (IAttribute) target;
 			if (attr.getType() == null){
-				setResult(new ValidationError(Messages.getMessage("error.include_unknowntype"), target));
+				setResult(new ValidationError(Messages.getMessage("error.include_unknowntype"), target,this));
 				return false;
 			}
 		}

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sysml4rtm.exceptions.ApplicationException;
-import sysml4rtm.validation.ValidationError;
-import sysml4rtm.validation.ValidationRule;
+import validation.ValidationError;
+import validation.ValidationErrorLevel;
+import validation.ValidationRule;
 
 import com.change_vision.jude.api.inf.exception.InvalidUsingException;
 import com.change_vision.jude.api.inf.model.INamedElement;
@@ -31,6 +32,21 @@ public abstract class DefaultValidationRule implements ValidationRule {
     	}catch(Exception e){
     		throw new ApplicationException(e);
     	}
+    }
+    
+    @Override
+    public ValidationErrorLevel getErrorLevel() {
+        return ValidationErrorLevel.NOTICE;
+    }
+
+    @Override
+    public String getHelpPath() {
+        return null;
+    }
+    
+    @Override
+    public List<validation.QuickFix> getQuickFixes(INamedElement target) {
+    	return null;
     }
     
     abstract public boolean validateRule(INamedElement target) throws InvalidUsingException;

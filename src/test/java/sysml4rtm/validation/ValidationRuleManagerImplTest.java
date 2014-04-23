@@ -16,11 +16,11 @@ import sysml4rtm.validation.rules.NotExistInconsitencyItemFlowAndFlowPropertyRel
 import sysml4rtm.validation.rules.PartMustHaveTypeRule;
 import sysml4rtm.validation.rules.PortDataTypeHasTmMemberRule;
 
-public class ValidationRuleManagerTest {
+public class ValidationRuleManagerImplTest {
 
 	@Test
 	public void ルールが登録されていること() {
-		ValidationRuleManager manager = ValidationRuleManager.getInstance();
+		ValidationRuleManagerImpl manager = new ValidationRuleManagerImpl();
 		assertThat(manager.getValidationRule().size(),is(10));
 		
 		assertThat(manager.hasRule(ConnectorMustAttachPortRule.class),is(true));

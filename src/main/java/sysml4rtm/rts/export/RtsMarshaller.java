@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -23,15 +21,11 @@ import sysml4rtm.Messages;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.exceptions.ApplicationException;
 import sysml4rtm.exceptions.UnSupportDiagramException;
-import sysml4rtm.exceptions.ValidationException;
 import sysml4rtm.rts.export.profilebuilder.RtsProfileBasicInfoBuilder;
 import sysml4rtm.rts.export.profilebuilder.RtsProfileBuilder;
-import sysml4rtm.validation.ModelValidator;
-import sysml4rtm.validation.ValidationError;
 
 import com.change_vision.jude.api.inf.model.IDiagram;
 import com.change_vision.jude.api.inf.model.IInternalBlockDiagram;
-import com.change_vision.jude.api.inf.model.INamedElement;
 
 
 public class RtsMarshaller {
@@ -51,7 +45,6 @@ public class RtsMarshaller {
 	public void marshal(IDiagram currentDiagram, String pathToOutputFolder) {
 		checkSupportDiagram(currentDiagram);
 		this.currentDiagram = currentDiagram;
-		validate();
 
 		RtsProfileBuilder builder = new RtsProfileBuilder();
 		builder.setBasicInfoBuilder(basicInfoBuilder);
@@ -59,17 +52,6 @@ public class RtsMarshaller {
 		RtsProfileExt profile = builder.createRtsProfile(currentDiagram);
 		
 		marshallAsFile(pathToOutputFolder, profile);
-	}
-
-	private void validate() {
-		List<INamedElement> targets = new ArrayList<INamedElement>();
-		targets.add(currentDiagram);
-
-		ModelValidator validator = new ModelValidator();
-		List<ValidationError> errors = validator.validate(targets);
-		if (errors != null && errors.size() > 0) {
-			throw new ValidationException(errors);
-		}
 	}
 	
 	private void marshallAsFile(String pathToOutputFolder,

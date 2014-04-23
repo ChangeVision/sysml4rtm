@@ -3,7 +3,7 @@ package sysml4rtm.validation.rules;
 import sysml4rtm.Messages;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.utils.ModelUtils;
-import sysml4rtm.validation.ValidationError;
+import validation.ValidationError;
 
 import com.change_vision.jude.api.inf.exception.InvalidUsingException;
 import com.change_vision.jude.api.inf.model.IAttribute;
@@ -41,10 +41,13 @@ public class PortDataTypeHasTmMemberRule extends DefaultValidationRule {
 				dataType = type.getFlowProperties()[0].getType();
 			}
 			
+			if(dataType == null)
+				continue;
+			
 			if(!hasTmMember(dataType)){
 				setResult(new ValidationError(Messages.getMessage(
 						"error.port_type_must_have_tm_member", ModelUtils.getPartName(part),
-						ModelUtils.getPortName(port),dataType.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR)),part));
+						ModelUtils.getPortName(port),dataType.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR)),part,this));
 				return false;
 			}
 			
