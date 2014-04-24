@@ -36,7 +36,7 @@ public abstract class DefaultValidationRule implements ValidationRule {
     
     @Override
     public ValidationErrorLevel getErrorLevel() {
-        return ValidationErrorLevel.NOTICE;
+        return ValidationErrorLevel.ERROR;
     }
 
     @Override

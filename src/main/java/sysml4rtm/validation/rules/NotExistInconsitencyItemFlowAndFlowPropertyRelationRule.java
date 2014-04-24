@@ -53,7 +53,7 @@ public class NotExistInconsitencyItemFlowAndFlowPropertyRelationRule extends Def
 			if (!directionFromFlowProperty.equals(directionFromItemFlow)) {
 				setResult(new ValidationError(Messages.getMessage(
 						"error.Inconsistency_flowproperty_itemflow", ModelUtils.getPartName(attr),
-						ModelUtils.getPortName(port)), attr, this));
+						ModelUtils.getPortName(port)), port, this));
 				return false;
 			}
 		}

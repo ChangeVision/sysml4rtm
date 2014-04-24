@@ -7,6 +7,8 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import sysml4rtm.validation.ValidationRuleManagerImpl;
 import validation.view.ModelValidationViewLocator;
@@ -18,21 +20,29 @@ public class Activator implements BundleActivator {
 
 	private static IMessageDialogHandler messageHandler;
 	private static ModelValidationViewLocator locator;
+	private static final Logger logger = LoggerFactory.getLogger(Activator.class);
 
 	public void start(final BundleContext context) {
+		logger.debug("Activator#start");
 
-		getModaliValidationViewLocatorReference(context);
+		try {
+			getModaliValidationViewLocatorReference(context);
 
-		ServiceReference reference = context.getServiceReference(IMessageDialogHandlerFactory.class
-				.getName());
-		IMessageDialogHandlerFactory factory = (IMessageDialogHandlerFactory) context
-				.getService(reference);
-		if (factory != null) {
-			messageHandler = factory.createMessageDialogHandler(new Messages(),
-					"\\.astah\\sysml\\sysml4rtm.log");
+			ServiceReference reference = context
+					.getServiceReference(IMessageDialogHandlerFactory.class.getName());
+			IMessageDialogHandlerFactory factory = (IMessageDialogHandlerFactory) context
+					.getService(reference);
+			if (factory != null) {
+				messageHandler = factory.createMessageDialogHandler(new Messages(),
+						"\\.astah\\sysml\\sysml4rtm.log");
+			}
+
+			context.ungetService(reference);
+			logger.debug("Activator#end");
+
+		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
-
-		context.ungetService(reference);
 	}
 
 	private void getModaliValidationViewLocatorReference(final BundleContext context) {
@@ -48,7 +58,7 @@ public class Activator implements BundleActivator {
 				}
 			}, "(objectClass=" + ModelValidationViewLocator.class.getName() + ")");
 		} catch (InvalidSyntaxException e) {
-			e.printStackTrace();
+			logger.error("unexpected error", e);
 		}
 
 		ServiceTracker serviceTracker = new ServiceTracker(context,

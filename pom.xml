@@ -169,14 +169,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>com.change_vision.astah</groupId>
                 <artifactId>astah-maven-plugin</artifactId>
                 <version>1.0.0</version>
@@ -203,11 +195,8 @@
                         <Bundle-SymbolicName>${bundle.symbolicName};
                             singleton:=true</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <!-- | assume public classes are in the top package, 
-                            and private classes are under ".internal" -->
-                        <Export-Package>org.openrtp.namespaces.*,!${bundle.namespace}.internal.*,${bundle.namespace}.*;version="${project.version}"</Export-Package>
+                        <Export-Package>org.openrtp.namespaces.*,${bundle.namespace}.*;version="${project.version}"</Export-Package>
                         <Import-Package>validation</Import-Package>
-                        <Private-Package>${bundle.namespace}.internal.*</Private-Package>
                         <Bundle-Activator>${bundle.namespace}.Activator</Bundle-Activator>
                         <Astah-Version>${astah.version}</Astah-Version>
                         <Astah-Edition>${astah.edition}</Astah-Edition>
@@ -238,6 +227,9 @@
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
                 <executions>
                     <execution>
                         <id>copy-resources</id>

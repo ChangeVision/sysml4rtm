@@ -47,7 +47,7 @@ public class PortDataTypeHasTmMemberRule extends DefaultValidationRule {
 			if(!hasTmMember(dataType)){
 				setResult(new ValidationError(Messages.getMessage(
 						"error.port_type_must_have_tm_member", ModelUtils.getPartName(part),
-						ModelUtils.getPortName(port),dataType.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR)),part,this));
+						ModelUtils.getPortName(port),dataType.getFullName(Constants.MODEL_NAMESPACE_SEPARATOR)),port,this));
 				return false;
 			}
 			

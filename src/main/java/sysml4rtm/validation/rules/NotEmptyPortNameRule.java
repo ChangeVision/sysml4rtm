@@ -26,7 +26,7 @@ public class NotEmptyPortNameRule extends DefaultValidationRule {
 		for (IPort port : block.getPorts()) {
 			if (StringUtils.isEmpty(port.getName())) {
 				setResult(new ValidationError(Messages.getMessage("error.port_name_is_empty",
-						ModelUtils.getPartName(part), ModelUtils.getPortName(port)), part, this));
+						ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 				return false;
 			}
 		}

@@ -32,7 +32,7 @@ public class DefineDirectionRule extends DefaultValidationRule {
 			if (portType == null) {
 				if (itemFlows.length == 0) {
 					setResult(new ValidationError(Messages.getMessage("error.direction_not_define",
-							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), target,
+							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port,
 							this));
 					return false;
 				}
@@ -40,7 +40,7 @@ public class DefineDirectionRule extends DefaultValidationRule {
 				IFlowProperty[] flowProperties = portType.getFlowProperties();
 				if (itemFlows.length == 0 && flowProperties.length == 0) {
 					setResult(new ValidationError(Messages.getMessage("error.direction_not_define",
-							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), target,
+							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port,
 							this));
 					return false;
 				}

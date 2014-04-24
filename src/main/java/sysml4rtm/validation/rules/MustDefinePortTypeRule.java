@@ -30,26 +30,26 @@ public class MustDefinePortTypeRule extends DefaultValidationRule {
 			if (hasItemFlow(port)) {
 				if (ModelUtils.getConveyDataType(port.getItemFlows()[0]) == null) {
 					setResult(new ValidationError(Messages.getMessage("error.port_type_not_define",
-							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), part, this));
+							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 					return false;
 				}
 
 				if (!ModelUtils.hasItemPropertiesHaveSameType(port.getItemFlows())) {
 					setResult(new ValidationError(Messages.getMessage("error.type_must_same",
-							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), part, this));
+							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 					return false;
 				}
 			} else {
 				if (!hasFlowProperties(port)) {
 					setResult(new ValidationError(Messages.getMessage("error.port_type_not_define",
-							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), part, this));
+							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 					return false;
 				}
 
 				IBlock type = (IBlock) port.getType();
 				if (!ModelUtils.hasFlowPropertieshaveSameType(type.getFlowProperties())) {
 					setResult(new ValidationError(Messages.getMessage("error.type_must_same",
-							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), part, this));
+							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 					return false;
 				}
 			}

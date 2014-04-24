@@ -35,7 +35,7 @@ public class NotExistInOutItemFlowPropertyRule extends DefaultValidationRule {
 			if (direction.equals(DataPortType.INOUT)) {
 				setResult(new ValidationError(Messages.getMessage(
 						"error.inout_itemproperty_not_support", ModelUtils.getPartName(part),
-						ModelUtils.getPortName(port)), part, this));
+						ModelUtils.getPortName(port)), port, this));
 				return false;
 			}
 		}
