@@ -3,6 +3,7 @@ package sysml4rtm.validation.rules;
 import sysml4rtm.Messages;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.utils.ModelUtils;
+import validation.DefaultValidationRule;
 import validation.ValidationError;
 
 import com.change_vision.jude.api.inf.model.IAttribute;
@@ -12,7 +13,7 @@ public class PartMustHaveTypeRule extends DefaultValidationRule {
 
 
 	@Override
-	public boolean validateRule(INamedElement target) {
+	public boolean validateRule(INamedElement target) throws Exception{
 		if (target instanceof IAttribute) {
 			IAttribute attr = (IAttribute) target;
 			if (attr.getType() == null){

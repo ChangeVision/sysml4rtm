@@ -4,6 +4,7 @@ import sysml4rtm.Messages;
 import sysml4rtm.constants.Constants;
 import sysml4rtm.constants.Constants.DataPortType;
 import sysml4rtm.utils.ModelUtils;
+import validation.DefaultValidationRule;
 import validation.ValidationError;
 
 import com.change_vision.jude.api.inf.exception.InvalidUsingException;
@@ -22,7 +23,7 @@ public class NotExistInconsitencyItemFlowAndFlowPropertyRelationRule extends Def
 	}
 
 	@Override
-	public boolean validateRule(INamedElement target) throws InvalidUsingException {
+	public boolean validateRule(INamedElement target) throws Exception {
 		return validateInconsistencyItemFlowAndFlowProperty((IAttribute) target);
 	}
 

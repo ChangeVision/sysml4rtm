@@ -3,6 +3,7 @@ package sysml4rtm.actions;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import sysml4rtm.Activator;
 import sysml4rtm.dialogs.GenerateRtmProfileDialog;
 
 import com.change_vision.jude.api.inf.ui.IPluginActionDelegate;
@@ -12,6 +13,7 @@ public class RtmProfileExportAction implements IPluginActionDelegate {
 
 	public Object run(IWindow window) throws UnExpectedException {
 		try {
+			Activator.getModaliValidationViewLocator().showErrorOnModelValidationView();
 			JFrame frame = (JFrame) window.getParent();
 			GenerateRtmProfileDialog dialog = new GenerateRtmProfileDialog(frame);
 			dialog.setVisible(true);
