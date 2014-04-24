@@ -3,6 +3,7 @@ package sysml4rtm.validation.rules;
 import org.apache.commons.lang3.StringUtils;
 
 import sysml4rtm.Messages;
+import sysml4rtm.constants.Constants;
 import sysml4rtm.utils.ModelUtils;
 import validation.ValidationError;
 
@@ -25,7 +26,7 @@ public class NotEmptyPortNameRule extends DefaultValidationRule {
 		IBlock block = (IBlock) part.getType();
 		for (IPort port : block.getPorts()) {
 			if (StringUtils.isEmpty(port.getName())) {
-				setResult(new ValidationError(Messages.getMessage("error.port_name_is_empty",
+				setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage("error.port_name_is_empty",
 						ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 				return false;
 			}

@@ -1,6 +1,7 @@
 package sysml4rtm.validation.rules;
 
 import sysml4rtm.Messages;
+import sysml4rtm.constants.Constants;
 import sysml4rtm.utils.ModelUtils;
 import validation.ValidationError;
 
@@ -29,26 +30,26 @@ public class MustDefinePortTypeRule extends DefaultValidationRule {
 			}
 			if (hasItemFlow(port)) {
 				if (ModelUtils.getConveyDataType(port.getItemFlows()[0]) == null) {
-					setResult(new ValidationError(Messages.getMessage("error.port_type_not_define",
+					setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage("error.port_type_not_define",
 							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 					return false;
 				}
 
 				if (!ModelUtils.hasItemPropertiesHaveSameType(port.getItemFlows())) {
-					setResult(new ValidationError(Messages.getMessage("error.type_must_same",
+					setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage("error.type_must_same",
 							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 					return false;
 				}
 			} else {
 				if (!hasFlowProperties(port)) {
-					setResult(new ValidationError(Messages.getMessage("error.port_type_not_define",
+					setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage("error.port_type_not_define",
 							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 					return false;
 				}
 
 				IBlock type = (IBlock) port.getType();
 				if (!ModelUtils.hasFlowPropertieshaveSameType(type.getFlowProperties())) {
-					setResult(new ValidationError(Messages.getMessage("error.type_must_same",
+					setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage("error.type_must_same",
 							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port, this));
 					return false;
 				}

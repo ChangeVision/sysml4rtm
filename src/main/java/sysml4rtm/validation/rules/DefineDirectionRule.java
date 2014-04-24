@@ -1,6 +1,7 @@
 package sysml4rtm.validation.rules;
 
 import sysml4rtm.Messages;
+import sysml4rtm.constants.Constants;
 import sysml4rtm.utils.ModelUtils;
 import validation.ValidationError;
 
@@ -31,7 +32,7 @@ public class DefineDirectionRule extends DefaultValidationRule {
 			IBlock portType = (IBlock) port.getType();
 			if (portType == null) {
 				if (itemFlows.length == 0) {
-					setResult(new ValidationError(Messages.getMessage("error.direction_not_define",
+					setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage("error.direction_not_define",
 							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port,
 							this));
 					return false;
@@ -39,7 +40,7 @@ public class DefineDirectionRule extends DefaultValidationRule {
 			} else {
 				IFlowProperty[] flowProperties = portType.getFlowProperties();
 				if (itemFlows.length == 0 && flowProperties.length == 0) {
-					setResult(new ValidationError(Messages.getMessage("error.direction_not_define",
+					setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage("error.direction_not_define",
 							ModelUtils.getPartName(part), ModelUtils.getPortName(port)), port,
 							this));
 					return false;

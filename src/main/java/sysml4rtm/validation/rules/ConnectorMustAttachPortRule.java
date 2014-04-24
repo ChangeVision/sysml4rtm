@@ -1,6 +1,7 @@
 package sysml4rtm.validation.rules;
 
 import sysml4rtm.Messages;
+import sysml4rtm.constants.Constants;
 import sysml4rtm.utils.ModelUtils;
 import validation.ValidationError;
 
@@ -25,7 +26,7 @@ public class ConnectorMustAttachPortRule extends DefaultValidationRule {
 
 		IConnector[] partConnectors = part.getConnectors();
 		if (partConnectors.length > 0) {
-			setResult(new ValidationError(Messages.getMessage("error.connector_must_attach_port",
+			setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage("error.connector_must_attach_port",
 					ModelUtils.getPartName(part)), target, this));
 			return false;
 		}
@@ -35,7 +36,7 @@ public class ConnectorMustAttachPortRule extends DefaultValidationRule {
 			for (IConnector connector : connectors) {
 				if (!(connector.getPorts().length == 2 && connector.getPorts()[0] != null && connector
 						.getPorts()[1] != null)) {
-					setResult(new ValidationError(Messages.getMessage(
+					setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage(
 							"error.connector_must_attach_port", ModelUtils.getPartName(part)),
 							target, this));
 					return false;

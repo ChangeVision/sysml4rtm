@@ -1,6 +1,7 @@
 package sysml4rtm.validation.rules;
 
 import sysml4rtm.Messages;
+import sysml4rtm.constants.Constants;
 import sysml4rtm.constants.Constants.DataPortType;
 import sysml4rtm.utils.ModelUtils;
 import validation.ValidationError;
@@ -33,7 +34,7 @@ public class NotExistInOutItemFlowPropertyRule extends DefaultValidationRule {
 
 			DataPortType direction = ModelUtils.getDirection(part, itemFlows);
 			if (direction.equals(DataPortType.INOUT)) {
-				setResult(new ValidationError(Messages.getMessage(
+				setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage(
 						"error.inout_itemproperty_not_support", ModelUtils.getPartName(part),
 						ModelUtils.getPortName(port)), port, this));
 				return false;

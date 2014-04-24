@@ -1,6 +1,7 @@
 package sysml4rtm.validation.rules;
 
 import sysml4rtm.Messages;
+import sysml4rtm.constants.Constants;
 import sysml4rtm.constants.Constants.DataPortType;
 import sysml4rtm.utils.ModelUtils;
 import validation.ValidationError;
@@ -51,7 +52,7 @@ public class NotExistInconsitencyItemFlowAndFlowPropertyRelationRule extends Def
 			}
 			DataPortType directionFromItemFlow = ModelUtils.getDirection(attr, itemFlows);
 			if (!directionFromFlowProperty.equals(directionFromItemFlow)) {
-				setResult(new ValidationError(Messages.getMessage(
+				setResult(new ValidationError(Constants.VALIDATION_ERROR_CATEGORY,Messages.getMessage(
 						"error.Inconsistency_flowproperty_itemflow", ModelUtils.getPartName(attr),
 						ModelUtils.getPortName(port)), port, this));
 				return false;
