@@ -19,11 +19,18 @@ SysML内部ブロック図上に存在するパートから :term:`RTCプロフ�
 
 リファレンス
 ---------------------
+..
  * モデリング
  * モデル検証
  * OpenRTP-RTCBuilderを用いて、RTコンポーネントのコードを生成する
  * OpenRTM-RTSystemEditorを用いて、システム構成を復元する
- 
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   reference/model_validation_view   
+   
 チュートリアル
 ---------------------
 ..
