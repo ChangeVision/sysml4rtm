@@ -5,3 +5,4 @@ surefire-reports
 failed-gui-tests
 *.bak
 *.lock
+build
