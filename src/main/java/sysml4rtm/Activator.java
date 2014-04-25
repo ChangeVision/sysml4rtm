@@ -65,10 +65,8 @@ public class Activator implements BundleActivator {
 				ModelValidationViewLocator.class.getName(), null);
 		serviceTracker.open();
 		if (serviceTracker != null) {
-			ModelValidationViewLocator e = (ModelValidationViewLocator) serviceTracker.getService();
-			if (e != null) {
-				locator.addValidationRuleManager(new ValidationRuleManagerImpl());
-			}
+			locator = (ModelValidationViewLocator) serviceTracker.getService();
+			locator.addValidationRuleManager(new ValidationRuleManagerImpl());
 		}
 		serviceTracker.close();
 	}
