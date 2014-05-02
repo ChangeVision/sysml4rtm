@@ -9,10 +9,15 @@ RT(Robot Technology)コンポーネントを設計する
 
 RTコンポーネントの設計、実行の手順は以下のとおりです。
 
+* :ref:`ref-tutorial-basic-createproject`
+* :ref:`ref-tutorial-basic-bdd`
+* :ref:`ref-tutorial-basic-ibd`
+* :ref:`ref-tutorial-basic-rts-rtc-profile`
+
 
 .. describe:: このチュートリアルで作成するシステムについて
     
-  RTコンポーネントMyFirstComponentを設計します。
+  RTコンポーネントMyFirstComponentを含むシステムを設計します。
 
 **ブロック図**
 
@@ -26,11 +31,12 @@ RTコンポーネントの設計、実行の手順は以下のとおりです。
 
   * :download:`モデルのダウンロード </sources/tutorial/basic.asml>`
 
- .. _ref-tutorial-basic-createproject:
 
 astah* SysMLでRTコンポーネントを設計する
 ======================================================
 まずは、astah* SysMLを起動し、設計するロボットシステムのモデルを管理するプロジェクトを作成します。
+
+.. _ref-tutorial-basic-createproject:
 
 プロジェクトの新規作成
 ----------------------------
@@ -41,9 +47,11 @@ OpenRTM-aistが提供するデータ型などを定義したテンプレート�
   .. figure:: /images/tutorial/basic/templatemenu.png
        :alt: image
        
-* サブメニューから"テンプレートからプロジェクトの新規作成"を選択し、このSysML-RTM連携プラグインのダウンロードファイルに含まれるrtc_template.asmlを選択します。
+* サブメニューから"テンプレートからプロジェクトの新規作成"を選択し、この |plugin_name| のダウンロードファイルにも含まれる :download:`rtc_template.asml </sources/rtc_template.asml>` を選択します。
 
 --------------
+
+.. _ref-tutorial-basic-bdd:
 
 ブロック図でシステムとRTコンポーネントの構造と関係を設計する
 --------------------------------------------------------------------------------
@@ -61,7 +69,7 @@ OpenRTM-aistが提供するデータ型などを定義したテンプレート�
 
 この長方形は、システムを構成する要素を意味するブロックというモデルです。
 
-この「ブロック0」の名前を、これから作成したいロボットシステムの名前として、BasicTutorialSystemに変更してみましょう。
+この「ブロック0」の名前を、これから作成したいロボットシステムの名前として、TutorialSystemに変更してみましょう。
 
   1. ブロック定義図上で作成した「ブロック0」を選択します。
 
@@ -69,13 +77,13 @@ OpenRTM-aistが提供するデータ型などを定義したテンプレート�
   
      画面左下の「プロパティビュー」に、選択されたブロックのプロパティが表示されます。
      
-     | これから設計するBasicTutorialSystemをプロパティビューの名前に入力してください。
+     | これから設計するTutorialSystemをプロパティビューの名前に入力してください。
      | このように、図や構造ツリーで選択したモデルのプロパティは、プロパティビューから表示、編集できます。
 
     .. figure:: /images/tutorial/basic/block_property.png
        :alt: image
 
-次に、BasicTutorialSystemを構成するRTコンポーネントとして、MyFirstComponentブロックを作成しましょう。先程と同様にツールバーよりブロックを作成し、名前を"MyFirstComponent"と変更します。
+次に、TutorialSystemを構成するRTコンポーネントとして、MyFirstComponentブロックを作成しましょう。先程と同様にツールバーよりブロックを作成し、名前を"MyFirstComponent"と変更します。
 
 ブロックにRTCステレオタイプを設計する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -96,12 +104,12 @@ OpenRTM-aistが提供するデータ型などを定義したテンプレート�
        
 システムとRTコンポーネントの階層構造関係を設計する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-システム(BasicTutorialSystem)とRTコンポーネント(MyFirstComponent)を設計できたので、MyFirstComponentがBasicTutorialSystemを構成する要素であることを、ブロック定義図上で設計しましょう。
+システム(TutorialSystem)とRTコンポーネント(MyFirstComponent)を設計できたので、MyFirstComponentがTutorialSystemを構成する要素であることを、ブロック定義図上で設計しましょう。
 
 SysMLでは全体と部分という関係を表すUMLのコンポジションに相当する、部品関連(Part Assosication)が用意されています。astah* SysMLでは部品関連をコンポジションと称して提供しています。
-今回、MyFirstComponentはBasicTutorialSystemを構成する部品であることを定義します。
+今回、MyFirstComponentはTutorialSystemを構成する部品であることを定義します。
 
-「ツールバー」-「関連 - コンポジション」を選択し、BasicTutorialSystemからMyFirstComponentに向けて線を引いて下さい。
+「ツールバー」-「関連 - コンポジション」を選択し、TutorialSystemからMyFirstComponentに向けて線を引いて下さい。
 
 **ツールバー**
   .. figure:: /images/tutorial/basic/composition.png
@@ -111,7 +119,7 @@ SysMLでは全体と部分という関係を表すUMLのコンポジションに
   .. figure:: /images/tutorial/basic/composition_dnd.png
        :alt: image
 
-黒菱形が付いているコネクタの端側が全体を表します。今回の場合は、BasicTutorialSystem側に黒菱形が表示されているはずです。
+黒菱形が付いているコネクタの端側が全体を表します。今回の場合は、TutorialSystem側に黒菱形が表示されているはずです。
 このようにコンポジションによって、全体と部品関係を設計できます。
 
 .. figure:: /images/tutorial/basic/composition_done.png
@@ -119,18 +127,20 @@ SysMLでは全体と部分という関係を表すUMLのコンポジションに
 
 --------------
 
-内部ブロック図を作成する
+.. _ref-tutorial-basic-ibd:
+
+内部ブロック図で、システムを構成する要素間の関係性を設計する
 --------------------------------------------------------------------------------
 ブロック定義図でシステムにどのような要素で構成されるかを設計したので、次に内部ブロック図を用いて、システムを構成する要素間の関係性を設計します。
 
-今回はBasicTutorialSystemには、MyFirstComponentしか存在しないので関係性は設計できませんが、今後のチュートリアルで説明していきます。
+今回はTutorialSystemには、MyFirstComponentしか存在しないので関係性は設計できませんが、今後のチュートリアルで説明していきます。
 
 内部ブロック図は、ブロック定義図上でブロックを選択しコンテキストメニューから「内部ブロック図の追加」を選択して作成します。
 
 .. figure:: /images/tutorial/basic/ibd_contextmenu.png
      :alt: image
 
-BasicTutorialSystemを選択して「内部ブロック図の追加」を選択してください。次のような図が作成され、開かれるはずです。
+TutorialSystemを選択して「内部ブロック図の追加」を選択してください。次のような図が作成され、開かれるはずです。
 
 .. figure:: /images/tutorial/basic/ibd_first.png
      :alt: image
@@ -158,7 +168,11 @@ astah* SysMLの右下に「モデル検証」というビューに、次のよ�
 
 モデル検証ビューは、編集中の設計モデル中の不整合を一覧表示、操作するビューを提供します。エラーが存在する場合、RTC/RTSプロファイルが生成できませんので、エラーを解決してください。
 
-内部ブロック図を選択し、プロパティビューから名前に"basic_tutorial"と入力してください。設定すると、モデル検証ビューからエラーが削除されるはずです。
+内部ブロック図を選択し、プロパティビューから名前に"tutorial_system"と入力してください。設定すると、モデル検証ビューからエラーが削除されるはずです。
+
+---------------
+
+.. _ref-tutorial-basic-rts-rtc-profile:
 
 RTS/RTCプロファイルの生成
 =======================================
@@ -173,24 +187,26 @@ RTS/RTCプロファイルの生成
 .. figure:: /images/tutorial/basic/plugin_dialog.png
      :alt: image
 
-出力場所で指定したフォルダには、次のようなファイルが生成されています。
+出力場所で指定したフォルダ(以下の例では/tmp/tutorial/basic_tutorial)には、次のようなファイルが生成されています。
  
  ::
  
   /tmp/tutorial/basic_tutorial/
    |- MyFirstComponent.xml
-   |- basic_tutorial.xml
+   |- tutorial_system.xml
    
 .. describe:: MyFirstComponent.xml
 
    RTコンポーネントMyFirstComponentのRTCプロファイル
 
-.. describe:: basic_tutorial.xml
+.. describe:: tutorial_system.xml
 
-   BasicTutorialSystemのRTSプロファイル
+   TutorialSystemのRTSプロファイル
  
 
 なお、RTCBuilderやRTSystemEditorの操作方法やOpenRTM-aistに準拠したRTコンポーネントのビルド方法については、公式サイトを参照下さい。
+
+-------
 
 RTCプロファイルのインポート
 --------------------------------------------------
@@ -206,6 +222,10 @@ RTCプロファイルのインポート
 
 このような手順でSysMLから生成されたRTCプロファイルを元に、RTコンポーネントのソースコードのひな形を作成できます。
 
+-------
+
+.. _ref-tutorial-basic-import-rtcprofile:
+
 RTSプロファイルのインポート
 --------------------------------------------------
 生成されたRTSプロファイルを用いて、RTSystemEditorでシステムを復元します。
@@ -214,17 +234,20 @@ RTSプロファイルのインポート
 
 .. figure:: /images/tutorial/basic/rtsystemeditor.png
      :alt: image
-       
+
 .. hint:: 
   
    RTCBuilderから生成されるひな形は、パート名がコンポーネント名0という名前で生成されます。SysMLのパートで指定したプロパティ名と一致しない場合、RTSystemEditorでの復元でエラーが発生します。
-   rtc.confを修正し、プロパティ名と一致するように修正してから、システムを復元して下さい。
+   rtc.confの次のプロパティを修正し、RTコンポーネントのCORBA Naming Serverにバインドする際の名前、及びRTコンポーネントのインスタンス名が、SysMLのプロパティ名と一致するように修正してから、システムを復元して下さい。
    
+    * naming.formatプロパティ : CORBA Naming Serverに登録する際の名前
+    * manager.components.precreate : RTコンポーネントのインスタンス名
+    
    ex)rtc.conf
    
    ::
    
-    naming.format : myFirstComp.rtc  
- 
+    naming.format : myFirstComp.rtc
+    manager.components.precreate: MyFirstComponent?instance_name=myFirstComp
 
 このようにSysMLのブロック定義図と内部ブロック図を用い、RTコンポーネントを含んだロボットシステムのモデルを設計できます。

@@ -7,14 +7,16 @@ Welcome to SysML-RTM's documentation
 ====================================
 SysMLモデルによるシステム設計を :term:`OMG Robotic Technology Component` に準拠したソフトウェア設計として生成、変換するプラグインです。
 
-
 SysML内部ブロック図上に存在するパートから :term:`RTCプロファイル` 、:term:`RTSプロファイル` を生成します。
 
+.. figure:: /images/sample.png
+   :alt: image
+   
 インストール方法
 ---------------------
 #. sysml4rtm-x.x.x.zip ファイルをダウンロードし、任意のフォルダへ展開します。
 #. astah*を起動し、メニュー[ヘルプ] – [プラグイン一覧] から、 [インストール] ボタンをクリックします。
-#. 展開したフォルダの"plugins"フォルダにある sysml4rtm-x.x.x.jar ファイルを選択し、メッセージに従ってastah*を再起動して下さい。
+#. 展開したフォルダの"plugins"フォルダにある sysml4rtm-x.x.x.jar ファイルとmodel-validation-x.x.x.jarを選択し、メッセージに従ってastah*を再起動して下さい。
 #. インストールを完了しastah*を再起動すると、メニュー[ツール]に [SysML-RTM]が追加されていれば、インストール完了です。
 
 リファレンス
@@ -37,7 +39,6 @@ SysML内部ブロック図上に存在するパートから :term:`RTCプロフ�
  * RT(Robot Technology)コンポーネントを設計する
  * ポートを介して、他のRTコンポーネントと連携するモデルを設計する
  * インタフェースを介して、他のRTコンポーネント連携するモデルを設計する
- * ユーザー定義型のデータ型を利用する
 
 .. toctree::
    :maxdepth: 1
@@ -45,7 +46,8 @@ SysML内部ブロック図上に存在するパートから :term:`RTCプロフ�
 
    tutorial/basic
    tutorial/dataport   
-
+   tutorial/interface
+   
 License
 --------------------
 Copyright 2014 Change Vision, Inc.

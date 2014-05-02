@@ -25,6 +25,7 @@
 * :ref:`ref-customtype-attr`
 * :ref:`ref-customtype-relation`
 * :ref:`ref-customtype-hint`
+* :ref:`ref-customtype-rtm`
 
 ------------------
 
@@ -382,9 +383,7 @@ ValueTypeの属性の名前、型がそのままIDLに生成されます。
 集約は生成されるコードに影響を与えませんが、集合であることが明示されるので、指定する方が望ましいです。
 
  .. figure:: /images/reference/customtype/aggregation.jpg
-    :alt: 
-
-
+    :alt: image
 
 ----------------
 
@@ -412,3 +411,64 @@ ValueTypeの属性の名前、型がそのままIDLに生成されます。
   struct B{
     ::A a;
   };
+
+------------------
+
+.. _ref-customtype-rtm:
+
+RTCBuilderによる独自データ型の利用
+------------------------------------------
+このように作成された独自データ型を含んだRTCプロファイルを元に、RTCBuilderでソースコードのひな形を作成する方法について説明します。
+
+次のモデルで示されるような、Angleという独自データ型を扱うポートをもつCustomCompブロックを、RTコンポーネントとして出力します。
+
+**ブロック定義図**
+
+.. figure:: /images/reference/customtype/custom_bdd.png
+    :alt: image
+
+**内部ブロック図**
+
+.. figure:: /images/reference/customtype/custom_ibd.png
+    :alt: image
+
+**モデル**
+ :download:`モデルのダウンロード </sources/customtype.asml>`
+ 
+:ref:`ref-tutorial-basic-import-rtcprofile` などを参考に、メニュー :menuselection:`ツール  --> SysML-RTM --> 開いている図からRTC/RTSプロファイルを生成する` を選択します。
+表示されるダイアログで、RTC/RTSプロファイルを生成するフォルダにを指定し「生成」ボタンを押下して下さい。
+
+出力場所で指定したフォルダ(以下の例では/tmp/tutorial/custom)には、次のようなファイルが生成されます。
+ 
+ ::
+ 
+  /tmp/tutorial/custom/
+   |- Angle.idl
+   |- CustomComp.xml
+   |- sample.xml
+
+.. describe:: Angle.idl
+
+   CustomCompコンポーネントが利用する、独自データ型Angleの構造を示すIDLファイル
+   
+.. describe:: CustomComp.xml
+
+   RTコンポーネントCustomCompのRTCプロファイル
+
+.. describe:: sample.xml
+
+   RTSプロファイル
+
+上記のように生成されたRTCプロファイルを:ref:`ref-tutorial-basic-import-rtcprofile` にあるような、以下の手順でRTCBuilderにインポートし、CustomCompコンポーネントのソースコードのひな形を生成します。
+
+* RTCBuilderを起動し、独自データ型をRTCBuilderが参照できるよう、メニュー :menuselection:`ウィンドウ  --> 設定 --> RTCBuilder` を選択し、生成された独自データ型のIDLが配置されているフォルダを指定します。(上記例の場合、/tmp/tutorial/custom/)
+
+  .. figure:: /images/reference/customtype/rtcbuilder-preference.png
+      :alt: image
+      
+* RTCBuilderを再起動し、CustomCompプロジェクトを作成します。
+* 「基本」タブのプロファイル情報のインポート・エクスポートの「インポート」ボタンから生成したRTCプロファイルを選択します。
+* 「データポート」タブを開き、独自データ型を利用しているポートのデータ型を確認すると、独自データ型がコンボボックスで選択されているはずです。
+* 言語タブでC++やPythonなど任意の言語を選択し「基本」タブの「コード生成とパッケージ」の「コード生成」ボタンを押下し、ソースコードのひな形を生成します。
+
+このように、独自データ型をデータポートの型として利用している場合、RTCBuilderでソースコードのひな形を作成するには、その型をRTCBuilderから参照するための設定が必要となります。   
