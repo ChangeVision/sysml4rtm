@@ -5,9 +5,9 @@
 
 Welcome to SysML-RTM's documentation
 ====================================
-SysMLモデルによるシステム設計を :term:`OMG Robotic Technology Component` に準拠したソフトウェア設計として生成、変換するプラグインです。
+|plugin_name| は、SysMLモデルによるシステム設計を :term:`OMG Robotic Technology Component` に準拠したソフトウェア設計として生成、変換するプラグインです。
 
-SysML内部ブロック図上に存在するパートから :term:`RTCプロファイル` 、:term:`RTSプロファイル` を生成します。
+SysML内部ブロック図上に存在するパートから :term:`RTCプロファイル` 、:term:`RTSプロファイル` を生成し `OpenRTM-aist <http://openrtm.org/openrtm/>`_ が提供するOpenRTPと連携することで、Robot Technologyコンポーネント(RTコンポーネント)のソースコードのひな形の作成や、ロボットシステムに含まれるコンポーネントとその接続関係の復元を実現します。
 
 .. figure:: /images/sample.png
    :alt: image
