@@ -20,12 +20,44 @@
 
 このリファレンスで説明する機能は、次の通りです。
 
+* :ref:`ref-customtype-package`
 * :ref:`ref-customtype-sequence`
 * :ref:`ref-customtype-array`
 * :ref:`ref-customtype-attr`
 * :ref:`ref-customtype-relation`
 * :ref:`ref-customtype-hint`
 * :ref:`ref-customtype-rtm`
+
+------------------
+
+.. _ref-customtype-package:
+
+パッケージを利用する
+----------------------------
+パッケージ(名前空間)を利用することで、独自型が属する名前空間を設計することができます。
+名前空間はIDLのModule句に相当します。
+
+ .. figure:: /images/reference/customtype/package.png
+     :alt: image
+
+このようなモデルから作成されるIDLは次のようになります。
+
+..describe:: com/changevision/CustomType.idl
+::
+
+  #ifndef CUSTOMTYPE_IDL
+  #define CUSTOMTYPE_IDL
+  #include "BasicDataType.idl"
+
+  module com{
+      module changevision{
+          struct CustomType{
+              RTC::Time tm;
+          };
+      };
+  };
+  #endif
+                                    
 
 ------------------
 
