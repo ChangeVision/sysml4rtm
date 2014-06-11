@@ -9,8 +9,11 @@ Welcome to SysML-RTM's documentation
 
 SysML内部ブロック図上に存在するパートから :term:`RTCプロファイル` 、:term:`RTSプロファイル` を生成し `OpenRTM-aist <http://openrtm.org/openrtm/>`_ が提供するOpenRTPと連携することで、Robot Technologyコンポーネント(RTコンポーネント)のソースコードのひな形の作成や、ロボットシステムに含まれるコンポーネントとその接続関係の復元を実現します。
 
+このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。
+
 .. figure:: /images/sample.png
    :alt: image
+
    
 インストール方法
 ---------------------
