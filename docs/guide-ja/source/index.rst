@@ -51,8 +51,8 @@ SysML内部ブロック図上に存在するパートから :term:`RTCプロフ�
    tutorial/dataport   
    tutorial/interface
    
-License
---------------------
+License(SysML-RTM プラグイン)
+-------------------------------------------------
 Copyright 2014 Change Vision, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
@@ -60,3 +60,14 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+License(OpenRTM-aist)
+---------------------------------------
+OpenRTM-aistは、各言語版 (C++, Java, Python) のミドルウエアライブラリと、RTCBuilder, RTSystemEditorなどツールから構成されており、それぞれOpenRTM-aist (C++, Java, Python版)は LGPLと個別契約のデュアルライセンス
+RTSystemEditor, RTCBuilderはEPLと個別契約のデュアルライセンスのもとでオープンソース形式で配布しています。
+
+* LGPL (GNU Lesser General Public License) はフリーソフトウェア財団（Free Software Foundation、以下FSFと略称）が公開しているコピーレフト型のフリーソフトウェアライセンスです。
+* EPL (Eclipse Public License) は Free Software Foundation (FSF)によって 認められている「フリーソフトウェアライセンス」の1つであり、CPL (一部は LGPL) 等と似たライセンス形態であり、より商業利用を促進するものとなって います。
+
+これらのライセンスは、(i) 別モジュールとして頒布されるソフトウエアや、(ii) プログラムの派生物でないもの、には及びません。またEPLライセンスは、特許 に関する条項が含まれており、コントリビュータが持つ特許が当該ソフトウエ アに影響しない (使用者には使用料無料の特許ライセンスが付与される) 形態 となっています。
+詳細は `OpenRTM-aistライセンス <http://openrtm.org/openrtm/ja/content/openrtm-aist%E3%81%A8%E3%81%AF%EF%BC%9F-0>`_ を参照ください。
