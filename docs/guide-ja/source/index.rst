@@ -17,7 +17,7 @@ SysML内部ブロック図上に存在するパートから :term:`RTCプロフ�
    
 インストール方法
 ---------------------
-#. sysml4rtm-x.x.x.zip ファイルをダウンロードし、任意のフォルダへ展開します。
+#. `sysml4rtm-x.x.x.zip <https://github.com/ChangeVision/sysml4rtm/releases/download/1.0.0/sysml4rtm-1.0.0.zip>`_ ファイルをダウンロードし、任意のフォルダへ展開します。
 #. astah*を起動し、メニュー[ヘルプ] – [プラグイン一覧] から、 [インストール] ボタンをクリックします。
 #. 展開したフォルダの"plugins"フォルダにある sysml4rtm-x.x.x.jar ファイルとmodel-validation-x.x.x.jarを選択し、メッセージに従ってastah*を再起動して下さい。
 #. インストールを完了しastah*を再起動すると、メニュー[ツール]に [SysML-RTM]が追加されていれば、インストール完了です。
