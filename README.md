@@ -17,4 +17,4 @@ SysML内部ブロック図上に存在するパートからRTCプロファイル
 
 このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。
 
-[SysML fo RTM Pluginのドキュメントへ](http://changevision.github.io/sysml4rtm/)
+[SysML for RTM Pluginのドキュメントへ](http://changevision.github.io/sysml4rtm/)
