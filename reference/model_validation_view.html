@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>モデル検証ビュー &mdash; SysML-RTM 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SysML-RTM 1.0.0 documentation" href="../index.html" />
+    <link rel="next" title="独自のデータ型を設計し利用する" href="customtype.html" />
+    <link rel="prev" title="Welcome to SysML-RTM’s documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="customtype.html" title="独自のデータ型を設計し利用する"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to SysML-RTM’s documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo.png" alt="Logo"/>
+            </a></p><h3><a href="#">Powered By</a></h3>
+<img class="logo" src="_static/aist_logo.png" alt="Logo">
+<p></p>
+<img class="logo" src="_static/piping_rtm_logo2.png" alt="Logo">
+
+<p>このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。</p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">モデル検証ビュー</a><ul>
+<li><a class="reference internal" href="#id2">モデル更新時に、自動的にモデルを検証</a></li>
+<li><a class="reference internal" href="#id3">モデル検証ビューの更新</a></li>
+<li><a class="reference internal" href="#id4">不整合一覧</a><ul>
+<li><a class="reference internal" href="#errorlevel-notes-label">エラーレベルの凡例</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">不整合に対する操作</a><ul>
+<li><a class="reference internal" href="#id7">エラー行のクリック</a></li>
+<li><a class="reference internal" href="#id8">エラー行のダブルクリック</a></li>
+<li><a class="reference internal" href="#id9">図要素へジャンプ</a></li>
+<li><a class="reference internal" href="#id10">構造ツリーのモデルへジャンプ</a></li>
+<li><a class="reference internal" href="#quickfix">QuickFix</a></li>
+<li><a class="reference internal" href="#id11">ヘルプ</a></li>
+<li><a class="reference internal" href="#id12">ソートと表示順序</a></li>
+<li><a class="reference internal" href="#id13">表示領域</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Welcome to SysML-RTM&#8217;s documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="customtype.html"
+                        title="next chapter">独自のデータ型を設計し利用する</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ref-model-validation-view">
+<span id="id1"></span><h1>モデル検証ビュー<a class="headerlink" href="#ref-model-validation-view" title="Permalink to this headline">¶</a></h1>
+<p>編集中の設計モデル中の不整合を一覧表示、操作するビューを提供します。</p>
+<div class="figure">
+<img alt="image" src="../_images/model_validation_view.png" />
+</div>
+<div class="section" id="id2">
+<h2>モデル更新時に、自動的にモデルを検証<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="image" src="../_images/auto_update.png" />
+</div>
+<p>[モデル更新時に、自動的にモデルを検証]ボタンがONの場合、モデル更新時に自動的にモデル検証を行います。(デフォルト ON)</p>
+</div>
+<div class="section" id="id3">
+<h2>モデル検証ビューの更新<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>[更新]ボタンをクリックして、モデル検証の再実行を行います。</p>
+<div class="figure">
+<img alt="image" src="../_images/update.png" />
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">モデル検証は、メニュー <em class="menuselection">ツール ‣ モデル検証 ‣ モデル検証</em> からも実行できます。
+メニューから実行した場合には、モデルに不整合があることを通知する警告ダイアログ、または、モデルの整合性が保たれていることを通知するダイアログが表示されます。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>不整合一覧<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>不整合一覧では、モデルの不整合を表形式で表示します。
+一覧には以下の項目を表示します。</p>
+<ul class="simple">
+<li>分類 － 検出される不整合の検出ルールの分類</li>
+<li>説明 － 不整合の内容説明</li>
+<li>要素の種類 － 不整合のあるモデル要素の種類</li>
+<li>要素 － 不整合のあるモデル要素名</li>
+<li>要素のパス － 不整合のあるモデル要素のパス(パッケージのパスなど)</li>
+<li>エラーレベル － 不整合のエラーレベル(エラー種類とアイコン) <a class="reference internal" href="#errorlevel-notes-label"><em>エラーレベルの凡例</em></a></li>
+</ul>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">モデル検証ビューのヘッダ(エラーレベル列)にマウスカーソルを合わせると、 <a class="reference internal" href="#errorlevel-notes-label"><em>エラーレベルの凡例</em></a> がツールチップで表示されます。</p>
+</div>
+<div class="section" id="errorlevel-notes-label">
+<span id="id5"></span><h3>エラーレベルの凡例<a class="headerlink" href="#errorlevel-notes-label" title="Permalink to this headline">¶</a></h3>
+<p>モデル検証ビューでは以下のエラーレベルを設定しています。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">エラーレベル</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><img alt="critical_icon" src="../_images/critical_icon.jpg" /> 致命的なエラー</td>
+<td>設計されたモデルから成果物を生成できないため、問題の修正が必要です。</td>
+</tr>
+<tr class="row-odd"><td><img alt="error_icon" src="../_images/error_icon.jpg" /> エラー</td>
+<td>生成された成果物が正しく機能しない可能性があるため、問題の修正が必要です。</td>
+</tr>
+<tr class="row-even"><td><img alt="warning_icon" src="../_images/warning_icon.jpg" /> 警告</td>
+<td>成果物の設計に潜在的な問題が存在する可能性があるため、問題の調査が必要です。</td>
+</tr>
+<tr class="row-odd"><td><img alt="notice_icon" src="../_images/notice_icon.jpg" /> 通知</td>
+<td>注意を喚起したい情報を表示します。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>不整合に対する操作<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3>エラー行のクリック<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>プロパティビューに選択した行の要素のプロパティを表示します。</p>
+</div>
+<div class="section" id="id8">
+<h3>エラー行のダブルクリック<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>選択した行の要素の図要素があれば、図を表示します。</p>
+<ul class="simple">
+<li>エラー対象の図要素を図の中心に表示し、選択状態にします。</li>
+<li>複数図要素がある場合は、一つ目の図要素を表示します。</li>
+<li>図要素がない場合は、何も表示しません。</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3>図要素へジャンプ<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">エラー行を選択し右クリック後、[図要素へジャンプ]を選択、図を選択すると、不整合のあった要素の図要素を表示します。</div>
+<div class="line">図要素が存在しない要素を選択した場合には、[図要素へジャンプ]は非活性になっています。</div>
+</div>
+<ul class="simple">
+<li>エラー対象の図要素を図の中心に表示し、選択状態にします。</li>
+<li>複数図要素がある場合は、一つ目の図要素を表示します。</li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h3>構造ツリーのモデルへジャンプ<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">エラー行を選択し右クリック後、[構造ツリーのモデルへジャンプ]を選択すると、構造ツリー上のモデルを選択します。</div>
+<div class="line">コネクタなど構造ツリー上に表示されない要素を選択した場合には、[構造ツリーのモデルへジャンプ]は非活性になっています。</div>
+</div>
+</div>
+<div class="section" id="quickfix">
+<span id="quickfix-label"></span><h3>QuickFix<a class="headerlink" href="#quickfix" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">QuickFixは不整合の解決をサポートする機能です。</div>
+<div class="line">エラー行を選択し右クリック後、[QuickFix]を選択すると、解決の提案が可能な不整合について、複数の解決提案を表示します。</div>
+<div class="line">解決の提案がない不整合については、[QuickFix]は非活性になっています。</div>
+<div class="line">エラー行を選択して、「 <strong>Ctrl + 1</strong> 」でもQuickFixを表示することができます。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">QuickFixにより不整合を解決した場合、モデル検証が自動で再実行されます。
+[モデル更新時に、自動的にモデルを検証]ボタンをOFFにしている場合でも、再実行を行います。</p>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>ヘルプ<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>エラー行を解決するために参考になるマニュアルの該当箇所を表示する機能です。</p>
+</div>
+<div class="section" id="id12">
+<h3>ソートと表示順序<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">列のヘッダをクリックすることで、各列毎のソートが可能です。(初期表示時は、分類の昇順)</div>
+<div class="line">列のドラッグにより、列の表示順序を変更することもできます。</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h3>表示領域<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">モデル検証ビューの上部のバーをマウスでドラッグすることで、高さの変更が可能です。</div>
+<div class="line">プロジェクトビュー同様にモデル検証ビューを非表示にすることも可能です。</div>
+</div>
+<div class="figure">
+<img alt="モデル検証ビューの表示/非表示" src="../_images/view_showhide.jpg" />
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">モデル検証ビューの表示/非表示は、メニュー <em class="menuselection">表示 ‣ モデル検証ビューの表示/非表示</em> からも実行できます。</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="customtype.html" title="独自のデータ型を設計し利用する"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to SysML-RTM’s documentation"
+             >previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Change Vision,Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

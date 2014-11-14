@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>インタフェースを介して、他のRTコンポーネントと連携するモデルを設計する &mdash; SysML-RTM 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SysML-RTM 1.0.0 documentation" href="../index.html" />
+    <link rel="prev" title="ポートを介して、他のRTコンポーネントと連携するモデルを設計する" href="dataport.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dataport.html" title="ポートを介して、他のRTコンポーネントと連携するモデルを設計する"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo.png" alt="Logo"/>
+            </a></p><h3><a href="#">Powered By</a></h3>
+<img class="logo" src="_static/aist_logo.png" alt="Logo">
+<p></p>
+<img class="logo" src="_static/piping_rtm_logo2.png" alt="Logo">
+
+<p>このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。</p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">インタフェースを介して、他のRTコンポーネントと連携するモデルを設計する</a><ul>
+<li><a class="reference internal" href="#ref-tutorial-interface-port-and-if">ポートとインタフェースを設計する</a><ul>
+<li><a class="reference internal" href="#id2">インタフェースの作成</a></li>
+<li><a class="reference internal" href="#id3">操作の設計</a></li>
+<li><a class="reference internal" href="#id4">パラメータをもつ操作の設計</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ref-tutorial-interface-req-prov">提供、要求インタフェースを設計する</a><ul>
+<li><a class="reference internal" href="#myfirstcomponentmoveservice">MyFirstComponentコンポーネントにMoveServiceインタフェースを、提供インタフェースとして定義する</a></li>
+<li><a class="reference internal" href="#mysecondcomponentmoveservice">MySecondComponentコンポーネントにMoveServiceインタフェースを、要求インタフェースとして定義する</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rts-rtc">RTS/RTCプロファイルの生成</a><ul>
+<li><a class="reference internal" href="#rtc">RTCプロファイルのインポート</a></li>
+<li><a class="reference internal" href="#rts">RTSプロファイルのインポート</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dataport.html"
+                        title="previous chapter">ポートを介して、他のRTコンポーネントと連携するモデルを設計する</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rt">
+<span id="ref-tutorial-interface"></span><h1>インタフェースを介して、他のRTコンポーネントと連携するモデルを設計する<a class="headerlink" href="#rt" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="dataport.html#ref-tutorial-dataport"><em>ポートを介して、他のRTコンポーネントと連携するモデルを設計する</em></a> では、SysMLのポートを用いた設計方法について説明しました。</p>
+<div class="line-block">
+<div class="line">SysMLではインタフェースでも、RTコンポーネント間のやり取りを設計できます。</div>
+<div class="line">今回SysMLで設計するインタフェースは、RTコンポーネントにおけるサービスポートとインタフェースに該当します。</div>
+</div>
+<p>このチュートリアルでは、次の項目について説明します。</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ref-tutorial-interface-port-and-if"><em>ポートとインタフェースを設計する</em></a></li>
+<li><a class="reference internal" href="#ref-tutorial-interface-req-prov"><em>提供、要求インタフェースを設計する</em></a></li>
+<li><a class="reference internal" href="#ref-tutorial-interface-rts-rtc"><em>RTS/RTCプロファイルの生成</em></a></li>
+</ul>
+<dl class="describe">
+<dt>
+<tt class="descname">このチュートリアルで作成するシステムについて</tt></dt>
+<dd><p>MyFirstComponentブロックが提供するインタフェースを利用して、MySecondComponentからMyFirstComponentを移動させる指示を行うシステムを設計します</p>
+</dd></dl>
+
+<p><strong>ブロック図</strong></p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/bdd2.png" />
+</div>
+</div></blockquote>
+<p><strong>内部ブロック図</strong></p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/ibd2.png" />
+</div>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/interface.asml"><tt class="xref download docutils literal"><span class="pre">モデルのダウンロード</span></tt></a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="ref-tutorial-interface-port-and-if">
+<span id="id1"></span><h2>ポートとインタフェースを設計する<a class="headerlink" href="#ref-tutorial-interface-port-and-if" title="Permalink to this headline">¶</a></h2>
+<p>ブロックがどのようなサービスを提供、要求しているかといったことをポートとインタフェースを使って表すことができます。</p>
+<p>先の <a class="reference internal" href="dataport.html#ref-tutorial-dataport"><em>ポートを介して、他のRTコンポーネントと連携するモデルを設計する</em></a> で作成したモデルを元に、MyFirstComponentブロックに移動を指示できるMoveServiceインタフェースを追加しましょう。</p>
+<p>その前に、前回作成したポートを一旦すべて削除します。MyFirstComponent、MySecondComponentに設計されたポートを選択し「モデルから削除」メニューを選択して削除し、ポートを持たないmyFirstCompとmySecondCompパートを作成して下さい。</p>
+<p>インタフェースを設計するには、まずポートを追加する必要があります。<a class="reference internal" href="dataport.html#ref-tutorial-dataport"><em>ポートを介して、他のRTコンポーネントと連携するモデルを設計する</em></a> で行ったように、新しいポートをmyFirstCompパートに作成し、名前をserviceと設計して下さい。</p>
+<p>次にMyServiceインタフェースに操作を設計し、MyFirstComponentブロックに作成した&#8221;service&#8221;ポートに接続します。</p>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h3>インタフェースの作成<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>インタフェースはツールバー「インタフェース」から作成できます。</p>
+<div class="figure">
+<img alt="image" src="../_images/if_toolbar.png" />
+</div>
+<p>ツールバー「インタフェース」を選択し、内部ブロック図の好きな場所を選択します。すると、図上に&#8221;インタフェース0&#8221;というラベルのインタフェースが作成されます。</p>
+<p>作成されたインタフェースのプロパティは、今までと同様にプロパティビューから編集できるので、&#8221;インタフェース0&#8221;を選択しプロパティビューを表示させます。
+表示されたプロパティから、名前をMoveServiceに変更します。</p>
+</div>
+<div class="section" id="id3">
+<h3>操作の設計<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>次にMoveServiceインタフェースの操作に、driveという名前の操作を追加します。</p>
+<ol class="arabic simple">
+<li>操作タブを開きます</li>
+<li>操作タブの下部にある「追加」ボタンを押下します</li>
+<li>一覧にOperation0という名前の操作が作成されます</li>
+<li>Operation0という名前をダブルクリックして、driveと名前を変更します</li>
+</ol>
+<p>ここまでの操作で、次のようなdrive操作が追加されているはずです。</p>
+<div class="figure">
+<img alt="image" src="../_images/drive_1.png" />
+</div>
+</div>
+<div class="section" id="id4">
+<h3>パラメータをもつ操作の設計<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>次に、drive操作にパラメータを設計しましょう。</p>
+<ol class="arabic simple">
+<li>作成されたdrive操作を選択し「編集」ボタンを押下します</li>
+<li>表示された「操作」ダイアログの「パラメータ」タブを表示します</li>
+<li>パラメータタブの下部にある「追加」ボタンを押下します</li>
+<li>一覧にparam0という名前のパラメータが作成されます</li>
+<li>param0という名前をダブルクリックして、左車輪の速度を指定するleftWheelと名前を変更します</li>
+<li>leftWheelパラメータの型から、IDL::shortを選択します</li>
+<li>同じようにパラメータをもう一つ追加し、今度は右車輪の速度を指定する型がIDL::shortのrightWheelパラメータを作成します</li>
+</ol>
+<p>ここまでの操作で、パラメータは次のようになっているはずです。</p>
+<div class="figure">
+<img alt="image" src="../_images/drive_parameter.png" />
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">パラメータ型の候補には、IDLパッケージのshortの他にshort、int、longなどの型が表示されます。
+RTMと連携したSysMLモデルを設計する場合、IDLパッケージに用意されたIDL型を利用して下さい。</p>
+</div>
+<p>これでleftWheelとrightWheelパラメータをもつdrive操作を設計できました。</p>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="ref-tutorial-interface-req-prov">
+<span id="id5"></span><h2>提供、要求インタフェースを設計する<a class="headerlink" href="#ref-tutorial-interface-req-prov" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="myfirstcomponentmoveservice">
+<h3>MyFirstComponentコンポーネントにMoveServiceインタフェースを、提供インタフェースとして定義する<a class="headerlink" href="#myfirstcomponentmoveservice" title="Permalink to this headline">¶</a></h3>
+<p>このように作成されたMoveServiceインタフェースを、MyFirstComponentブロックが提供することを設計します。</p>
+<p>ブロックがインタフェースを提供、つまりインタフェースの操作を他のブロックから利用できるように提供していることを示すには、ポートに提供インタフェースとして接続する必要があります。</p>
+<p>インタフェースをポートに提供インタフェースとして接続するには、ツールバー「実現」を利用します。</p>
+<div class="figure">
+<img alt="image" src="../_images/prov_if_toolbar.png" />
+</div>
+<p>ツールバー「実現」を選択し、myFirstComponentパートの&#8221;service&#8221;ポートをクリックします。</p>
+<p>続いて、そのままMoveServiceにマウスをホバーさせると、次のように三角のアイコンがついた線がMoveServiceまで伸びるので、そのままクリックしてください。</p>
+<div class="figure">
+<img alt="image" src="../_images/add_provide_if.png" />
+</div>
+<p>これで、&#8221;service&#8221;ポートにMoveServiceを提供インタフェースとして定義できました。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="mysecondcomponentmoveservice">
+<h3>MySecondComponentコンポーネントにMoveServiceインタフェースを、要求インタフェースとして定義する<a class="headerlink" href="#mysecondcomponentmoveservice" title="Permalink to this headline">¶</a></h3>
+<p>これまでの操作で、MyFirstComponentブロックがMoveServiceインタフェースを提供していることを設計できました。次はMySecondComponentブロックが、このMoveServiceインタフェースを利用してメッセージのやり取りを行っていることを設計しましょう。</p>
+<div class="line-block">
+<div class="line">先程と同様に、MySecondComponentにポートを作成し、名前をserviceと設定して下さい。</div>
+<div class="line">OpenRTM-aistでは、インタフェースを提供するポートとやり取りする場合、そのポートの名前を一致させる必要があります。</div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">ポートの名前を一致させないと、インタフェースを提供、要求するポートを用いたメッセージのやりとりが正しく動作しません</p>
+</div>
+<p>インタフェースをポートに要求インタフェースとして接続するには、ツールバー「使用依存」を利用します。</p>
+<div class="figure">
+<img alt="image" src="../_images/req_if_toolbar.png" />
+</div>
+<p>ツールバー「使用依存」を選択し、mySecondComponentパートの&#8221;service&#8221;ポートをクリックします。</p>
+<p>続いて、そのままMoveServiceにマウスをホバーさせると、次のように三角のアイコンがついた線がMoveServiceまで伸びるので、そのままクリックしてください。</p>
+<div class="figure">
+<img alt="image" src="../_images/add_req_if.png" />
+</div>
+<p>これまでの操作で、次のようなモデルが作成されているはずです。</p>
+<div class="figure">
+<img alt="image" src="../_images/assembly_connector.png" />
+</div>
+<p>このような操作で、RTコンポーネント間のインタフェースを介したメッセージのやり取りを、SysMLを用いて設計することができます。</p>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="rts-rtc">
+<span id="ref-tutorial-interface-rts-rtc"></span><h2>RTS/RTCプロファイルの生成<a class="headerlink" href="#rts-rtc" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="basic.html#ref-tutorial-basic"><em>RT(Robot Technology)コンポーネントを設計する</em></a> で行ったように、内部ブロック図からRTC/RTSプロファイルを生成するため、これまで設計してきた内部ブロック図を開き、メニュー <em class="menuselection">ツール  ‣ SysML-RTM ‣ 開いている図からRTC/RTSプロファイルを生成する</em> を選択します。
+表示されるダイアログで、RTC/RTSプロファイルを生成するフォルダにを指定し「生成」ボタンを押下して下さい。</p>
+<p>出力場所で指定したフォルダ(以下の例では/tmp/tutorial/interface_tutorial)には、次のようなファイルが生成されています。</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>/tmp/tutorial/interface_tutorial/
+ |- MyFirstComponent.xml
+ |- MySecondComponent.xml
+ |- MyService.idl
+ |- tutorial_system.xml
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="describe">
+<dt>
+<tt class="descname">MyFirstComponent.xml</tt></dt>
+<dd><p>RTコンポーネントMyFirstComponentのRTCプロファイル</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">MySecondComponent.xml</tt></dt>
+<dd><p>RTコンポーネントMySecondComponentのRTCプロファイル</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">MyService.idl</tt></dt>
+<dd><p>SysMLで設計した、MoveServiceインタフェースの構造を表すIDLファイル</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">tutorial_system.xml</tt></dt>
+<dd><p>TutorialSystemのRTSプロファイル</p>
+</dd></dl>
+
+<p>RTS/RTCプロファイルの他に、インタフェースを利用した場合、その構造がIDLファイルとしても生成されます。</p>
+<hr class="docutils" />
+<div class="section" id="rtc">
+<h3>RTCプロファイルのインポート<a class="headerlink" href="#rtc" title="Permalink to this headline">¶</a></h3>
+<p>生成されたRTCプロファイルをRTCBuilderにインポートし、MyFirstComponentのソースコードのひな形を生成します。</p>
+<p>基本的な手順は <a class="reference internal" href="basic.html#ref-tutorial-basic"><em>RT(Robot Technology)コンポーネントを設計する</em></a> と同様ですが、今回はインタフェースから生成されたIDLファイルが参照する、OpenRTM-aistが提供するIDLファイルへのパスの設定が追加で必要になります。</p>
+<ul>
+<li><p class="first">RTCBuilderを起動し、MyFirstComponentプロジェクトを作成します。</p>
+</li>
+<li><p class="first">「基本」タブのプロファイル情報のインポート・エクスポートの「インポート」ボタンから生成したRTCプロファイルを選択します。</p>
+</li>
+<li><p class="first">インポートされると、次のようにMoveServiceインタフェースを提供するコンポーネントがRTCBuilderに取り込まれるはずです。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/rtc_builder1.png"><img alt="image" src="../_images/rtc_builder1.png" style="width: 700px;" /></a>
+</div>
+</li>
+<li><p class="first">「サービスポート」タブを開き、ツリーから「service」-「myService」を選択します。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/rtc_builder-service.png"><img alt="image" src="../_images/rtc_builder-service.png" style="width: 700px;" /></a>
+</div>
+</li>
+<li><p class="first">表示されたプロパティのインタフェース名の「IDLパス」に、OpenRTM-aistのidlファイルが配置されているディレクトリ(ex. /usr/include/openrtm-1.1/rtm/idl)を選択します。</p>
+</li>
+<li><p class="first">言語タブでC++やPythonなど任意の言語を選択し「基本」タブの「コード生成とパッケージ」の「コード生成」ボタンを押下し、ソースコードのひな形を生成します。</p>
+</li>
+</ul>
+<p>このような手順でSysMLから生成されたRTCプロファイルを元に、インタフェースを利用したRTコンポーネントのソースコードのひな形を作成できます。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="rts">
+<h3>RTSプロファイルのインポート<a class="headerlink" href="#rts" title="Permalink to this headline">¶</a></h3>
+<p>生成されたRTSプロファイルを用いて、RTSystemEditorでシステムを復元します。</p>
+<p>基本的な手順は <a class="reference internal" href="basic.html#ref-tutorial-basic"><em>RT(Robot Technology)コンポーネントを設計する</em></a> と同様に、システムエディタのコンテキストメニュー「Open and Restore」を選択し、RTSプロファイルを選択し復元します。
+ただし、<a class="reference internal" href="basic.html#ref-tutorial-basic-import-rtcprofile"><em>RTSプロファイルのインポート</em></a> で説明したように、復元する前にSysMLのパートで指定したプロパティ名とRTコンポーネントのインスタンス名、CORBA Naming Serviceにバインドする際の名前を一致させて下さい。</p>
+<blockquote>
+<div><p>ex)MyFirstComponent/rtc.conf</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>naming.format : myFirstComp.rtc
+manager.components.precreate: MyFirstComponent?instance_name=myFirstComp
+</pre></div>
+</div>
+</div></blockquote>
+<p>ex)MySecondComponent/rtc.conf</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>naming.format : mySecondComp.rtc
+manager.components.precreate: MySecondComponent?instance_name=mySecondComp
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<p>このようにSysMLのポートと提供、要求インタフェースを用いて、RTコンポーネントにおけるサービスポートを介した、ロボットシステムのモデルを設計できます。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dataport.html" title="ポートを介して、他のRTコンポーネントと連携するモデルを設計する"
+             >previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Change Vision,Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

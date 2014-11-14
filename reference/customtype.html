@@ -1,0 +1,643 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>独自のデータ型を設計し利用する &mdash; SysML-RTM 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SysML-RTM 1.0.0 documentation" href="../index.html" />
+    <link rel="next" title="RT(Robot Technology)コンポーネントを設計する" href="../tutorial/basic.html" />
+    <link rel="prev" title="モデル検証ビュー" href="model_validation_view.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../tutorial/basic.html" title="RT(Robot Technology)コンポーネントを設計する"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="model_validation_view.html" title="モデル検証ビュー"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo.png" alt="Logo"/>
+            </a></p><h3><a href="#">Powered By</a></h3>
+<img class="logo" src="_static/aist_logo.png" alt="Logo">
+<p></p>
+<img class="logo" src="_static/piping_rtm_logo2.png" alt="Logo">
+
+<p>このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。</p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">独自のデータ型を設計し利用する</a><ul>
+<li><a class="reference internal" href="#ref-customtype-package">パッケージを利用する</a></li>
+<li><a class="reference internal" href="#sequence">sequence型を利用する</a></li>
+<li><a class="reference internal" href="#ref-customtype-array">配列を利用する</a></li>
+<li><a class="reference internal" href="#ref-customtype-attr">属性を利用する</a></li>
+<li><a class="reference internal" href="#ref-customtype-relation">関連を利用する</a><ul>
+<li><a class="reference internal" href="#id6">誘導可能性</a><ul>
+<li><a class="reference internal" href="#id7">誘導可能</a></li>
+<li><a class="reference internal" href="#id8">誘導不可能</a></li>
+<li><a class="reference internal" href="#id9">誘導可能性未定</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10">多重度</a><ul>
+<li><a class="reference internal" href="#id11">例1. 多重度0, 1, 0..1の場合</a></li>
+<li><a class="reference internal" href="#ref-customtype-multiple">例2. 多重度が0, 1, 0..1以外の場合</a></li>
+<li><a class="reference internal" href="#id13">例3. 関連端名が定義されている</a></li>
+<li><a class="reference internal" href="#id14">例4. 多重度が定義されていない</a></li>
+<li><a class="reference internal" href="#corbasequence">例5. ステレオタイプ&lt;&lt;CORBASequence&gt;&gt;が定義されている</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id15">関連端名</a></li>
+<li><a class="reference internal" href="#id16">集約</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ref-customtype-hint">独自データ型の設計における注意点</a></li>
+<li><a class="reference internal" href="#rtcbuilder">RTCBuilderによる独自データ型の利用</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="model_validation_view.html"
+                        title="previous chapter">モデル検証ビュー</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../tutorial/basic.html"
+                        title="next chapter">RT(Robot Technology)コンポーネントを設計する</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ref-customtype">
+<span id="id1"></span><h1>独自のデータ型を設計し利用する<a class="headerlink" href="#ref-customtype" title="Permalink to this headline">¶</a></h1>
+<p>SysML-RTM連携 では、rtc_template.asmlファイルのRTCパッケージに、OpenRTM-aistが定義する基本的なデータ型定義しています。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/defined_rtcdatatype.png" src="../_images/defined_rtcdatatype.png" />
+</div>
+</div></blockquote>
+<p>このデータ型の他に、ユーザーが独自に定義した型をSysMLのValueTypeとして定義し、ポートの型や、インターフェースの属性や操作の戻り値、パラメータの型などに利用できます。</p>
+<p>この独自データ型がどのようなメンバーを持つかといった、独自データ型の構造は、クラスの属性や関連を利用して表すことができます。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/sample1.png" src="../_images/sample1.png" />
+</div>
+</div></blockquote>
+<p>属性として定義する場合は、関連で設定する必要がある、名前や誘導可能性、多重度を設定せずともよく、手間が少ないですが、関係するデータ型が多い場合、データ型間の関係が一目で分かりにくい点がデメリットです。</p>
+<p>複雑なデータ型の場合は関連を利用し、 単純なデータ型の場合は属性として定義するなどといった、他の利用者にとって分かりやすいモデルはどちらか？という視点で選ぶとよいでしょう。</p>
+<p>また、どちらかで統一する必要はなく、構造が分かりにくいと思う箇所だけ関連を利用し、他の部分はシンプルに属性を利用するなど、モデルもシンプルな表現を目指すとよいでしょう。</p>
+<p>このリファレンスで説明する機能は、次の通りです。</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ref-customtype-package"><em>パッケージを利用する</em></a></li>
+<li><a class="reference internal" href="#ref-customtype-sequence"><em>sequence型を利用する</em></a></li>
+<li><a class="reference internal" href="#ref-customtype-array"><em>配列を利用する</em></a></li>
+<li><a class="reference internal" href="#ref-customtype-attr"><em>属性を利用する</em></a></li>
+<li><a class="reference internal" href="#ref-customtype-relation"><em>関連を利用する</em></a></li>
+<li><a class="reference internal" href="#ref-customtype-hint"><em>独自データ型の設計における注意点</em></a></li>
+<li><a class="reference internal" href="#ref-customtype-rtm"><em>RTCBuilderによる独自データ型の利用</em></a></li>
+</ul>
+<hr class="docutils" />
+<div class="section" id="ref-customtype-package">
+<span id="id2"></span><h2>パッケージを利用する<a class="headerlink" href="#ref-customtype-package" title="Permalink to this headline">¶</a></h2>
+<p>パッケージ(名前空間)を利用することで、独自型が属する名前空間を設計することができます。
+名前空間はIDLのModule句に相当します。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/package.png" />
+</div>
+</div></blockquote>
+<p>このようなモデルから作成されるIDLは次のようになります。</p>
+<p>..describe:: com/changevision/CustomType.idl</p>
+<div class="highlight-python"><div class="highlight"><pre>#ifndef CUSTOMTYPE_IDL
+#define CUSTOMTYPE_IDL
+#include &quot;BasicDataType.idl&quot;
+
+module com{
+    module changevision{
+        struct CustomType{
+            RTC::Time tm;
+        };
+    };
+};
+#endif
+</pre></div>
+</div>
+<hr class="docutils" />
+</div>
+<div class="section" id="sequence">
+<span id="ref-customtype-sequence"></span><h2>sequence型を利用する<a class="headerlink" href="#sequence" title="Permalink to this headline">¶</a></h2>
+<p>可変長のデータを扱えるsequenceを利用するには、次のような手順でsequence型のデータをモデルとして表現して設計します。</p>
+<ul class="simple">
+<li>sequenceが扱うデータ(以下の例ではItem)をクラスとして定義します。</li>
+<li>sequence型(以下の例ではItemSeq)自体もクラスとして定義し、sequence型を意味する&lt;&lt;CORBASequence&gt;&gt;ステレオタイプを付与します。</li>
+<li>sequenceが扱うデータのクラスと、sequence型のクラス間に多重度が0..*である関連を作成します。</li>
+</ul>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/sequence_model_style.png" />
+</div>
+</div></blockquote>
+<p>このようなモデルから作成されるIDLは次のようになります。</p>
+<div class="highlight-python"><div class="highlight"><pre>- Item.idl
+#ifndef ITEM_IDL
+#define ITEM_IDL
+#include &quot;BasicDataType.idl&quot;
+
+struct Item{
+};
+#endif
+
+- ItemSeq.idl
+#ifndef ITEMSEQ_IDL
+#define ITEMSEQ_IDL
+#include &quot;BasicDataType.idl&quot;
+#include &quot;Item.idl&quot;
+
+typedef sequence&lt;::Item&gt; ItemSeq;
+#endif
+</pre></div>
+</div>
+<p>なお、ItemSeqにCORBASequenceを付与しない場合、次のようにItemSeq自体をstructとして定義されます。
+sequence型のValueType(この例ではItemSeq)が、単なるコンテナ型である場合はCORBASequenceステレオタイプを付与すると、余計なstructが定義されません。</p>
+<div class="highlight-python"><div class="highlight"><pre>- ItemSeq.idl
+#ifndef ITEMSEQ_IDL
+#define ITEMSEQ_IDL
+#include &quot;BasicDataType.idl&quot;
+#include &quot;Item.idl&quot;
+
+#ifndef ITEMSEQ
+#define ITEMSEQ
+typedef sequence&lt;::Item&gt; ItemSeq;
+#endif
+struct ItemSeq{
+  ItemSeq item;
+};
+#endif
+</pre></div>
+</div>
+<hr class="docutils" />
+</div>
+<div class="section" id="ref-customtype-array">
+<span id="id3"></span><h2>配列を利用する<a class="headerlink" href="#ref-customtype-array" title="Permalink to this headline">¶</a></h2>
+<p>ValueTypeの属性のベースタブで多重度を5や3,4などと指定するか、ブロック定義図上でValueTypeの属性を編集して添字を付けると、次のように配列として生成されます。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/customtype_array.png" src="../_images/customtype_array.png" />
+</div>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre>- Sample.idl
+#ifndef SAMPLE_IDL
+#define SAMPLE_IDL
+#include &quot;BasicDataType.idl&quot;
+struct Sample{
+  RTC::TimedDouble attr1[5];
+  RTC::TimedDouble attr2[3][4];
+};
+#endif
+</pre></div>
+</div>
+<hr class="docutils" />
+</div>
+<div class="section" id="ref-customtype-attr">
+<span id="id4"></span><h2>属性を利用する<a class="headerlink" href="#ref-customtype-attr" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/customtype_attr.png" src="../_images/customtype_attr.png" />
+</div>
+</div></blockquote>
+<p>ValueTypeの属性の名前、型がそのままIDLに生成されます。</p>
+<p>たとえば、それぞれのクラスがcom::changevisionパッケージに属する場合、次のようなIDLが生成されます。</p>
+<div class="highlight-python"><div class="highlight"><pre>- Order.idl
+#ifndef ORDER_IDL
+#define ORDER_IDL
+#include &quot;BasicDataType.idl&quot;
+#include &quot;com/changevision/Customer.idl&quot;
+
+module com{
+    module changevision{
+        struct Order{
+            RTC::Time tm;
+            com::changevision::Customer customer;
+        };
+    };
+};
+#endif
+
+- Customer.idl
+#ifndef CUSTOMER_IDL
+#define CUSTOMER_IDL
+#include &quot;BasicDataType.idl&quot;
+
+module com{
+    module changevision{
+        struct Customer{
+            long id;
+            string name;
+        };
+    };
+};
+#endif
+</pre></div>
+</div>
+<hr class="docutils" />
+</div>
+<div class="section" id="ref-customtype-relation">
+<span id="id5"></span><h2>関連を利用する<a class="headerlink" href="#ref-customtype-relation" title="Permalink to this headline">¶</a></h2>
+<p>独自のデータ型の構造を表現するのに関連を利用する場合、生成されるIDLには関連の「誘導可能性」「多重度」「関連端名」が関係してきます。</p>
+<div class="line-block">
+<div class="line">誘導可能性は、関連で結ばれている先のValueTypeをメンバーとして生成するかどうかです。</div>
+<div class="line">多重度は、関連で結ばれている先のValueTypeを、単一か集合体として生成するかどうかに関係します。</div>
+<div class="line">また関連端名は、関連で結ばれている先のValueTypeをメンバーとして生成する際のメンバー名として、利用されます。</div>
+</div>
+<div class="section" id="id6">
+<h3>誘導可能性<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>関連には、ValueTypeに対する誘導可能性を設定できます。誘導可能性とは、片方のValueTypeから、もう片方のValueTypeを参照できるかどうかを定義するものです。
+誘導可能性がどのタイプで定義されているかによって、関連を定義したValueTypeが、生成されるIDLにてValueTypeのメンバーに定義されるかどうか決定されます。</p>
+<p>誘導可能性には、「誘導可能」「誘導不可能」「誘導可能性未定」が存在します。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/WS001266.jpg" />
+</div>
+</div></blockquote>
+<p>SysML-RTM連携 では、誘導可能性が未定義である場合は、関連先への参照を持たないものとして、独自の型を生成します。</p>
+<div class="section" id="id7">
+<h4>誘導可能<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>誘導可能は、ValueTypeを参照できる方向を矢印で表します。
+次の例の場合、Class0からClass1は誘導可能(参照できる)。Class1からClass0は参照できるかは未定という意味になります。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/472.png" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id8">
+<h4>誘導不可能<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>次の例の場合、Class0からClass1は誘導不可能(参照できない)。Class1からClass0は参照できるかは未定という意味になります。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/471.png" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id9">
+<h4>誘導可能性未定<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>次の例の場合、両方のクラスからそれぞれ参照できるかは未定という意味になります。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/473.png" />
+</div>
+</div></blockquote>
+<p>例</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/110.png" />
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>AとBはそれぞれ参照できる</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>struct A{
+  ::B b;
+};
+struct B{
+  ::A a;
+};
+</pre></div>
+</div>
+<ul class="simple">
+<li>CとDはそれぞれ参照できない</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>struct C{};
+struct D{};
+</pre></div>
+</div>
+<ul class="simple">
+<li>EとFはそれぞれ参照できるかは未定</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>struct E{};
+struct F{};
+</pre></div>
+</div>
+<ul class="simple">
+<li>GからHは参照できるが、HからGは参照できない</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>struct G{
+  ::H h;
+};
+struct H{};
+</pre></div>
+</div>
+<ul class="simple">
+<li>IからJは参照できるが、JからIは参照できるかは未定</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>struct I{
+  ::J j;
+};
+struct J{};
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>多重度<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">多重度が0,1,0..1の場合は単数、それ以外は集合とみなします。</div>
+<div class="line">多重度が定義されていない場合は、１が定義されているとみなします。</div>
+</div>
+<p>SysML-RTM連携 の場合、集合はsequence型でのみ対応しているため、0..*など「0 , 1 , 0..1」以外の多重度が指定された場合、sequence型として定義します。
+ただし、1..3などとサイズを定義しても、サイズは反映されず、サイズ未定義のsequenceとして生成します。</p>
+<p>なお関連から生成されるメンバー名は、未定義の場合はValueType名を小文字にした名前で定義します。関連端名が定義されている場合は、その名前が利用されます。</p>
+<div class="section" id="id11">
+<h4>例1. 多重度0, 1, 0..1の場合<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>多重度が0, 1, 0..1の場合は、次のコードが生成されます</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/WS001336.jpg" />
+</div>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre>struct A{
+  ::B b;
+};
+struct B{};
+</pre></div>
+</div>
+</div>
+<div class="section" id="ref-customtype-multiple">
+<span id="id12"></span><h4>例2. 多重度が0, 1, 0..1以外の場合<a class="headerlink" href="#ref-customtype-multiple" title="Permalink to this headline">¶</a></h4>
+<p>多重度を0, 1, 0..1以外にする場合は、次のようにステレオタイプ&lt;&lt;CORBASequence&gt;&gt;を持つクラスを作成して下さい。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../_images/use_corbasequence.jpg"><img alt="../_images/use_corbasequence.jpg" src="../_images/use_corbasequence.jpg" style="width: 300px;" /></a>
+</div>
+</div></blockquote>
+<p>1..3などとサイズを指定した場合でも、sequence&lt;::B,3&gt;とは定義されず、sequence&lt;::B&gt;として定義されます。</p>
+<p>関連端名が定義されていないので、ValueType名を小文字にした名前で定義されます。</p>
+<p>上記のブロック定義図でクラスBをdoubleなどのプリミティブ型にしたい場合は、IDLパッケージの型を利用してください。</p>
+<div class="highlight-python"><div class="highlight"><pre>typedef sequence&lt;::B&gt; BSeq;
+struct A{
+  ::BSeq bSeq;
+};
+struct B{};
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h4>例3. 関連端名が定義されている<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<p>関連端名が定義されているので、メンバーの変数名としてmemberが利用されます。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/member.jpg" />
+</div>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre>struct A{
+  ::B member;
+};
+struct B{};
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h4>例4. 多重度が定義されていない<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p>多重度が定義されていない場合は1で定義されているとみなします。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/WS001340.jpg" />
+</div>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre>struct A{
+  ::B b;
+};
+struct B{};
+</pre></div>
+</div>
+</div>
+<div class="section" id="corbasequence">
+<h4>例5. ステレオタイプ&lt;&lt;CORBASequence&gt;&gt;が定義されている<a class="headerlink" href="#corbasequence" title="Permalink to this headline">¶</a></h4>
+<p>クラスにステレオタイプ&lt;&lt;CORBASequence&gt;&gt;が定義されている場合はtypedefとして生成されます。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../_images/corbasequence.jpg"><img alt="../_images/corbasequence.jpg" src="../_images/corbasequence.jpg" style="width: 300px;" /></a>
+</div>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre>typedef sequence&lt;::A&gt; ASeq;
+struct A{};
+</pre></div>
+</div>
+<p>上記のクラス図でクラスAをdoubleなどのプリミティブ型にしたい場合は、rtc_template.asmlファイルで提供するIDLパッケージの型を利用してください。</p>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>関連端名<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>関連端名は、メンバー変数の名前として利用されます。未定義の場合、クラス名を小文字にした名前で定義します。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/member_line.jpg" />
+</div>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre>struct A{
+  ::B member;
+};
+struct B{};
+</pre></div>
+</div>
+<p>関連端名が未定義の場合</p>
+<div class="highlight-python"><div class="highlight"><pre>struct A{
+  ::B b;
+};
+struct B{};
+</pre></div>
+</div>
+<p>なお、複数の関連が存在し、それぞれ関連端名が未定義の場合、同じ名前のメンバーが重複します。omniIDLなど実行時にエラーとなります。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/117.png" />
+</div>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre>struct Organization{
+  ::Employee employee;
+  ::Employee employee;
+};
+struct Employee{
+  ::Organization organization;
+  ::Organization organization;
+};
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3>集約<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>集約は生成されるコードに影響を与えませんが、集合であることが明示されるので、指定する方が望ましいです。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/aggregation.jpg" />
+</div>
+</div></blockquote>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="ref-customtype-hint">
+<span id="id17"></span><h2>独自データ型の設計における注意点<a class="headerlink" href="#ref-customtype-hint" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>データポートに指定する、独自データ型はRTC::Time型のtmという名前のメンバーを定義する必要があります。</li>
+</ul>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/WS001344.jpg" />
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>クラスが相互参照している場合、IDLのコンパイルでエラーが発生します。相互参照しないようモデルを修正して下さい。</li>
+</ul>
+<p>次の例は、AとBが相互参照しているため、omniIDLなどのidlツールでエラーが発生します。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="" src="../_images/WS001345.jpg" />
+</div>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre>struct A{
+  ::B b;
+};
+struct B{
+  ::A a;
+};
+</pre></div>
+</div>
+<hr class="docutils" />
+</div>
+<div class="section" id="rtcbuilder">
+<span id="ref-customtype-rtm"></span><h2>RTCBuilderによる独自データ型の利用<a class="headerlink" href="#rtcbuilder" title="Permalink to this headline">¶</a></h2>
+<p>このように作成された独自データ型を含んだRTCプロファイルを元に、RTCBuilderでソースコードのひな形を作成する方法について説明します。</p>
+<p>次のモデルで示されるような、Angleという独自データ型を扱うポートをもつCustomCompブロックを、RTコンポーネントとして出力します。</p>
+<p><strong>ブロック定義図</strong></p>
+<div class="figure">
+<img alt="image" src="../_images/custom_bdd.png" />
+</div>
+<p><strong>内部ブロック図</strong></p>
+<div class="figure">
+<img alt="image" src="../_images/custom_ibd.png" />
+</div>
+<dl class="docutils">
+<dt><strong>モデル</strong></dt>
+<dd><a class="reference download internal" href="../_downloads/customtype.asml"><tt class="xref download docutils literal"><span class="pre">モデルのダウンロード</span></tt></a></dd>
+</dl>
+<p><a class="reference internal" href="../tutorial/basic.html#ref-tutorial-basic-import-rtcprofile"><em>RTSプロファイルのインポート</em></a> などを参考に、メニュー <em class="menuselection">ツール  ‣ SysML-RTM ‣ 開いている図からRTC/RTSプロファイルを生成する</em> を選択します。
+表示されるダイアログで、RTC/RTSプロファイルを生成するフォルダにを指定し「生成」ボタンを押下して下さい。</p>
+<p>出力場所で指定したフォルダ(以下の例では/tmp/tutorial/custom)には、次のようなファイルが生成されます。</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>/tmp/tutorial/custom/
+ |- Angle.idl
+ |- CustomComp.xml
+ |- sample.xml
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="describe">
+<dt>
+<tt class="descname">Angle.idl</tt></dt>
+<dd><p>CustomCompコンポーネントが利用する、独自データ型Angleの構造を示すIDLファイル</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">CustomComp.xml</tt></dt>
+<dd><p>RTコンポーネントCustomCompのRTCプロファイル</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">sample.xml</tt></dt>
+<dd><p>RTSプロファイル</p>
+</dd></dl>
+
+<p>上記のように生成されたRTCプロファイルを:ref:<cite>ref-tutorial-basic-import-rtcprofile</cite> にあるような、以下の手順でRTCBuilderにインポートし、CustomCompコンポーネントのソースコードのひな形を生成します。</p>
+<ul>
+<li><p class="first">RTCBuilderを起動し、独自データ型をRTCBuilderが参照できるよう、メニュー <em class="menuselection">ウィンドウ  ‣ 設定 ‣ RTCBuilder</em> を選択し、生成された独自データ型のIDLが配置されているフォルダを指定します。(上記例の場合、/tmp/tutorial/custom/)</p>
+<div class="figure">
+<img alt="image" src="../_images/rtcbuilder-preference.png" />
+</div>
+</li>
+<li><p class="first">RTCBuilderを再起動し、CustomCompプロジェクトを作成します。</p>
+</li>
+<li><p class="first">「基本」タブのプロファイル情報のインポート・エクスポートの「インポート」ボタンから生成したRTCプロファイルを選択します。</p>
+</li>
+<li><p class="first">「データポート」タブを開き、独自データ型を利用しているポートのデータ型を確認すると、独自データ型がコンボボックスで選択されているはずです。</p>
+</li>
+<li><p class="first">言語タブでC++やPythonなど任意の言語を選択し「基本」タブの「コード生成とパッケージ」の「コード生成」ボタンを押下し、ソースコードのひな形を生成します。</p>
+</li>
+</ul>
+<p>このように、独自データ型をデータポートの型として利用している場合、RTCBuilderでソースコードのひな形を作成するには、その型をRTCBuilderから参照するための設定が必要となります。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../tutorial/basic.html" title="RT(Robot Technology)コンポーネントを設計する"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="model_validation_view.html" title="モデル検証ビュー"
+             >previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Change Vision,Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

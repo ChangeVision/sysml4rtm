@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RT(Robot Technology)コンポーネントを設計する &mdash; SysML-RTM 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SysML-RTM 1.0.0 documentation" href="../index.html" />
+    <link rel="next" title="ポートを介して、他のRTコンポーネントと連携するモデルを設計する" href="dataport.html" />
+    <link rel="prev" title="独自のデータ型を設計し利用する" href="../reference/customtype.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dataport.html" title="ポートを介して、他のRTコンポーネントと連携するモデルを設計する"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../reference/customtype.html" title="独自のデータ型を設計し利用する"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo.png" alt="Logo"/>
+            </a></p><h3><a href="#">Powered By</a></h3>
+<img class="logo" src="_static/aist_logo.png" alt="Logo">
+<p></p>
+<img class="logo" src="_static/piping_rtm_logo2.png" alt="Logo">
+
+<p>このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。</p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RT(Robot Technology)コンポーネントを設計する</a><ul>
+<li><a class="reference internal" href="#astah-sysmlrt">astah* SysMLでRTコンポーネントを設計する</a><ul>
+<li><a class="reference internal" href="#ref-tutorial-basic-createproject">プロジェクトの新規作成</a></li>
+<li><a class="reference internal" href="#rt">ブロック図でシステムとRTコンポーネントの構造と関係を設計する</a><ul>
+<li><a class="reference internal" href="#rtc">ブロックにRTCステレオタイプを設計する</a></li>
+<li><a class="reference internal" href="#id2">システムとRTコンポーネントの階層構造関係を設計する</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ref-tutorial-basic-ibd">内部ブロック図で、システムを構成する要素間の関係性を設計する</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rts-rtc">RTS/RTCプロファイルの生成</a><ul>
+<li><a class="reference internal" href="#id4">RTCプロファイルのインポート</a></li>
+<li><a class="reference internal" href="#rts">RTSプロファイルのインポート</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../reference/customtype.html"
+                        title="previous chapter">独自のデータ型を設計し利用する</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dataport.html"
+                        title="next chapter">ポートを介して、他のRTコンポーネントと連携するモデルを設計する</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rt-robot-technology">
+<span id="ref-tutorial-basic"></span><h1>RT(Robot Technology)コンポーネントを設計する<a class="headerlink" href="#rt-robot-technology" title="Permalink to this headline">¶</a></h1>
+<p>このチュートリアルでは、SysMLを用いて最も基本的なRTコンポーネントを設計する方法と、OpenRTPを用いてRTコンポーネントのソースコードのひな型を生成する方法について説明します。</p>
+<p>なお、OpenRTMや、ソースコードを実行する際に必要なOpenRTM-aistの概要やインストール方法は <a class="reference external" href="http://openrtm.org/openrtm/">OpenRTM-aist公式サイト</a> を参照して下さい。</p>
+<p>RTコンポーネントの設計、実行の手順は以下のとおりです。</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ref-tutorial-basic-createproject"><em>プロジェクトの新規作成</em></a></li>
+<li><a class="reference internal" href="#ref-tutorial-basic-bdd"><em>ブロック図でシステムとRTコンポーネントの構造と関係を設計する</em></a></li>
+<li><a class="reference internal" href="#ref-tutorial-basic-ibd"><em>内部ブロック図で、システムを構成する要素間の関係性を設計する</em></a></li>
+<li><a class="reference internal" href="#ref-tutorial-basic-rts-rtc-profile"><em>RTS/RTCプロファイルの生成</em></a></li>
+</ul>
+<dl class="describe">
+<dt>
+<tt class="descname">このチュートリアルで作成するシステムについて</tt></dt>
+<dd><p>RTコンポーネントMyFirstComponentを含むシステムを設計します。</p>
+</dd></dl>
+
+<p><strong>ブロック図</strong></p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/bdd.png" />
+</div>
+</div></blockquote>
+<p><strong>内部ブロック図</strong></p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/ibd.png" />
+</div>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/basic.asml"><tt class="xref download docutils literal"><span class="pre">モデルのダウンロード</span></tt></a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="astah-sysmlrt">
+<h2>astah* SysMLでRTコンポーネントを設計する<a class="headerlink" href="#astah-sysmlrt" title="Permalink to this headline">¶</a></h2>
+<p>まずは、astah* SysMLを起動し、設計するロボットシステムのモデルを管理するプロジェクトを作成します。</p>
+<div class="section" id="ref-tutorial-basic-createproject">
+<span id="id1"></span><h3>プロジェクトの新規作成<a class="headerlink" href="#ref-tutorial-basic-createproject" title="Permalink to this headline">¶</a></h3>
+<p>OpenRTM-aistが提供するデータ型などを定義したテンプレートファイルを元に、新規ロボットシステムの設計を行うプロジェクトを作成します。</p>
+<ul>
+<li><p class="first">astah* SysMLを起動し、メニュー <em class="menuselection">ファイル  ‣ テンプレートからプロジェクトの新規作成</em> を選択します。</p>
+<div class="figure">
+<img alt="image" src="../_images/templatemenu.png" />
+</div>
+</li>
+<li><p class="first">サブメニューから&#8221;テンプレートからプロジェクトの新規作成&#8221;を選択し、この SysML-RTM連携 のダウンロードファイルにも含まれる <a class="reference download internal" href="../_downloads/rtc_template.asml"><tt class="xref download docutils literal"><span class="pre">rtc_template.asml</span></tt></a> を選択します。</p>
+</li>
+</ul>
+<hr class="docutils" />
+</div>
+<div class="section" id="rt">
+<span id="ref-tutorial-basic-bdd"></span><h3>ブロック図でシステムとRTコンポーネントの構造と関係を設計する<a class="headerlink" href="#rt" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">RTコンポーネントはブロック定義図と内部ブロック図で設計します。</div>
+<div class="line">まず、ブロック定義図でシステムにどのような要素で構成されるかを設計し、内部ブロック図を用いて、システムを構成する要素間の関係性を設計します。</div>
+</div>
+<p>それでは、ブロック定義図を作成するため、メニュー <em class="menuselection">図  ‣ ブロック定義図</em> を選択します。</p>
+<p>ブロック定義図では、設計するシステム自体を表すブロックと、そのシステムを構成するRTコンポーネントをrtcステレオタイプが付与されたブロックとして定義します。</p>
+<p>最初に設計するシステム自体を表すブロックを作成するため、「ツールバー」-「ブロック」を選択してブロック定義図の好きな場所をクリックします。すると、図のように&#8221;ブロック0&#8221;という名前の長方形が表示されます。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/block.png" />
+</div>
+</div></blockquote>
+<p>この長方形は、システムを構成する要素を意味するブロックというモデルです。</p>
+<p>この「ブロック0」の名前を、これから作成したいロボットシステムの名前として、TutorialSystemに変更してみましょう。</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">ブロック定義図上で作成した「ブロック0」を選択します。</p>
+</li>
+<li><p class="first">ブロック0の名前を変更します</p>
+<p>画面左下の「プロパティビュー」に、選択されたブロックのプロパティが表示されます。</p>
+<div class="line-block">
+<div class="line">これから設計するTutorialSystemをプロパティビューの名前に入力してください。</div>
+<div class="line">このように、図や構造ツリーで選択したモデルのプロパティは、プロパティビューから表示、編集できます。</div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/block_property.png" />
+</div>
+</div></blockquote>
+</div></blockquote>
+<p>次に、TutorialSystemを構成するRTコンポーネントとして、MyFirstComponentブロックを作成しましょう。先程と同様にツールバーよりブロックを作成し、名前を&#8221;MyFirstComponent&#8221;と変更します。</p>
+<div class="section" id="rtc">
+<h4>ブロックにRTCステレオタイプを設計する<a class="headerlink" href="#rtc" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">システムはモーターやアクチュエーターなど、RTコンポーネントとは異なる要素も存在します。ブロックがRTコンポーネントであることを示すため、ステレオタイプを用います。</div>
+<div class="line">ステレオタイプはプロパティビューから&#8221;ステレオタイプ&#8221;タブから設計します。</div>
+<div class="line">追加ボタンを押下し、追加された名前にRTコンポーネントを意味するステレオタイプ、rtcを入力して下さい。</div>
+</div>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/stereotype.png" />
+</div>
+</div></blockquote>
+<p>ブロック定義図のデフォルトの設定では、ステレオタイプは図上に表示されません。
+ブロック定義図を選択しプロパティビューの「初期設定」タブの「ステレオタイプの表示」にチェックをし、「全図要素に反映」ボタンをクリックすると、図上にステレオタイプが表示されるようになります。</p>
+<p>これまでの操作で、次のようなモデルが作成されているはずです。</p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/basic_1.png" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h4>システムとRTコンポーネントの階層構造関係を設計する<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>システム(TutorialSystem)とRTコンポーネント(MyFirstComponent)を設計できたので、MyFirstComponentがTutorialSystemを構成する要素であることを、ブロック定義図上で設計しましょう。</p>
+<p>SysMLでは全体と部分という関係を表すUMLのコンポジションに相当する、部品関連(Part Assosication)が用意されています。astah* SysMLでは部品関連をコンポジションと称して提供しています。
+今回、MyFirstComponentはTutorialSystemを構成する部品であることを定義します。</p>
+<p>「ツールバー」-「関連 - コンポジション」を選択し、TutorialSystemからMyFirstComponentに向けて線を引いて下さい。</p>
+<dl class="docutils">
+<dt><strong>ツールバー</strong></dt>
+<dd><div class="first last figure">
+<img alt="image" src="../_images/composition.png" />
+</div>
+</dd>
+<dt><strong>図上での操作</strong></dt>
+<dd><div class="first last figure">
+<img alt="image" src="../_images/composition_dnd.png" />
+</div>
+</dd>
+</dl>
+<p>黒菱形が付いているコネクタの端側が全体を表します。今回の場合は、TutorialSystem側に黒菱形が表示されているはずです。
+このようにコンポジションによって、全体と部品関係を設計できます。</p>
+<div class="figure">
+<img alt="image" src="../_images/composition_done.png" />
+</div>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="ref-tutorial-basic-ibd">
+<span id="id3"></span><h3>内部ブロック図で、システムを構成する要素間の関係性を設計する<a class="headerlink" href="#ref-tutorial-basic-ibd" title="Permalink to this headline">¶</a></h3>
+<p>ブロック定義図でシステムにどのような要素で構成されるかを設計したので、次に内部ブロック図を用いて、システムを構成する要素間の関係性を設計します。</p>
+<p>今回はTutorialSystemには、MyFirstComponentしか存在しないので関係性は設計できませんが、今後のチュートリアルで説明していきます。</p>
+<p>内部ブロック図は、ブロック定義図上でブロックを選択しコンテキストメニューから「内部ブロック図の追加」を選択して作成します。</p>
+<div class="figure">
+<img alt="image" src="../_images/ibd_contextmenu.png" />
+</div>
+<p>TutorialSystemを選択して「内部ブロック図の追加」を選択してください。次のような図が作成され、開かれるはずです。</p>
+<div class="figure">
+<img alt="image" src="../_images/ibd_first.png" />
+</div>
+<p>内部ブロック図は作成されるときに、選択されたブロックからコンポジション関係にあるブロックからプロパティを作成します。</p>
+<p>SysMLのプロパティはUMLのパートに相当し、あるブロックのインスタンスひとつから見た構成要素や、保持する値を表現するモデルです。astah* SysMLではプロパティをパートと称して提供しています。</p>
+<div class="line-block">
+<div class="line">パートのラベルは&#8221;プロパティ名&#8221;:&#8221;型名&#8221;というフォーマットで表示されています。</div>
+<div class="line">プロパティ名とは、このシステムでのパートの役割を意味する名前です。たとえば、ロボットを表すrobot、右手を表すright-armなどと言った感じです。型名とは、パートという役割の振る舞いなどが定義された型(ブロック)を意味します。</div>
+</div>
+<p>今回は&#8221;:MyFirstComponent&#8221;パートを選択し、プロパティビューから名前にmyFirstCompと設定して、&#8221;myFirstComp:MyFirstComponent&#8221;パートとして定義して下さい。</p>
+<div class="figure">
+<img alt="image" src="../_images/part.png" />
+</div>
+<p>SysML-RTM連携 では、この内部ブロック図を元にRTC/RTSプロファイルを生成します。生成されるRTSプロファイルは内部ブロック図の名前を利用します。そのため内部ブロック図の名前は英数字で構成される必要があります。</p>
+<p>astah* SysMLの右下に「モデル検証」というビューに、次のようなエラーが表示されているはずです。</p>
+<div class="figure">
+<img alt="image" src="../_images/modelvalidationview.png" />
+</div>
+<p>モデル検証ビューは、編集中の設計モデル中の不整合を一覧表示、操作するビューを提供します。エラーが存在する場合、RTC/RTSプロファイルが生成できませんので、エラーを解決してください。</p>
+<p>内部ブロック図を選択し、プロパティビューから名前に&#8221;tutorial_system&#8221;と入力してください。設定すると、モデル検証ビューからエラーが削除されるはずです。</p>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="rts-rtc">
+<span id="ref-tutorial-basic-rts-rtc-profile"></span><h2>RTS/RTCプロファイルの生成<a class="headerlink" href="#rts-rtc" title="Permalink to this headline">¶</a></h2>
+<p>内部ブロック図からRTC/RTSプロファイルを生成するため、これまで設計してきた内部ブロック図を開き、メニュー <em class="menuselection">ツール  ‣ SysML-RTM ‣ 開いている図からRTC/RTSプロファイルを生成する</em> を選択します。</p>
+<div class="figure">
+<img alt="image" src="../_images/plugin_menu.png" />
+</div>
+<p>次のようなダイアログが表示されるので、RTC/RTSプロファイルを生成するフォルダを指定し「生成」ボタンを押下して下さい。</p>
+<div class="figure">
+<img alt="image" src="../_images/plugin_dialog.png" />
+</div>
+<p>出力場所で指定したフォルダ(以下の例では/tmp/tutorial/basic_tutorial)には、次のようなファイルが生成されています。</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>/tmp/tutorial/basic_tutorial/
+ |- MyFirstComponent.xml
+ |- tutorial_system.xml
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="describe">
+<dt>
+<tt class="descname">MyFirstComponent.xml</tt></dt>
+<dd><p>RTコンポーネントMyFirstComponentのRTCプロファイル</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">tutorial_system.xml</tt></dt>
+<dd><p>TutorialSystemのRTSプロファイル</p>
+</dd></dl>
+
+<p>なお、RTCBuilderやRTSystemEditorの操作方法やOpenRTM-aistに準拠したRTコンポーネントのビルド方法については、公式サイトを参照下さい。</p>
+<hr class="docutils" />
+<div class="section" id="id4">
+<h3>RTCプロファイルのインポート<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>生成されたRTCプロファイルをRTCBuilderにインポートし、MyFirstComponentのソースコードのひな形を生成します。</p>
+<ul>
+<li><p class="first">RTCBuilderを起動し、MyFirstComponentプロジェクトを作成します。</p>
+<div class="figure">
+<img alt="image" src="../_images/rtcbuilder.png" />
+</div>
+</li>
+<li><p class="first">「基本」タブのプロファイル情報のインポート・エクスポートの「インポート」ボタンから生成したRTCプロファイルを選択します。</p>
+</li>
+<li><p class="first">言語タブでC++やPythonなど任意の言語を選択し「基本」タブの「コード生成とパッケージ」の「コード生成」ボタンを押下し、ソースコードのひな形を生成します。</p>
+</li>
+</ul>
+<p>このような手順でSysMLから生成されたRTCプロファイルを元に、RTコンポーネントのソースコードのひな形を作成できます。</p>
+<hr class="docutils" />
+</div>
+<div class="section" id="rts">
+<span id="ref-tutorial-basic-import-rtcprofile"></span><h3>RTSプロファイルのインポート<a class="headerlink" href="#rts" title="Permalink to this headline">¶</a></h3>
+<p>生成されたRTSプロファイルを用いて、RTSystemEditorでシステムを復元します。</p>
+<p>具体的には、RTSystemEditorを起動し、システムエディタのコンテキストメニュー「Open and Restore」を選択し、RTSプロファイルを選択し復元します。</p>
+<div class="figure">
+<img alt="image" src="../_images/rtsystemeditor.png" />
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p>RTCBuilderから生成されるひな形は、パート名がコンポーネント名0という名前で生成されます。SysMLのパートで指定したプロパティ名と一致しない場合、RTSystemEditorでの復元でエラーが発生します。
+rtc.confの次のプロパティを修正し、RTコンポーネントのCORBA Naming Serverにバインドする際の名前、及びRTコンポーネントのインスタンス名が、SysMLのプロパティ名と一致するように修正してから、システムを復元して下さい。</p>
+<blockquote>
+<div><ul class="simple">
+<li>naming.formatプロパティ : CORBA Naming Serverに登録する際の名前</li>
+<li>manager.components.precreate : RTコンポーネントのインスタンス名</li>
+</ul>
+</div></blockquote>
+<p>ex)rtc.conf</p>
+<div class="last highlight-python"><div class="highlight"><pre>naming.format : myFirstComp.rtc
+manager.components.precreate: MyFirstComponent?instance_name=myFirstComp
+</pre></div>
+</div>
+</div>
+<p>このようにSysMLのブロック定義図と内部ブロック図を用い、RTコンポーネントを含んだロボットシステムのモデルを設計できます。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dataport.html" title="ポートを介して、他のRTコンポーネントと連携するモデルを設計する"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../reference/customtype.html" title="独自のデータ型を設計し利用する"
+             >previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Change Vision,Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ポートを介して、他のRTコンポーネントと連携するモデルを設計する &mdash; SysML-RTM 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SysML-RTM 1.0.0 documentation" href="../index.html" />
+    <link rel="next" title="インタフェースを介して、他のRTコンポーネントと連携するモデルを設計する" href="interface.html" />
+    <link rel="prev" title="RT(Robot Technology)コンポーネントを設計する" href="basic.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="interface.html" title="インタフェースを介して、他のRTコンポーネントと連携するモデルを設計する"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="basic.html" title="RT(Robot Technology)コンポーネントを設計する"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo.png" alt="Logo"/>
+            </a></p><h3><a href="#">Powered By</a></h3>
+<img class="logo" src="_static/aist_logo.png" alt="Logo">
+<p></p>
+<img class="logo" src="_static/piping_rtm_logo2.png" alt="Logo">
+
+<p>このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。</p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ポートを介して、他のRTコンポーネントと連携するモデルを設計する</a><ul>
+<li><a class="reference internal" href="#ref-tutorial-dataport-port">ポートを設計する</a></li>
+<li><a class="reference internal" href="#ref-tutorial-dataport-flowproperty">フロープロパティを利用して関係とデータ型を設計する</a><ul>
+<li><a class="reference internal" href="#id3">ポートの型、フロープロパティを設計する</a></li>
+<li><a class="reference internal" href="#id4">システムを構成する追加のパートを設計する</a></li>
+<li><a class="reference internal" href="#id5">コネクタを設計する</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ref-tutorial-dataport-itemflow">アイテムフローを利用して関係とデータ型を設計する</a></li>
+<li><a class="reference internal" href="#rts-rtc">RTS/RTCプロファイルの生成</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="basic.html"
+                        title="previous chapter">RT(Robot Technology)コンポーネントを設計する</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="interface.html"
+                        title="next chapter">インタフェースを介して、他のRTコンポーネントと連携するモデルを設計する</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rt">
+<span id="ref-tutorial-dataport"></span><h1>ポートを介して、他のRTコンポーネントと連携するモデルを設計する<a class="headerlink" href="#rt" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="basic.html#ref-tutorial-basic"><em>RT(Robot Technology)コンポーネントを設計する</em></a> では、SysMLを用いて最も基本的なRTコンポーネントの設計方法について説明しました。</p>
+<div class="line-block">
+<div class="line">次にRTコンポーネントを表すブロックにポートを設計し、他のRTコンポーネントとのやり取りしてみましょう。</div>
+<div class="line">今回SysMLで設計されたポートは、RTコンポーネントにおけるデータポートに該当します。</div>
+</div>
+<p>このチュートリアルでは、次の項目について説明します。</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ref-tutorial-dataport-port"><em>ポートを設計する</em></a></li>
+<li><a class="reference internal" href="#ref-tutorial-dataport-flowproperty"><em>フロープロパティを利用して関係とデータ型を設計する</em></a></li>
+<li><a class="reference internal" href="#ref-tutorial-dataport-itemflow"><em>アイテムフローを利用して関係とデータ型を設計する</em></a></li>
+</ul>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">ポートが扱うデータ型に、ユーザー独自のデータ型を利用したい場合は、<a class="reference internal" href="../reference/customtype.html#ref-customtype-rtm"><em>RTCBuilderによる独自データ型の利用</em></a> を参照して下さい。</p>
+</div>
+<dl class="describe">
+<dt>
+<tt class="descname">このチュートリアルで作成するシステムについて</tt></dt>
+<dd><p>RTC:TimedDouble型のデータを取り扱うポートをもつMyFirstComponent、及びMySecondComponentと、その関係を設計します。</p>
+</dd></dl>
+
+<p><strong>ブロック図</strong></p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/bdd1.png" />
+</div>
+</div></blockquote>
+<p><strong>内部ブロック図</strong></p>
+<blockquote>
+<div><div class="figure">
+<img alt="image" src="../_images/ibd1.png" />
+</div>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/dataport.asml"><tt class="xref download docutils literal"><span class="pre">モデルのダウンロード</span></tt></a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="ref-tutorial-dataport-port">
+<span id="id1"></span><h2>ポートを設計する<a class="headerlink" href="#ref-tutorial-dataport-port" title="Permalink to this headline">¶</a></h2>
+<p>それでは、RTコンポーネントにRTC::TimedDouble型のデータを出力するポートを定義してみましょう。</p>
+<p>内部ブロック図のツールバー「ポート」を選択し、<a class="reference internal" href="basic.html#ref-tutorial-basic"><em>RT(Robot Technology)コンポーネントを設計する</em></a> で作成した&#8221;myFirstComp:MyFirstComponent&#8221;パートの枠線の好きな場所を選択します。するとパート上にポートが作成されます。</p>
+<div class="figure">
+<img alt="image" src="../_images/port_toolbar.png" />
+</div>
+<div class="figure">
+<img alt="image" src="../_images/port.png" />
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">ポートはブロック定義図でも設計できます。</p>
+</div>
+<p>ポートには名前を設定する必要があるため、ポートを選択し、プロパティビューからoutという名前を設定して下さい。</p>
+<p>次にポートがRTC::TimedDouble型のデータを出力することを設計します。ポートが扱うデータ型やポートの方向性は、ポートの型となるモデルのフロープロパティやアイテムフローで設計します。</p>
+</div>
+<div class="section" id="ref-tutorial-dataport-flowproperty">
+<span id="id2"></span><h2>フロープロパティを利用して関係とデータ型を設計する<a class="headerlink" href="#ref-tutorial-dataport-flowproperty" title="Permalink to this headline">¶</a></h2>
+<p>フロープロパティを用いて、ポートが扱うデータ型や方向性を設計するには、以下の手順で行います。</p>
+<ol class="arabic simple">
+<li>ポートの型を設計する</li>
+<li>ポートの型にて、フロープロパティを設計する</li>
+<li>フロープロパティで、扱うデータ型とその方向性を設計する</li>
+</ol>
+<div class="section" id="id3">
+<h3>ポートの型、フロープロパティを設計する<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>ポートのフロープロパティを設計するために、まずはポートの型を設計します。</p>
+<p>先程作成したoutポートを選択し、プロパティビューから「型となるブロックを新規作成します」ボタンをクリックします。</p>
+<div class="figure">
+<img alt="image" src="../_images/create_port_type.png" />
+</div>
+<p>ポートの型となるブロックのプロパティビューが表示されるので、名前にPortTypeと設定して下さい</p>
+<p>次にフロープロパティを設計するため、PortTypeの「フロープロパティ」タブを開きます。</p>
+<div class="figure">
+<img alt="image" src="../_images/flowproperty.png" />
+</div>
+<p>追加ボタンを押下し、作成されたフロープロパティの名前をprop、型をRTC::TimedDoubleと設計して下さい。</p>
+<p>次に方向性を定めるため、追加したフロープロパティの方向欄から選択します。
+今回は出力する方向性を示すため、outを選択して下さい。</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">方向性はoutの他に、入力を示すin、入出力両方を示すinoutが設計可能です。</p>
+</div>
+<p>これまでの操作で、PortTypeに次のようなフロープロパティが作成されているはずです。</p>
+<div class="figure">
+<img alt="image" src="../_images/flowproperty_done.png" />
+</div>
+<p>このようにポートの型となるブロックのフロープロパティを用いて、データ型や方向性を設計できます。</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">SysMLでは、フロープロパティは複数設計でき、ポートが扱う可能性があるデータやその方向性は複数設計できます。
+ただし、RTコンポーネントのデータポートとして設計されるブロックのポートは、単一のデータ型と方向性で設計される必要があります。
+その為、異なるデータ型や方向性を持つ複数のフロープロパティは設計できません。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>システムを構成する追加のパートを設計する<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>フロープロパティを設計したので、以下の手順で、先程作成したポートを介して他のパートとやり取りしていることを設計します。</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="basic.html#ref-tutorial-basic"><em>RT(Robot Technology)コンポーネントを設計する</em></a> で行ったように、ブロック定義図を開き、新しいブロックを作成し、名前をMySecondComponentと設計します。</li>
+<li>次にブロックをRTコンポーネントとして意味付けるため、rtcステレオタイプを追加します。</li>
+<li>作成されたMySecondComponentをTutorialSystemの部品として設計するため、TutorialSystemからMySecondComponentにコンポジット関連を作成します。</li>
+</ol>
+<p>ブロック定義図ではパート名は関連端名として表現されます。既に作成されているMyFirstComponentとTutorialSystemの間のコンポジット関連を見ると、myFirstCompと表示されているはずです。
+同じように、関連端名をmySecondCompと設計して下さい。</p>
+<div class="figure">
+<img alt="image" src="../_images/block_add.png" />
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p>関連端名はコンポジット関連を選択し、関連端AもしくはBのタブを開き、名前欄から設計できます。</p>
+<p>または図上で、部品となる側のブロックに近いコネクタの端にマウスをホバーさせて表示される、横棒のアイコンをクリックして名前を設定することでも設計できます。</p>
+<div class="last figure">
+<img alt="image" src="../_images/suggest.png" />
+</div>
+</div>
+<p>これまでの操作で、ブロック定義図でTutorialSystemを構成する部品として、MySecondComponentを追加できましたので、内部ブロック図を開き、MySecondComponentのパートを作成しましょう。</p>
+<p>実はブロック図上でパート関係を作成しているので、既にmySecondComp:MySecondComponentパートのモデルは作成されています。
+このパートを内部ブロック図上に表示するため、内部ブロック図を開き、内部ブロック図上のコンテキストメニューから「パートの表示」を選択して下さい。</p>
+<div class="figure">
+<img alt="image" src="../_images/show_part.png" />
+</div>
+<p>表示されたダイアログに名前にmySecondComp、ターゲット(ブロック)にMySecondComponentという行が表示されているはずです。この行の表示欄のチェックをONにして、了解ボタンを押下して下さい。</p>
+<p>このような手順でシステムに含まれるパートを追加設計できます。</p>
+<div class="figure">
+<img alt="image" src="../_images/show_part_dialog.png" />
+</div>
+<p>次にパートを作成した後に、myFirstCompパートのoutポートとやり取りするための入力ポートinを作成します。</p>
+<p>ツールバー「ポート」からmySecondCompパートにポートを作成し、名前にinと設定して下さい。</p>
+<p>ポートが扱うデータとその方向性は、フロープロパティで設計しましたが、今回は既にmyFirstCompパートに設計されたoutポートとやり取りということが分かっています。
+改めて、inポートにポートの型を設計しフロープロパティを設計するのは、効率が悪いと感じられるでしょう。</p>
+<p>このような場合に対応するため、SysMLではポートに共役というプロパティが用意されています。</p>
+<div class="line-block">
+<div class="line">まずinポートを選択しプロパティビューから「型」にoutポートで指定したPortTypeブロックを選択します。</div>
+<div class="line">すると、PortTypeブロックのフロープロパティで設計された情報を元にout方向のポートとして、inポートが設計されるはずです。</div>
+</div>
+<div class="figure">
+<img alt="image" src="../_images/inport_doing.png" />
+</div>
+<p>inポートはRTC:TimedDouble型のデータを扱うことは正しいですが、今の状態では方向性がoutとなっています。これをin方向と設計するため、ポートのプロパティの共役をtrueに設定してみて下さい。</p>
+<p>すると方向性がinとなり、ポートの型の図上での表示が共役を意味する&#8221;~&#8221;が付与された、&#8221;~PortType&#8221;となっているはずです。</p>
+<div class="figure">
+<img alt="image" src="../_images/inport_done.png" />
+</div>
+<p>このようにポートの共役を使うことで、対となるポートを設計することができます。</p>
+</div>
+<div class="section" id="id5">
+<h3>コネクタを設計する<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>それでは、outポートとinポートを介して、myFirstCompとmySecondCompパートがやり取りしていることを設計しましょう。</p>
+<p>ブロック、パート間の関係は、主にコネクタやアイテムフローで設計します。この節ではコネクタを用いて設計します。</p>
+<p>内部ブロック図のツールバー「コネクタ」を選択し、myFirstCompパートのoutポートと、mySecondCompパートのinポートの間にコネクタを作成します。</p>
+<div class="figure">
+<img alt="image" src="../_images/connector.png" />
+</div>
+<p>このようにフロープロパティによって、ポートが扱うデータ型と方向性、それらのポート間がやり取りしていることをコネクタで表現することができます。</p>
+</div>
+</div>
+<div class="section" id="ref-tutorial-dataport-itemflow">
+<span id="id6"></span><h2>アイテムフローを利用して関係とデータ型を設計する<a class="headerlink" href="#ref-tutorial-dataport-itemflow" title="Permalink to this headline">¶</a></h2>
+<p>ポートが扱うデータ型とその方向性、パート間のやり取りを設計する、もうひとつの主な方法として、アイテムフローがあります。</p>
+<p>まずmyFirstCompパートとmySecondCompパートに新しいポートをそれぞれ１つ作成してください。
+myFirstCompパートのポートにはin、mySecondCompパートのポートにはoutという名前を設定して下さい。</p>
+<div class="figure">
+<img alt="image" src="../_images/itemflow_1.png" />
+</div>
+<p>先程はポートの型を設計し、フロープロパティを設計しましたが、今回はアイテムフローで表現してみます。</p>
+<p>内部ブロック図のツールバー「アイテムフロー」を選択し、mySecondCompパートのoutポートから、myFirstCompポートのinポートに向けて線を引いて下さい。</p>
+<div class="figure">
+<img alt="image" src="../_images/itemflow_2.png" />
+</div>
+<p>次に作成したアイテムフローを選択し、プロパティビューから「Convey」欄の追加ボタンを押下し、RTC::TimedDoubleを選択してください。</p>
+<div class="figure">
+<img alt="image" src="../_images/item_flow_property.png" />
+</div>
+<p>この操作で、mySecondCompからmyFirstCompにRTC::TimedDouble型をポートを介して、やり取りすることを表現できます。</p>
+<p>Conveyではアイテムフローで実際に流れるデータの型を設計できます。フロープロパティのようにプロパティ名と流れるデータを表現するには、アイテムフローのアイテムプロパティから設計します。</p>
+<p>フロープロパティでは、ポートが扱う可能性があるデータ型を設計でき、アイテムフローでは実際に流れるデータを設計できる違いがあります。</p>
+<p>例えば、フロープロパティでは液体が流れる可能性があるとして設計し、アイテムフローでは水、もしくは油が実際には流れるといったようなことが表現できます。</p>
+<p>このようにポートとコネクタ、もしくはアイテムフローを用いて、RTコンポーネントにおけるデータポートを介したやり取りを設計でき、RTS/RTCプロファイルとして生成できます。</p>
+</div>
+<div class="section" id="rts-rtc">
+<span id="ref-tutorial-dataport-rts-rtc"></span><h2>RTS/RTCプロファイルの生成<a class="headerlink" href="#rts-rtc" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="basic.html#ref-tutorial-basic"><em>RT(Robot Technology)コンポーネントを設計する</em></a> で行ったように、内部ブロック図からRTC/RTSプロファイルを生成するため、これまで設計してきた内部ブロック図を開き、メニュー <em class="menuselection">ツール  ‣ SysML-RTM ‣ 開いている図からRTC/RTSプロファイルを生成する</em> を選択します。
+表示されるダイアログで、RTC/RTSプロファイルを生成するフォルダにを指定し「生成」ボタンを押下して下さい。</p>
+<p>出力場所で指定したフォルダ(以下の例では/tmp/tutorial/dataport_tutorial)には、次のようなファイルが生成されています。</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>/tmp/tutorial/dataport_tutorial/
+ |- MyFirstComponent.xml
+ |- MySecondComponent.xml
+ |- tutorial_system.xml
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="describe">
+<dt>
+<tt class="descname">MyFirstComponent.xml</tt></dt>
+<dd><p>RTコンポーネントMyFirstComponentのRTCプロファイル</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">MySecondComponent.xml</tt></dt>
+<dd><p>RTコンポーネントMySecondComponentのRTCプロファイル</p>
+</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">tutorial_system.xml</tt></dt>
+<dd><p>TutorialSystemのRTSプロファイル</p>
+</dd></dl>
+
+<p>このように生成されたRTCプロファイルをRTCBuilderにインポートし、MyFirstComponentやMySecondComponentのソースコードのひな形を生成できます。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/rtc_builder.png"><img alt="image" src="../_images/rtc_builder.png" style="width: 700px;" /></a>
+</div>
+<p>また生成されたRTSプロファイルを用いて、RTSystemEditorでシステムを復元できます。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/rts.png"><img alt="image" src="../_images/rts.png" style="width: 700px;" /></a>
+</div>
+<p>基本的な手順は <a class="reference internal" href="basic.html#ref-tutorial-basic"><em>RT(Robot Technology)コンポーネントを設計する</em></a> と同様に、システムエディタのコンテキストメニュー「Open and Restore」を選択し、RTSプロファイルを選択し復元します。
+ただし、<a class="reference internal" href="basic.html#ref-tutorial-basic-import-rtcprofile"><em>RTSプロファイルのインポート</em></a> で説明したように、復元する前にSysMLのパートで指定したプロパティ名とRTコンポーネントのインスタンス名、CORBA Naming Serviceにバインドする際の名前を一致させて下さい。</p>
+<blockquote>
+<div><p>ex)MyFirstComponent/rtc.conf</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>naming.format : myFirstComp.rtc
+manager.components.precreate: MyFirstComponent?instance_name=myFirstComp
+</pre></div>
+</div>
+</div></blockquote>
+<p>ex)MySecondComponent/rtc.conf</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>naming.format : mySecondComp.rtc
+manager.components.precreate: MySecondComponent?instance_name=mySecondComp
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<p>このようにSysMLのポートを用いて、RTコンポーネントにおけるデータポートを介した、ロボットシステムのモデルを設計できます。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="interface.html" title="インタフェースを介して、他のRTコンポーネントと連携するモデルを設計する"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="basic.html" title="RT(Robot Technology)コンポーネントを設計する"
+             >previous</a> |</li>
+        <li><a href="../index.html">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Change Vision,Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

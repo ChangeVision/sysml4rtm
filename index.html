@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to SysML-RTM’s documentation &mdash; SysML-RTM 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="SysML-RTM 1.0.0 documentation" href="#" />
+    <link rel="next" title="モデル検証ビュー" href="reference/model_validation_view.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="reference/model_validation_view.html" title="モデル検証ビュー"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p><h3><a href="#">Powered By</a></h3>
+<img class="logo" src="_static/aist_logo.png" alt="Logo">
+<p></p>
+<img class="logo" src="_static/piping_rtm_logo2.png" alt="Logo">
+
+<p>このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。</p>
+
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to SysML-RTM&#8217;s documentation</a><ul>
+<li><a class="reference internal" href="#id1">インストール方法</a></li>
+<li><a class="reference internal" href="#id2">リファレンス</a></li>
+<li><a class="reference internal" href="#id3">チュートリアル</a></li>
+<li><a class="reference internal" href="#license-sysml-rtm">License(SysML-RTM プラグイン)</a></li>
+<li><a class="reference internal" href="#license-openrtm-aist">License(OpenRTM-aist)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reference/model_validation_view.html"
+                        title="next chapter">モデル検証ビュー</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-sysml-rtm-s-documentation">
+<h1>Welcome to SysML-RTM&#8217;s documentation<a class="headerlink" href="#welcome-to-sysml-rtm-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>SysML-RTM連携 は、SysMLモデルによるシステム設計を <a class="reference internal" href="glossary.html#term-omg-robotic-technology-component"><em class="xref std std-term">OMG Robotic Technology Component</em></a> に準拠したソフトウェア設計として生成、変換するプラグインです。</p>
+<p>SysML内部ブロック図上に存在するパートから <a class="reference internal" href="glossary.html#term-rtc"><em class="xref std std-term">RTCプロファイル</em></a> 、<a class="reference internal" href="glossary.html#term-rts"><em class="xref std std-term">RTSプロファイル</em></a> を生成し <a class="reference external" href="http://openrtm.org/openrtm/">OpenRTM-aist</a> が提供するOpenRTPと連携することで、Robot Technologyコンポーネント(RTコンポーネント)のソースコードのひな形の作成や、ロボットシステムに含まれるコンポーネントとその接続関係の復元を実現します。</p>
+<p>このプラグインは、独立行政法人産業技術総合研究所と共同研究した成果を活用しています。</p>
+<div class="figure">
+<img alt="image" src="_images/sample.png" />
+</div>
+<div class="section" id="id1">
+<h2>インストール方法<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>sysml4rtm-x.x.x.zip ファイルをダウンロードし、任意のフォルダへ展開します。</li>
+<li>astah*を起動し、メニュー[ヘルプ] – [プラグイン一覧] から、 [インストール] ボタンをクリックします。</li>
+<li>展開したフォルダの&#8221;plugins&#8221;フォルダにある sysml4rtm-x.x.x.jar ファイルとmodel-validation-x.x.x.jarを選択し、メッセージに従ってastah*を再起動して下さい。</li>
+<li>インストールを完了しastah*を再起動すると、メニュー[ツール]に [SysML-RTM]が追加されていれば、インストール完了です。</li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h2>リファレンス<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference/model_validation_view.html">モデル検証ビュー</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/customtype.html">独自のデータ型を設計し利用する</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>チュートリアル<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/basic.html">RT(Robot Technology)コンポーネントを設計する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/dataport.html">ポートを介して、他のRTコンポーネントと連携するモデルを設計する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/interface.html">インタフェースを介して、他のRTコンポーネントと連携するモデルを設計する</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="license-sysml-rtm">
+<h2>License(SysML-RTM プラグイン)<a class="headerlink" href="#license-sysml-rtm" title="Permalink to this headline">¶</a></h2>
+<p>Copyright 2014 Change Vision, Inc.</p>
+<p>Licensed under the Apache License, Version 2.0 (the &#8220;License&#8221;); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:</p>
+<p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an &#8220;AS IS&#8221; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+</div>
+<div class="section" id="license-openrtm-aist">
+<h2>License(OpenRTM-aist)<a class="headerlink" href="#license-openrtm-aist" title="Permalink to this headline">¶</a></h2>
+<p>OpenRTM-aistは、各言語版 (C++, Java, Python) のミドルウエアライブラリと、RTCBuilder, RTSystemEditorなどツールから構成されており、それぞれOpenRTM-aist (C++, Java, Python版)は LGPLと個別契約のデュアルライセンス
+RTSystemEditor, RTCBuilderはEPLと個別契約のデュアルライセンスのもとでオープンソース形式で配布しています。</p>
+<ul class="simple">
+<li>LGPL (GNU Lesser General Public License) はフリーソフトウェア財団（Free Software Foundation、以下FSFと略称）が公開しているコピーレフト型のフリーソフトウェアライセンスです。</li>
+<li>EPL (Eclipse Public License) は Free Software Foundation (FSF)によって 認められている「フリーソフトウェアライセンス」の1つであり、CPL (一部は LGPL) 等と似たライセンス形態であり、より商業利用を促進するものとなって います。</li>
+</ul>
+<p>これらのライセンスは、(i) 別モジュールとして頒布されるソフトウエアや、(ii) プログラムの派生物でないもの、には及びません。またEPLライセンスは、特許 に関する条項が含まれており、コントリビュータが持つ特許が当該ソフトウエ アに影響しない (使用者には使用料無料の特許ライセンスが付与される) 形態 となっています。
+詳細は <a class="reference external" href="http://openrtm.org/openrtm/ja/content/openrtm-aist%E3%81%A8%E3%81%AF%EF%BC%9F-0">OpenRTM-aistライセンス</a> を参照ください。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="reference/model_validation_view.html" title="モデル検証ビュー"
+             >next</a> |</li>
+        <li><a href="#">SysML-RTM 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Change Vision,Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
